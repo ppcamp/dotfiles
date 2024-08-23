@@ -18,6 +18,7 @@
     email = pedro.santos@emailprovider.com
 [core]
     editor = code --wait
+    pager = less -IR -
 [diff]
     tool = vscode
 [difftool "vscode"]
