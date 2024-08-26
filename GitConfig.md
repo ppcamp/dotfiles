@@ -21,6 +21,11 @@
     pager = less -IR -
 [diff]
     tool = vscode
+    external = difft
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
