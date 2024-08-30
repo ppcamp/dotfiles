@@ -33,7 +33,7 @@
 [mergetool "vscode"]
     cmd = code --wait $MERGED
 [alias]
-    alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig
+    alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig | sed -n 's/^\\([a-zA-Z0-9]\\+\\)[[:space:]]*=\\(.*\\)$/\\1?\\2/p' | column -t -s '?'
     graph = log --graph --oneline --decorate
     graph-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
