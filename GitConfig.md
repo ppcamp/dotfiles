@@ -35,7 +35,7 @@
 [alias]
     alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig | sed -n 's/^\\([a-zA-Z0-9]\\+\\)[[:space:]]*=\\(.*\\)$/\\1?\\2/p' | column -t -s '?'
     graph = log --graph --oneline --decorate
-    graph-main = !git graph $(git curr) main
+    graph-vs-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
@@ -45,7 +45,7 @@
     recent-branches = !git branch --sort=-committerdate | head
     local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'
     s = !git status
-    f = !git fetch
+    f = !git fetch --prune
     p = !git pull
     c = !git branch | fzf | xargs git checkout
     sync = !git f && git p
