@@ -34,3 +34,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank()
     end,
 })
+
+local wk = require("which-key")
+
+wk.add({
+  { "<leader>f", group = " Completions"}, -- group
+  { "<leader>fn", desc = "<C-n> Select the [n]ext item" },
+  { "<leader>fp", desc = "<C-p> Select the [p]revious item" },
+  { "<leader>fb", desc = "<C-b> Scroll the documentation window [b]ack" },
+  { "<leader>ff", desc = "<C-f> Scroll the documentation window [f]orward" },
+  { "<leader>fy", desc = "<C-y> Accept ([y]es) the completion" },
+  { "<leader>fs", desc = "<C-Space> Manually trigger a completion from nvim-cmp" },
+
+  { "<leader>z", group = " Tools"},
+  { "<leader>zb", function() print("hello") end, desc = "Foobar" },
+--   { "<leader>f1", hidden = true }, -- hide this keymap
+--   { "<leader>w", proxy = "<c-w>", group = "windows" }, -- proxy to window mappings
+--   { "<leader>b", group = "buffers", expand = function()
+--       return require("which-key.extras").expand.buf()
+--     end
+--   },
+})
