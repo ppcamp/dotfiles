@@ -6,6 +6,8 @@ A simple nvim setup for my use
 > Based on [kickstart-modular-nvim]
 
 
+As a suggestion, use a [nerdfont], which contains icons
+
 1. Install neovim https://github.com/neovim/neovim/blob/master/INSTALL.md
     ```bash
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -21,3 +23,4 @@ A simple nvim setup for my use
 3. Run `nvim .`
 
 [kickstart-modular-nvim]: https://github.com/dam9000/kickstart-modular.nvim
+[nerdfont]: https://www.nerdfonts.com/font-downloads
