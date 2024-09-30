@@ -14,7 +14,7 @@
 [init]
     defaultBranch = main
 [commit]
-    template = $HOME/.git-template
+    template = ~/.git-template
 [user]
     name = Pedro Santos
     email = pedro.santos@emailprovider.com
