@@ -14,7 +14,7 @@
 [init]
     defaultBranch = main
 [commit]
-    template = /home/ppcamp/.git-template
+    template = $HOME/.git-template
 [user]
     name = Pedro Santos
     email = pedro.santos@emailprovider.com
