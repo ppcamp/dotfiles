@@ -40,7 +40,6 @@
     graph = log --graph --oneline --decorate
     graph-vs-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
-    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     conflicts = diff --name-only --diff-filter=U
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case
