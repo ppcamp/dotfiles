@@ -13,6 +13,8 @@
     helper = store
 [init]
     defaultBranch = main
+[commit]
+    template = /home/ppcamp/.git-template
 [user]
     name = Pedro Santos
     email = pedro.santos@emailprovider.com
@@ -83,3 +85,40 @@
 ```
 
 </details>
+	
+	
+<details>
+	<summary>
+		<code>~/.git-template</code>
+	</summary>
+
+```bash
+# <type>[optional scope]: <short_description>
+#
+# Co-authored-by: Co Author Name <coauthor@email.com>
+#
+# optional_body may also include references to PR #256,
+# to Jira ticket (TICKETid-256). Or a URL
+#
+# BREAKING CHANGE: <breaking_change_description>
+#
+################################################################################
+# Types:
+# - fix           Bugfix
+# - feat          New feature/functionality added
+# - chore         For files that don't change our source code
+# - ci            For changes in pipeline
+# - docs          For documentation changes only
+# - refactor      Usually, no feature added
+# - perf          Performance improvements
+# - test          Added/changed tests
+#
+################################################################################
+# For revert commits, use the template below:
+# 
+# revert: let us never again speak of the noodle incident
+#
+# Refs: 676104e, a215868
+################################################################################
+# see https://www.conventionalcommits.org/en/v1.0.0	
+```
