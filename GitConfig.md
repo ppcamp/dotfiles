@@ -36,19 +36,19 @@
     cmd = code --wait $MERGED
 [alias]
     alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig | sed -n 's/^\\([a-zA-Z0-9]\\+\\)[[:space:]]*=\\(.*\\)$/\\1?\\2/p' | column -t -s '?'
+    ls = log --pretty=format:"%C(yellow)%h%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate
     graph = log --graph --oneline --decorate
     graph-vs-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
-    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
     conflicts = diff --name-only --diff-filter=U
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case
     recent-branches = !git branch --sort=-committerdate | head
     local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'
-    s = !git status
-    f = !git fetch --prune
-    p = !git pull
+    s = status
+    f = fetch --prune
+    p = pull
     c = !git branch | fzf | xargs git checkout
     sync = !git f && git p
 ```
