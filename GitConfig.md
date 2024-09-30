@@ -36,8 +36,7 @@
     cmd = code --wait $MERGED
 [alias]
     alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig | sed -n 's/^\\([a-zA-Z0-9]\\+\\)[[:space:]]*=\\(.*\\)$/\\1?\\2/p' | column -t -s '?'
-    ls = log --pretty=format:"%C(yellow)%h%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate
-    lds = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short
+    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short
     graph = log --graph --oneline --decorate
     graph-vs-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
