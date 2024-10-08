@@ -40,9 +40,9 @@
     process = git-lfs filter-process
     required = true
 [alias]
-    alias = !sed -n "'/^\\[alias\\]/,/^\\[/{ /^[^[]/ {s/^[ \\t]*//;s/[ \\t]*=[ \\t]*/=/;p } }'" $HOME/.gitconfig | sed -n 's/^\\([a-zA-Z0-9]\\+\\)[[:space:]]*=\\(.*\\)$/\\1?\\2/p' | column -t -s '?'
+    alias = config --get-regexp alias
     ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short
-    graph = log --graph --oneline --decorate
+    graph = log --graph --oneline --decorate # you can also pass branches, example: git graph develop feature/some-12
     graph-vs-main = !git graph $(git curr) main
     curr = rev-parse --abbrev-ref HEAD
     conflicts = diff --name-only --diff-filter=U
@@ -54,6 +54,9 @@
     p = pull
     c = !git branch | fzf | xargs git checkout
     sync = !git f && git p
+    push! = push --force
+[commit]
+	template = ~/.git-template
 ```
 </details>
 	
