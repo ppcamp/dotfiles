@@ -56,7 +56,9 @@
     sync = !git f && git p
     push! = push --force
 [commit]
-	template = ~/.git-template
+    template = ~/.git-template
+[push]
+    autoSetupRemote = true
 ```
 </details>
 	
