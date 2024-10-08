@@ -101,6 +101,7 @@
 	</summary>
 
 ```bash
+
 # <type>[optional scope]: <short_description>
 #
 # Co-authored-by: Co Author Name <coauthor@email.com>
