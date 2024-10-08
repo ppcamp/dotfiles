@@ -54,7 +54,7 @@
     p = pull
     c = !git branch | fzf | xargs git checkout
     sync = !git f && git p
-    push! = push --force
+    pushf = push --force
 [commit]
     template = ~/.git-template
 [push]
