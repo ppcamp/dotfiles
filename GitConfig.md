@@ -19,7 +19,7 @@
     name = Pedro Santos
     email = pedro.santos@emailprovider.com
 [core]
-    editor = code --wait
+    editor = vim #code --wait
     pager = less -IR -
 [diff]
     tool = vscode
@@ -55,6 +55,9 @@
     c = !git branch | fzf | xargs git checkout
     sync = !git f && git p
     pushf = push --force
+    clean-all = clean -df
+    hard-reset = reset --hard HEAD
+    reset-all = !git clean-all && git hard-reset
 [commit]
     template = ~/.git-template
 [push]
