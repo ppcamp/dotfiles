@@ -41,23 +41,25 @@
     required = true
 [alias]
     alias = config --get-regexp alias
-    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short
-    graph = log --graph --oneline --decorate # you can also pass branches, example: git graph develop feature/some-12
-    graph-vs-main = !git graph $(git curr) main
-    curr = rev-parse --abbrev-ref HEAD
-    conflicts = diff --name-only --diff-filter=U
-    authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case
-    recent-branches = !git branch --sort=-committerdate | head
-    local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'
+    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short # alternative to <git log>, example: <git ls>
+    graph = log --graph --oneline --decorate # example: <git graph develop feature/some-14> or just <git graph>
+    graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
+    curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
+    conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
+    authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
+    recent-branches = !git branch --sort=-committerdate | head # (show recent branches) example: <git recent-branches>
+    local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }' # (show local only branches) example: <git local-branches>
     s = status
     f = fetch --prune
     p = pull
-    c = !git branch | fzf | xargs git checkout
-    sync = !git f && git p
-    pushf = push --force
-    clean-all = clean -df
-    hard-reset = reset --hard HEAD
-    reset-all = !git clean-all && git hard-reset
+    c = !git branch -a | fzf | xargs git checkout # (checkout by showing and selecting) example: <git c>
+    sync = !git f && git p # (fetch and pull) example: <git sync>
+    pushf = push --force --progress # (force push) example: <git pushf>
+    reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
+    reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
+    reset-all = !git clean-all && git hard-reset # (clean all- (un)tracked files) example: <git reset-all>
+    delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
+    new = checkout -B # (create new branches) example: <git new branchName>
 [commit]
     template = ~/.git-template
 [push]
