@@ -57,7 +57,7 @@
     pushf = push --force --progress # (force push) example: <git pushf>
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
-    reset-all = !git clean-all && git hard-reset # (clean all- (un)tracked files) example: <git reset-all>
+    reset-all = !git reset-untracked && git reset-hard # (clean all changes) example: <git reset-all>
     delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
     new = checkout -B # (create new branches) example: <git new branchName>
 [commit]
