@@ -62,8 +62,10 @@
     new = checkout -B # (create new branches) example: <git new branchName>
     list = branch -v # (list local branches) example: <git list>
     list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
+    # git branch -m <branch=new-branch-name>; git push origin <branch>; git push origin --delete <current=$(git curr)>
     rename = branch -m # (rename branch locally, remember to <git push origin branch> + <git delete-remote>) example: <git rename newName>
     delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
+    exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
 [commit]
     template = ~/.git-template
 [push]
