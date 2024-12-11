@@ -60,6 +60,10 @@
     reset-all = !git reset-untracked && git reset-hard # (clean all changes) example: <git reset-all>
     delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
     new = checkout -B # (create new branches) example: <git new branchName>
+    list = branch -v # (list local branches) example: <git list>
+    list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
+    rename = branch -m # (rename branch locally, remember to <git push origin branch> + <git delete-remote>) example: <git rename newName>
+    delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
 [commit]
     template = ~/.git-template
 [push]
