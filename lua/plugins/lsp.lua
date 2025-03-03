@@ -1,4 +1,7 @@
 -- LSP Plugins
+--
+-- Language server protocol (used to generate editors errors, code navigation, etc)
+
 return {
 	{
 		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -176,19 +179,20 @@ return {
 				-- clangd = {},
 				-- gopls = {},
 				gopls = {
-					-- settings = {
-					--     gopls = {
-					--         directoryFilters = {
-					--             "-",
-					--             "+" .. cwd,
-					--         },
-					--         -- Exclude the 'pkg' directory from being indexed
-					--         analyses = {
-					--             unusedparams = true,
-					--         },
-					--         staticcheck = true,
-					--     },
-					-- },
+					settings = {
+						gopls = {
+							-- directoryFilters = {
+							--     "-",
+							--     "+" .. cwd,
+							-- },
+							-- Exclude the 'pkg' directory from being indexed
+							analyses = {
+								unusedparams = true,
+								modernize = true,
+							},
+							staticcheck = true,
+						},
+					},
 				},
 
 				-- pyright = {},
@@ -237,6 +241,9 @@ return {
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
+				-- install
+				ensure_installed = {},
+				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}

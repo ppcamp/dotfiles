@@ -1,4 +1,3 @@
-# nvim
 
 A simple nvim setup for my use
 
@@ -6,7 +5,7 @@ A simple nvim setup for my use
 > Based on [kickstart-modular-nvim]
 
 
-To enable numbering, for vim only
+[Check my gist with tips for vim](https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8)
 
 As a suggestion, use a [nerdfont], which contains icons for your files, and after install it,
 set it as font that should be used for your terminal emulator, after that, go to `lua/config/options.lua`
@@ -28,6 +27,31 @@ and enabled it.
 
 See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 
+For nvim to work with sudo account, you'll need to create a copy or a link into the `root/home` directory
+`sudo ln -s /opt/nvim-config /root/.config/nvim`
+
+
+```sh
+# Linux / MacOS (unix)
+rm -rf ~/.config/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.local/share/nvim
+
+# Flatpak (linux)
+rm -rf ~/.var/app/io.neovim.nvim/config/nvim
+rm -rf ~/.var/app/io.neovim.nvim/data/nvim
+rm -rf ~/.var/app/io.neovim.nvim/.local/state/nvim
+
+# Windows CMD
+rd -r ~\AppData\Local\nvim
+rd -r ~\AppData\Local\nvim-data
+
+# Windows PowerShell
+rm -Force ~\AppData\Local\nvim
+rm -Force ~\AppData\Local\nvim-data
+```
+
 
 [kickstart-modular-nvim]: https://github.com/dam9000/kickstart-modular.nvim
 [nerdfont]: https://www.nerdfonts.com/font-downloads
+
