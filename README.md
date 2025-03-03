@@ -41,5 +41,9 @@ and enabled it.
 	```
 3. Run `nvim .`
 
+
+See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
+
+
 [kickstart-modular-nvim]: https://github.com/dam9000/kickstart-modular.nvim
 [nerdfont]: https://www.nerdfonts.com/font-downloads

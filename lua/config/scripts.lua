@@ -12,3 +12,5 @@ end
 
 local dir = vim.fn.stdpath('config') .. '/lua/scripts'
 load_lua_files_from_dir(dir)
+
+-- vim: ts=2 sts=2 sw=2 et

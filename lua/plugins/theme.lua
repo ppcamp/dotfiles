@@ -20,13 +20,60 @@
 
 
 
--- Lazy
+-- Monokai
+-- return {
+--     {
+--         "polirritmico/monokai-nightasty.nvim",
+--         lazy = false,
+--         priority = 1000,
+--     }
+-- }
+
+-- lua/plugins/rose-pine.lua
+-- return {
+--     "rose-pine/neovim",
+--     name = "rose-pine",
+--     config = function()
+--         vim.cmd("colorscheme rose-pine")
+--     end
+-- }
+
+-- Catppuccin
+-- return {
+--     "catppuccin/nvim",
+--     name = "catppuccin",
+--     priority = 1000
+-- }
+
+-- return {
+--     "ViViDboarder/wombat.nvim",
+--     dependencies = { { "rktjmp/lush.nvim" } },
+--     opts = {
+--         -- You can optionally specify the name of the ansi colors you wish to use
+--         -- This defaults to nil and will use the default ansi colors for the theme
+--         ansi_colors_name = nil,
+--     },
+-- }
+
+-- tokyonight
 return {
-    {
-        "polirritmico/monokai-nightasty.nvim",
-        lazy = false,
-        priority = 1000,
-    }
+
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    vim.cmd("colorscheme tokyonight")
+  end
 }
+
+-- Dracula
+-- return {
+--     {
+--         "Mofiqul/dracula.nvim",
+--         config = function()
+--             vim.cmd("colorscheme dracula")
+--         end
+--     },
+-- }
 
 -- vim: ts=2 sts=2 sw=2 et

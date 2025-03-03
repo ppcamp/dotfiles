@@ -24,7 +24,7 @@ return {
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -99,11 +99,13 @@ return {
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<F2>', vim.lsp.buf.rename, '[R]e[n]ame', { 'n', 'i' })
+
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+          map('<C-.>', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'i' })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -169,6 +171,22 @@ return {
       local servers = {
         -- clangd = {},
         -- gopls = {},
+        gopls = {
+           -- settings = {
+           --     gopls = {
+           --         directoryFilters = {
+           --             "-",
+           --             "+" .. cwd,
+           --         },
+           --         -- Exclude the 'pkg' directory from being indexed
+           --         analyses = {
+           --             unusedparams = true,
+           --         },
+           --         staticcheck = true,
+           --     },
+           -- },
+        },
+
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
