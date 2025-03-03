@@ -23,17 +23,17 @@
     email = pedro.santos@emailprovider.com
 
 [core]
-    editor = vim #code --wait
+    editor = nvim #code --wait
     pager = less -IR -
 
 [diff]
-    tool = vscode
-    external = difft
+    tool = difft
+    #external = difft # DO NOT CHANGE THIS, otherwise, you won't be able to generate valid patch files
 
 [difftool]
     prompt = false
 
-[difftool "difftastic"]
+[difftool "difft"]
     cmd = difft "$LOCAL" "$REMOTE"
 
 [difftool "vscode"]
