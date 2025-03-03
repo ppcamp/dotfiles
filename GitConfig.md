@@ -200,7 +200,7 @@ git diff HEAD > ~/changes.patch
 git apply ~/changes.patch
 ```
 
-> Note that this **won't work if you changed the external tool for git**, it **must** be the default (diff)
+Note that this **won't work if you changed the external tool for git**, it **must** be the default (diff)
 
 </details>
 
