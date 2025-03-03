@@ -165,6 +165,9 @@
 </details>
 	
 # Tips
+	
+<details>
+	<summary>Logging based on the action</summary>
 
 ```sh
 # git history + changes
@@ -183,4 +186,22 @@ U	Show only unmerged (conflicting) files
 X	Show unknown files
 B	Show only broken pairings (used for detecting broken renames)
 ```
-> Note that you can combine multiple filters
+	
+> Note that you can combine multiple filters	
+	
+</details>
+	
+	
+<details>
+	<summary>Generating a Patch file</summary>
+	
+```sh
+git diff HEAD > ~/changes.patch
+git apply ~/changes.patch
+```
+
+> Note that this **won't work if you changed the external tool for git**, it **must** be the default (diff)
+
+</details>
+
+	
