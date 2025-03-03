@@ -161,3 +161,25 @@
 ################################################################################
 # see https://www.conventionalcommits.org/en/v1.0.0	
 ```
+	
+
+# Tips
+
+```sh
+# git history + changes
+git log -p
+```
+
+Possible git filters
+```
+A	Show only added files
+C	Show only copied files
+D	Show only deleted files
+M	Show only modified files
+R	Show only renamed files
+T	Show only files with type changes (e.g., file → symlink)
+U	Show only unmerged (conflicting) files
+X	Show unknown files
+B	Show only broken pairings (used for detecting broken renames)
+```
+> Note that you can combine multiple filters
