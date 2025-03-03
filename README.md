@@ -30,9 +30,8 @@ and enabled it.
 
 1. Install neovim https://github.com/neovim/neovim/blob/master/INSTALL.md
     ```bash
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    sudo rm -rf /opt/nvim
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    # Download and install nvim
+    sudo rm -rf /opt/nvim && curl -sLo - https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz  | sudo tar -xz -C /opt
     ```
 2. Clone this repo
     ```bash
