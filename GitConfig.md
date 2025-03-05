@@ -9,6 +9,11 @@
 	</summary>
 	
 ```bash
+[push]
+	autoSetupRemote = true
+[safe]
+	directory = /usr/share/nvim
+
 [credential]
     helper = store
 
