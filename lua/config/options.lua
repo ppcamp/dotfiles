@@ -27,7 +27,7 @@ vim.o.foldmethod = "indent"
 -- Set the default fold level (higher levels are unfolded)
 vim.o.foldlevel = 0
 -- Enable folding by default (folding is turned on when the file is opened)
-vim.o.foldenable = true
+vim.o.foldenable = false
 
 autocmd("FileType", {
 	pattern = "bash",
