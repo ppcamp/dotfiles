@@ -9,10 +9,14 @@
 	</summary>
 	
 ```bash
-[push]
-	autoSetupRemote = true
 [safe]
 	directory = /usr/share/nvim
+
+[url "git@bitbucket.org:"]
+	insteadOf = https://bitbucket.org/
+
+[push]
+	autoSetupRemote = true
 
 [credential]
     helper = store
