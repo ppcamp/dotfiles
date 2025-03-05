@@ -1,5 +1,6 @@
 local map = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
+local wk = require("which-key")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -21,7 +22,7 @@ map(
 )
 
 -- Diagnostic keymaps
-map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+map("n", "<leader>cq", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix list" })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -32,7 +33,17 @@ map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
-map({ "n" }, "<leader>tt", "<cmd> Telescope <cr>", { silent = true, desc = "Opens Telescope selection" })
+-- Telescope higher functions
+map({ "n" }, "<leader>tt", "<cmd> Telescope <cr>", { silent = true, desc = "Opens Telescope" })
+map({ "n" }, "<leader>tc", "<cmd> Telescope commands<cr>", { silent = true, desc = "Telescope commands" })
+map({ "n" }, "<leader>sm", "<cmd> Telescope man_pages<cr>", { silent = true, desc = "Telescope man pages" })
+
+-- Git
+map("n", "<leader>gs", ":Telescope git_stash<CR>", { desc = "Git Stash" })
+map("n", "<leader>gc", ":Telescope git_commits<CR>", { desc = "Git Commits" })
+map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git Branches" })
+map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git Files" })
+map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git Status" })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -45,24 +56,20 @@ autocmd("TextYankPost", {
 	end,
 })
 
--- local wk = require("which-key")
--- wk.add({
---     { "<leader>f", group = " Completions" }, -- group
---     { "<leader>fn", desc = "<C-n> Select the [n]ext item" },
---     { "<leader>fp", desc = "<C-p> Select the [p]revious item" },
---     { "<leader>fb", desc = "<C-b> Scroll the documentation window [b]ack" },
---     { "<leader>ff", desc = "<C-f> Scroll the documentation window [f]orward" },
---     { "<leader>fy", desc = "<C-y> Accept ([y]es) the completion" },
---     { "<leader>fs", desc = "<C-Space> Manually trigger a completion from nvim-cmp" },
---
---     { "<leader>z", group = " Tools" },
---     { "<leader>zb", function() print("hello") end, desc = "Foobar" },
---     --   { "<leader>f1", hidden = true }, -- hide this keymap
---     --   { "<leader>w", proxy = "<c-w>", group = "windows" }, -- proxy to window mappings
---     --   { "<leader>b", group = "buffers", expand = function()
---     --       return require("which-key.extras").expand.buf()
---     --     end
---     --   },
--- })
+-- Add extra icons and texts
+wk.add({
+	{ "<leader>g", group = "Git" },
+	{ "<leader>t", icon = "", group = "Tools" },
+	{ "<leader>c", group = "Code", mode = { "n", "x" } },
+	{ "<leader>d", group = "Document" },
+	{ "<leader>s", group = "Search" },
+	{
+		"<leader>tb",
+		desc = "Example of a function",
+		function()
+			print("hello")
+		end,
+	},
+})
 
 -- vim: ts=2 sts=2 sw=2 et

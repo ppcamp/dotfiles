@@ -11,6 +11,10 @@ As a suggestion, use a [nerdfont], which contains icons for your files, and afte
 set it as font that should be used for your terminal emulator, after that, go to `lua/config/options.lua`
 and enabled it.
 
+## Todo
+
+- Telescope git as in buffer: https://chatgpt.com/share/67c8c4eb-d404-800e-a407-926c8629eb63
+
 1. Install neovim https://github.com/neovim/neovim/blob/master/INSTALL.md
     ```bash
     # Download and install nvim
