@@ -107,7 +107,9 @@
     history = !git log --oneline --color | fzf --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
     log-deleted = log --diff-filter=D -- # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
     unstage = restore --staged
-
+    unstage-all = unstage -S .
+    add-all = add -A
+    patch = !git add -N . && git diff HEAD > patch
 ```
 </details>
 	
