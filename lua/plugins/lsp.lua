@@ -98,7 +98,7 @@ return {
 
 					-- Fuzzy find all the symbols in your current workspace.
 					--  Similar to document symbols, except searches over your entire project.
-					map("<leader>st", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+					map("<leader>sw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
 
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.

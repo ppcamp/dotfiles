@@ -80,7 +80,7 @@ return {
 
 			map("n", "<leader>sh", builtin.help_tags, { desc = "Telescope Help" })
 			map("n", "<leader>sf", builtin.find_files, { desc = "Find Files" })
-			map("n", "<leader>sw", builtin.grep_string, { desc = "Find current Word" })
+			map("n", "<leader>st", builtin.grep_string, { desc = "Find current Word" })
 			map("n", "<leader>sg", builtin.live_grep, { desc = "Find by Grep" })
 			map("n", "<leader>sr", builtin.resume, { desc = "Telescope Resume" })
 			map("n", "<leader>s.", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
