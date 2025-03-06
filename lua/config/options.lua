@@ -40,6 +40,14 @@ autocmd("FileType", {
 	end,
 })
 
+-- Show diagnostics in the command line when cursor moves
+vim.o.updatetime = 500 -- delay time to 500ms
+autocmd("CursorHold", {
+	callback = function()
+		vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor", border = "rounded" })
+	end,
+})
+
 -- Configs applied to windows only
 if is_wsl() then
 	-- print("windows")
