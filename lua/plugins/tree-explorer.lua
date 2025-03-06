@@ -1,5 +1,4 @@
 -- Show a explorer view, with folders, and file icons
---
 
 --- Define your custom on_attach_change function
 --- @param bufnr integer
@@ -13,14 +12,36 @@
 -- 	-- Add custom key mappings for the nvim-tree buffer
 -- 	vim.api.nvim_buf_set_keymap(bufnr, "n", "a", ":NvimTreeToggle<CR>", opts) -- Toggle NvimTree when 'a' is pressed
 -- end
+local function on_attach(bufnr)
+	local api = require("nvim-tree.api")
+	local map = vim.keymap.set
+
+	local function opts(desc)
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+	end
+
+	-- default mappings
+	api.config.mappings.default_on_attach(bufnr)
+
+	-- custom mappings
+	map("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
+	map("n", "?", api.tree.toggle_help, opts("Help"))
+end
 
 return {
 	{
 		"nvim-tree/nvim-tree.lua",
-		opts = { on_attach = on_attach_change },
-
+		opts = { on_attach = on_attach },
 		-- open it by typing :NvimTreeToggle
 		-- and then, you can type "a"
+
+		config = function()
+			local map = vim.keymap.set
+
+			map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle Explorer" })
+
+			require("nvim-tree").setup()
+		end,
 	},
 }
 
