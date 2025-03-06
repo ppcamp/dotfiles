@@ -1,3 +1,5 @@
+local is_wsl = require("utils.system").is_wsl
+
 local opt = vim.opt
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -38,19 +40,25 @@ autocmd("FileType", {
 	end,
 })
 
--- CONFIGS FOR WSL (windows only)
-vim.opt.clipboard = "unnamedplus"
-vim.g.clipboard = {
-	name = "win32yank-wsl",
-	copy = {
-		["+"] = "clip.exe",
-		["*"] = "clip.exe",
-	},
-	paste = {
-		["+"] = "powershell.exe Get-Clipboard",
-		["*"] = "powershell.exe Get-Clipboard",
-	},
-	cache_enabled = 0,
-}
+if is_wsl() then
+	-- print("windows")
+
+	-- CONFIGS FOR WSL (windows only)
+	vim.opt.clipboard = "unnamedplus"
+	vim.g.clipboard = {
+		name = "win32yank-wsl",
+		copy = {
+			["+"] = "clip.exe",
+			["*"] = "clip.exe",
+		},
+		paste = {
+			["+"] = "powershell.exe Get-Clipboard",
+			["*"] = "powershell.exe Get-Clipboard",
+		},
+		cache_enabled = 0,
+	}
+	-- else
+	-- 	 print("not windows")
+end
 
 -- vim: ts=2 sts=2 sw=2 et
