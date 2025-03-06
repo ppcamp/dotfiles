@@ -45,6 +45,10 @@ map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git Branches" })
 map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git Status" })
 
+--
+map("n", "<leader>nn", "/^\\s*$<CR>", { desc = "Navegate to next empty line" })
+map("n", "<leader>np", "?^\\s*$<CR>", { desc = "Navegate to prev empty line" })
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -60,6 +64,7 @@ autocmd("TextYankPost", {
 wk.add({
 	{ "<leader>g", group = "Git" },
 	{ "<leader>t", icon = "", group = "Tools" },
+	{ "<leader>n", icon = "󱣱", group = "Navigation" },
 	{ "<leader>c", group = "Code", mode = { "n", "x" } },
 	{ "<leader>d", group = "Document" },
 	{ "<leader>s", group = "Search" },

@@ -40,6 +40,7 @@ autocmd("FileType", {
 	end,
 })
 
+-- Configs applied to windows only
 if is_wsl() then
 	-- print("windows")
 
