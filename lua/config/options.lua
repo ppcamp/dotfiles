@@ -13,16 +13,21 @@ opt.number = true -- Set line numbering
 opt.ignorecase = true -- Ignore case when searching
 
 -- Set indentation options
-opt.shiftwidth = 4 -- Number of spaces for each indentation level
-opt.tabstop = 4 -- Number of spaces a tab character represents
 opt.expandtab = true -- Use spaces instead of tabs
+opt.tabstop = 4 -- Number of spaces that a tab counts for
+opt.shiftwidth = 4 -- Number of spaces to use for indentation
+opt.softtabstop = 4 -- Number of spaces for a tab key press
 
 -- Use ripgrep (rg) for :grep
 opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 -- Set the format for parsing grep output
 opt.grepformat = "%f:%l:%c:%m"
 
+-- Numbering basing on the current cursor position (usefull to apply motions)
 opt.relativenumber = true
+
+-- Show a reference line at position 80
+vim.o.colorcolumn = "81"
 
 -- Enable folding based on syntax
 vim.o.foldmethod = "indent"

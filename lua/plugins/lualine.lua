@@ -7,6 +7,12 @@ return {
 				return os.date(" %Y/%m/%d %H:%M")
 			end
 
+			local function curr_cursor_pos()
+				local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+				-- formats the cursor position as line:column
+				return string.format("%d:%d", row, col)
+			end
+
 			require("lualine").setup({
 				options = {
 					theme = "auto",
@@ -15,7 +21,10 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { "branch", { "diff", symbols = { added = " ", modified = " ", removed = " " } } },
+					lualine_b = {
+						"branch",
+						{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
+					},
 					lualine_c = {
 						{
 							"filename",
@@ -25,7 +34,10 @@ return {
 						},
 					},
 					lualine_x = { "diagnostics", "encoding", "fileformat", "filetype" }, -- Error status
-					lualine_y = { "progress" }, --
+					lualine_y = {
+						"progress",
+						curr_cursor_pos,
+					},
 					lualine_z = {
 						--"location",
 						{ clock, color = { fg = "#ffffff", bg = "gray" } }, --, gui = "bold"
