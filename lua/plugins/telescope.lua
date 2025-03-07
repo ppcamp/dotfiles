@@ -76,43 +76,54 @@ return {
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
-			local map = vim.keymap.set
 
-			map("n", "<leader>sh", builtin.help_tags, { desc = "Telescope Help" })
-			map("n", "<leader>sf", builtin.find_files, { desc = "Find Files" })
-			map("n", "<leader>st", builtin.grep_string, { desc = "Find current Word" })
-			map("n", "<leader>sg", builtin.live_grep, { desc = "Find by Grep" })
-			map("n", "<leader>sr", builtin.resume, { desc = "Telescope Resume" })
-			map("n", "<leader>s.", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
-			map("n", "<leader>sb", builtin.buffers, { desc = "Find in all existing buffers" })
+			---Alternative to map
+			---@param keys string
+			---@param func function | string
+			---@param desc string
+			---@param mode string?
+			local map = function(keys, func, desc, mode)
+				mode = mode or "n"
+				vim.keymap.set(mode, keys, func, { desc = "Telescope: " .. desc })
+			end
 
-			map("n", "<leader>sd", builtin.diagnostics, { desc = "LSP Diagnostics" })
+			map("<leader>tt", "<cmd> Telescope <cr>", "Open")
+			map("<leader>tc", "<cmd> Telescope commands<cr>", "Commands")
+			map("<leader>sm", "<cmd> Telescope man_pages<cr>", "Man pages")
 
-			map("n", "<leader>tk", builtin.keymaps, { desc = "Telescope Keymaps" })
+			map("<leader>sh", builtin.help_tags, "Help")
+			map("<leader>sf", builtin.find_files, "Find Files")
+			map("<leader>st", builtin.grep_string, "Find current Word")
+			map("<leader>sw", builtin.live_grep, "Find by Grep")
+			map("<leader>sr", builtin.resume, "Resume")
+			map("<leader>s.", builtin.oldfiles, "Find Recent Files ('.' for repeat)")
+			map("<leader>sb", builtin.buffers, "Find in all existing buffers")
+
+			map("<leader>tk", builtin.keymaps, "Keymaps")
 
 			-- Slightly advanced example of overriding default behavior and theme
-			map("n", "<leader>/", function()
+			map("<leader>/", function()
 				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 					winblend = 10,
 					previewer = false,
 				}))
-			end, { desc = "Search in current buffer" })
+			end, "Search in current buffer")
 
 			-- It's also possible to pass additional configuration options.
 			--  See `:help telescope.builtin.live_grep()` for information about particular keys
-			map("n", "<leader>s/", function()
+			map("<leader>s/", function()
 				builtin.live_grep({
 					grep_open_files = true,
 					prompt_title = "Live Grep in Open Files",
 				})
-			end, { desc = "Search / in Open Files" })
+			end, "Search / in Open Files")
 
 			--
 			-- Shortcut for searching your Neovim configuration files
-			map("n", "<leader>tn", function()
+			map("<leader>tn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "Telescope search Neovim files" })
+			end, "Telescope search Neovim files")
 		end,
 	},
 }

@@ -1,6 +1,8 @@
 local map = vim.keymap.set
-local autocmd = vim.api.nvim_create_autocmd
 local wk = require("which-key")
+local autocmd = vim.api.nvim_create_autocmd
+
+--#region Keybindings
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -21,45 +23,39 @@ map(
 	{ noremap = true, silent = true, desc = "While in insert mode, when hit Ctrl+Q, will close the current buffer" }
 )
 
--- Diagnostic keymaps
-map("n", "<leader>cq", vim.diagnostic.setloclist, { desc = "Open diagnostic Quickfix list" })
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-map("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
--- Telescope higher functions
-map({ "n" }, "<leader>tt", "<cmd> Telescope <cr>", { silent = true, desc = "Opens Telescope" })
-map({ "n" }, "<leader>tc", "<cmd> Telescope commands<cr>", { silent = true, desc = "Telescope commands" })
-map({ "n" }, "<leader>sm", "<cmd> Telescope man_pages<cr>", { silent = true, desc = "Telescope man pages" })
+map("n", "<C-h>", "<C-w><C-h>", { desc = "Git: Move focus to the left window" })
+map("n", "<C-l>", "<C-w><C-l>", { desc = "Git: Move focus to the right window" })
+map("n", "<C-j>", "<C-w><C-j>", { desc = "Git: Move focus to the lower window" })
+map("n", "<C-k>", "<C-w><C-k>", { desc = "Git: Move focus to the upper window" })
 
 -- Git
-map("n", "<leader>gs", ":Telescope git_stash<CR>", { desc = "Git Stash" })
-map("n", "<leader>gc", ":Telescope git_commits<CR>", { desc = "Git Commits" })
-map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git Branches" })
-map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git Files" })
-map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git Status" })
+map("n", "<leader>gs", ":Telescope git_stash<CR>", { desc = "Git: Stash" })
+map("n", "<leader>gc", ":Telescope git_commits<CR>", { desc = "Git: Commits" })
+map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" })
+map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
+map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
---
-map("n", "<leader>nn", "/^\\s*$<CR>", { desc = "Navegate to next empty line" })
-map("n", "<leader>np", "?^\\s*$<CR>", { desc = "Navegate to prev empty line" })
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+-- Conditional maps to file openned only
+autocmd("BufEnter", {
+	-- Navegate to empty blank lines
+	once = true,
 	callback = function()
-		vim.highlight.on_yank()
+		if vim.bo.buftype == "" then
+			map("n", "<leader>nn", "/^\\s*$<CR>", { desc = "Goto: Next empty line" })
+			map("n", "<leader>nN", "?^\\s*$<CR>", { desc = "Goto: Prev empty line" })
+			--	else
+			--		vim.keymap.del("n", "<leader>nn")
+			--		vim.keymap.del("n", "<leader>nN")
+		end
 	end,
 })
+--#endregion
 
+--#region icons
 -- Add extra icons and texts
 wk.add({
 	{ "<leader>g", group = "Git" },
@@ -70,11 +66,12 @@ wk.add({
 	{ "<leader>s", group = "Search" },
 	{
 		"<leader>tb",
-		desc = "Example of a function",
+		desc = "Functions: My",
 		function()
-			print("hello")
+			print("Type of current file is " .. vim.bo.filetype)
 		end,
 	},
 })
+--#endregion
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -24,7 +24,7 @@ return {
 			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-
+			"folke/which-key.nvim",
 			-- Useful status updates for LSP.
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ "j-hui/fidget.nvim", opts = {} },
@@ -58,6 +58,18 @@ return {
 			-- If you're wondering about lsp vs treesitter, you can check out the wonderfully
 			-- and elegantly composed help section, `:help lsp-vs-treesitter`
 
+			local wk = require("which-key")
+
+			---Alternative to map
+			---@param keys string
+			---@param func function | string
+			---@param desc string
+			---@param mode ? table | string
+			local map = function(keys, func, desc, mode)
+				mode = mode or "n"
+				vim.keymap.set(mode, keys, func, { desc = "LSP: " .. desc })
+			end
+
 			--  This function gets run when an LSP attaches to a particular buffer.
 			--    That is to say, every time a new file is opened that is associated with
 			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -65,40 +77,58 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
-					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
-					-- to define small helper and utility functions so you don't have to repeat yourself.
-					--
-					-- In this case, we create a function that lets us more easily define mappings specific
-					-- for LSP related items. It sets the mode, buffer and description for us each time.
-					local map = function(keys, func, desc, mode)
-						mode = mode or "n"
-						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-					end
-
+					-- Add group icon
+					-- It needs to be added here, otherwise, vim.bo.filetype will be empty
+					local icon = {
+						name = vim.bo.filetype,
+						cat = "filetype",
+					}
+					wk.add({
+						{ "<leader>l", group = "LSP", icon = icon },
+						{ "<leader>nd", icon = icon },
+						{ "<leader>nr", icon = icon },
+						{ "<leader>ni", icon = icon },
+						{ "<leader>nt", icon = icon },
+						{ "<leader>sw", icon = icon },
+						{ "<leader>sW", icon = icon },
+						{ "<leader>le", icon = icon },
+						{ "<leader>la", icon = icon },
+					})
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
+					map("<leader>nd", require("telescope.builtin").lsp_definitions, "Goto Definition")
+					map("<F12>", require("telescope.builtin").lsp_definitions, "Goto Definition")
 
 					-- Find references for the word under your cursor.
-					map("gr", require("telescope.builtin").lsp_references, "Goto References")
+					map("<leader>nr", require("telescope.builtin").lsp_references, "Goto References")
+					map("<S-F12>", require("telescope.builtin").lsp_references, "Goto References")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+					map("<leader>ni", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+					map("<C-F12>", require("telescope.builtin").lsp_implementations, "Goto Implementation")
 
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
-					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+					map("<leader>nt", require("telescope.builtin").lsp_type_definitions, "Type Definition")
 
 					-- Fuzzy find all the symbols in your current document.
 					--  Symbols are things like variables, functions, types, etc.
-					map("<leader>ss", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+					map("<leader>sw", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
 
 					-- Fuzzy find all the symbols in your current workspace.
 					--  Similar to document symbols, except searches over your entire project.
-					map("<leader>sw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+					map("<leader>sW", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+
+					-- Diagnostics
+					map("<leader>le", require("telescope.builtin").diagnostics, "Diagnostics")
+
+					--
+
+					-- Diagnostic keymaps
+					map("<leader>cq", vim.diagnostic.setloclist, "Open Quickfix list")
 
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.
@@ -106,12 +136,12 @@ return {
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
-					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-					map("<C-.>", vim.lsp.buf.code_action, "[C]ode [A]ction", { "i" })
+					map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+					map("<C-.>", vim.lsp.buf.code_action, "Code Action", { "i" })
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header.
-					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					map("<leader>nD", vim.lsp.buf.declaration, "Goto Declaration")
 
 					-- The following two autocommands are used to highlight references of the
 					-- word under your cursor when your cursor rests there for a little while.
@@ -148,9 +178,9 @@ return {
 					--
 					-- This may be unwanted, since they displace some of your code
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-						map("<leader>th", function()
+						map("<leader>lh", function()
 							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-						end, "[T]oggle Inlay [H]ints")
+						end, "Toggle Inlay Hints")
 					end
 				end,
 			})

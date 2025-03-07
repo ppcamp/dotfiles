@@ -2,6 +2,7 @@ local is_wsl = require("utils.system").is_wsl
 
 local opt = vim.opt
 local autocmd = vim.api.nvim_create_autocmd
+local extras = vim.o
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 -- if you disabled this, then you'll need to check some icons
@@ -27,15 +28,17 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.relativenumber = true
 
 -- Show a reference line at position 80
-vim.o.colorcolumn = "81"
+extras.colorcolumn = "81"
 
 -- Enable folding based on syntax
-vim.o.foldmethod = "indent"
+extras.foldmethod = "expr"
+extras.foldexpr = "nvim_treesitter#foldexpr()"
 -- Set the default fold level (higher levels are unfolded)
-vim.o.foldlevel = 0
+extras.foldlevel = 0
 -- Enable folding by default (folding is turned on when the file is opened)
-vim.o.foldenable = false
+extras.foldenable = false
 
+-- Fold methodology for bash filetypes
 autocmd("FileType", {
 	pattern = "bash",
 	callback = function()
@@ -45,8 +48,19 @@ autocmd("FileType", {
 	end,
 })
 
+-- Highlight when yanking (copying) text
+--  Try it with `yap` in normal mode
+--  See `:help vim.highlight.on_yank()`
+autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
+
 -- Show diagnostics in the command line when cursor moves
-vim.o.updatetime = 500 -- delay time to 500ms
+extras.updatetime = 500 -- delay time to 500ms
 autocmd("CursorHold", {
 	callback = function()
 		vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor", border = "rounded" })
@@ -58,7 +72,7 @@ if is_wsl() then
 	-- print("windows")
 
 	-- CONFIGS FOR WSL (windows only)
-	vim.opt.clipboard = "unnamedplus"
+	opt.clipboard = "unnamedplus"
 	vim.g.clipboard = {
 		name = "win32yank-wsl",
 		copy = {
