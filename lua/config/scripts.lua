@@ -1,16 +1,13 @@
--- vim.cmd('runtime! lua/scripts/**/*.lua')
+-- All extra commands that I think usefull
 
-local function load_lua_files_from_dir(dir)
-    local files = vim.fn.readdir(dir)
-    for _, file in ipairs(files) do
-        if file:match('%.lua$') then -- match lua files only
-            local fpath = 'scripts.' .. file:gsub('%.lua$', '')
-            require(fpath)
-        end
-    end
-end
+local cmd = require("utils.command").command
+local api = vim.api
 
-local dir = vim.fn.stdpath('config') .. '/lua/scripts'
-load_lua_files_from_dir(dir)
+cmd("AddVimFormatLine", function()
+	local line_count = api.nvim_buf_line_count(0)
+	local text = "vim: ts=2 sts=2 sw=2 et"
+	api.nvim_buf_set_lines(0, line_count, line_count, false, { text })
+	api.nvim_win_set_cursor(0, { line_count + 1, 0 })
+end)
 
 -- vim: ts=2 sts=2 sw=2 et
