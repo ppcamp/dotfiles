@@ -27,10 +27,10 @@ map(
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-map("n", "<C-h>", "<C-w><C-h>", { desc = "Git: Move focus to the left window" })
-map("n", "<C-l>", "<C-w><C-l>", { desc = "Git: Move focus to the right window" })
-map("n", "<C-j>", "<C-w><C-j>", { desc = "Git: Move focus to the lower window" })
-map("n", "<C-k>", "<C-w><C-k>", { desc = "Git: Move focus to the upper window" })
+map("n", "<C-h>", "<C-w><C-h>", { desc = "Window: Move focus to the left" })
+map("n", "<C-l>", "<C-w><C-l>", { desc = "Window: Move focus to the right" })
+map("n", "<C-j>", "<C-w><C-j>", { desc = "Window: Move focus to the lower" })
+map("n", "<C-k>", "<C-w><C-k>", { desc = "Window: Move focus to the upper" })
 
 -- Git
 map("n", "<leader>gs", ":Telescope git_stash<CR>", { desc = "Git: Stash" })
@@ -40,19 +40,23 @@ map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
 -- Conditional maps to file openned only
-autocmd("BufEnter", {
-	-- Navegate to empty blank lines
-	once = true,
-	callback = function()
-		if vim.bo.buftype == "" then
-			map("n", "<leader>nn", "/^\\s*$<CR>", { desc = "Goto: Next empty line" })
-			map("n", "<leader>nN", "?^\\s*$<CR>", { desc = "Goto: Prev empty line" })
-			--	else
-			--		vim.keymap.del("n", "<leader>nn")
-			--		vim.keymap.del("n", "<leader>nN")
-		end
-	end,
-})
+--
+-- NOTE: that we already have the next/prev line by typing in normal mode
+--- { or }
+--
+-- autocmd("BufEnter", {
+-- 	-- Navegate to empty blank lines
+-- 	once = true,
+-- 	callback = function()
+-- 		if vim.bo.buftype == "" then
+-- 			map("n", "<leader>nn", "/^\\s*$<CR>", { desc = "Goto: Next empty line" })
+-- 			map("n", "<leader>nN", "?^\\s*$<CR>", { desc = "Goto: Prev empty line" })
+-- 			--	else
+-- 			--		vim.keymap.del("n", "<leader>nn")
+-- 			--		vim.keymap.del("n", "<leader>nN")
+-- 		end
+-- 	end,
+-- })
 --#endregion
 
 --#region icons
@@ -64,6 +68,14 @@ wk.add({
 	{ "<leader>c", group = "Code", mode = { "n", "x" } },
 	{ "<leader>d", group = "Document" },
 	{ "<leader>s", group = "Search" },
+	{
+		"<leader>?",
+		function()
+			require("which-key").show({ global = false })
+		end,
+		desc = "Keymaps (which-key)",
+		icon = { icon = "", color = "green" },
+	},
 	{
 		"<leader>tb",
 		desc = "Functions: My",

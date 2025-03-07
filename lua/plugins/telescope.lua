@@ -89,17 +89,16 @@ return {
 
 			map("<leader>tt", "<cmd> Telescope <cr>", "Open")
 			map("<leader>tc", "<cmd> Telescope commands<cr>", "Commands")
-			map("<leader>sm", "<cmd> Telescope man_pages<cr>", "Man pages")
+			map("<leader>tk", builtin.keymaps, "Keymaps")
 
+			map("<leader>sm", "<cmd> Telescope man_pages<cr>", "Man pages")
 			map("<leader>sh", builtin.help_tags, "Help")
 			map("<leader>sf", builtin.find_files, "Find Files")
 			map("<leader>st", builtin.grep_string, "Find current Word")
-			map("<leader>sw", builtin.live_grep, "Find by Grep")
+			map("<leader>ss", builtin.live_grep, "Find by Grep")
 			map("<leader>sr", builtin.resume, "Resume")
 			map("<leader>s.", builtin.oldfiles, "Find Recent Files ('.' for repeat)")
-			map("<leader>sb", builtin.buffers, "Find in all existing buffers")
-
-			map("<leader>tk", builtin.keymaps, "Keymaps")
+			map("<leader>sb", builtin.buffers, "Find in all openned buffers")
 
 			-- Slightly advanced example of overriding default behavior and theme
 			map("<leader>/", function()
