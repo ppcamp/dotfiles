@@ -1,3 +1,6 @@
+# nvim basic setup
+
+When using the NvimTree, you can use `space+sw` to open current file manager.
 
 A simple nvim setup for my use
 
