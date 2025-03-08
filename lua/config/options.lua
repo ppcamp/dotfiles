@@ -69,7 +69,7 @@ autocmd("CursorHold", {
 
 -- Configs applied to windows only
 if is_wsl() then
-	-- print("windows")
+	-- print("WSL")
 
 	-- CONFIGS FOR WSL (windows only)
 	opt.clipboard = "unnamedplus"
@@ -86,7 +86,7 @@ if is_wsl() then
 		cache_enabled = 0,
 	}
 	-- else
-	-- 	 print("not windows")
+	-- 	print("Not WSL")
 end
 
 -- vim: ts=2 sts=2 sw=2 et

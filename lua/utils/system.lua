@@ -1,7 +1,11 @@
 -- Usefull system related functions
 
+local trim = require("utils.strings").trim
+
 local M = {}
 
+---Check if current terminal is running inside a WSL
+---@return boolean True if windows
 M.is_wsl = function()
 	-- execute and get buffer
 	local f = io.popen("echo $WSL_DISTRO_NAME")
@@ -11,7 +15,8 @@ M.is_wsl = function()
 		local output = f:read("*a")
 		f:close()
 
-		return not output == "" -- if variable is not empty
+		output = trim(output)
+		return output and output ~= "" -- if variable is not empty
 	end
 
 	return false
