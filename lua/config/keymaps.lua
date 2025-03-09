@@ -39,7 +39,8 @@ map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" }
 map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
---
+-- Copilot
+map("n", "<leader>ta", ":Copilot help", { desc = "Copilot: Help" })
 
 -- Conditional maps to file openned only
 --

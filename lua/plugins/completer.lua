@@ -45,7 +45,8 @@ return {
 			-- See `:help cmp`
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
-			luasnip.config.setup({})
+
+			luasnip.config.setup()
 
 			cmp.setup({
 				snippet = {
@@ -60,13 +61,34 @@ return {
 				-- No, but seriously. Please read `:help ins-completion`, it is really good!
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
-					["<C-n>"] = cmp.mapping.select_next_item(),
+					["<C-j>"] = cmp.mapping.select_next_item(),
 					-- Select the [p]revious item
-					["<C-p>"] = cmp.mapping.select_prev_item(),
+					["<C-k>"] = cmp.mapping.select_prev_item(),
 
 					-- Scroll the documentation window [b]ack / [f]orward
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<Up>"] = cmp.mapping(function(fallback)
+						if cmp.visible_docs() then
+							cmp.mapping.scroll_docs(-4)
+						else
+							fallback()
+						end
+					end, { "i" }),
+
+					["<Down>"] = cmp.mapping(function(fallback)
+						if cmp.visible_docs() then
+							cmp.mapping.scroll_docs(4)
+						else
+							fallback()
+						end
+					end, { "i" }),
+
+					["<C-g>"] = cmp.mapping(function() -- Alternativaly, use K while "n"
+						if cmp.visible_docs() then
+							return cmp.close_docs()
+						else
+							return not cmp.open_docs() or vim.lsp.buf.hover()
+						end
+					end, { "i" }),
 
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
@@ -75,7 +97,7 @@ return {
 
 					-- If you prefer more traditional completion keymaps,
 					-- you can uncomment the following lines
-					["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+					-- ["<Tab>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
 					--['<Tab>'] = cmp.mapping.select_next_item(),
 					--['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
@@ -92,16 +114,24 @@ return {
 					--
 					-- <c-l> will move you to the right of each of the expansion locations.
 					-- <c-h> is similar, except moving you backwards.
-					["<C-l>"] = cmp.mapping(function()
-						if luasnip.expand_or_locally_jumpable() then
+
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
+						elseif cmp.visible() then
+							cmp.confirm()
+						else
+							fallback()
 						end
 					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function()
-						if luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { "i", "s" }),
+
+					-- ["<C-h>"] = cmp.mapping(function(fallback)
+					-- 	if luasnip.locally_jumpable(-1) then
+					-- 		luasnip.jump(-1)
+					-- 	else
+					-- 		fallback()
+					-- 	end
+					-- end, { "i", "s" }),
 
 					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
 					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -112,6 +142,9 @@ return {
 						-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
 						group_index = 0,
 					},
+					{ name = "copilot" },
+					{ name = "buffer" },
+					{ name = "nvim_lua" },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
