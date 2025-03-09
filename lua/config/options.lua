@@ -1,4 +1,4 @@
-local is_wsl = require("utils.system").is_wsl
+local is_wsl = require("utils.os").is_wsl
 
 local opt = vim.opt
 local autocmd = vim.api.nvim_create_autocmd
