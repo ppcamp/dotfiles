@@ -67,12 +67,14 @@ autocmd("CursorHold", {
 	end,
 })
 
--- Configs applied to windows only
 if is_wsl() then
 	-- print("WSL")
 
-	-- CONFIGS FOR WSL (windows only)
-	opt.clipboard = "unnamedplus"
+	-- if set, it'll overwrite the internal clipboard to always use the system,
+	-- which in windows, will add the carriage return char at the end of simple
+	-- commands such as dd or p
+	-- opt.clipboard = "unnamed" -- or unnamed plus
+	opt.clipboard = ""
 	vim.g.clipboard = {
 		name = "win32yank-wsl",
 		copy = {
@@ -80,8 +82,8 @@ if is_wsl() then
 			["*"] = "clip.exe",
 		},
 		paste = {
-			["+"] = "powershell.exe Get-Clipboard",
-			["*"] = "powershell.exe Get-Clipboard",
+			["+"] = "powershell.exe -noprofile -command Get-Clipboard",
+			["*"] = "powershell.exe -noprofile -command Get-Clipboard",
 		},
 		cache_enabled = 0,
 	}
