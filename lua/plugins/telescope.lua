@@ -32,6 +32,8 @@ return {
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
+			local telescope = require("telescope")
+
 			-- Telescope is a fuzzy finder that comes with a lot of different things that
 			-- it can fuzzy find! It's more than just a "file finder", it can search
 			-- many different aspects of Neovim, your workspace, LSP, and more!
@@ -53,26 +55,29 @@ return {
 
 			-- [[ Configure Telescope ]]
 			-- See `:help telescope` and `:help telescope.setup()`
-			require("telescope").setup({
+			telescope.setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
-				-- },
-				-- pickers = {}
-				extensions = {
-					["ui-select"] = {
-						require("telescope.themes").get_dropdown(),
+				defaults = {
+					horizontal = {
+						height = 0.9,
+						preview_cutoff = 120,
+						prompt_position = "bottom",
+						width = 0.9,
+					},
+					vertical = {
+						height = 0.9,
+						preview_cutoff = 40,
+						prompt_position = "bottom",
+						width = 0.9,
 					},
 				},
 			})
 
 			-- Enable Telescope extensions if they are installed
-			pcall(require("telescope").load_extension, "fzf")
-			pcall(require("telescope").load_extension, "ui-select")
+			pcall(telescope.load_extension, "fzf")
+			pcall(telescope.load_extension, "ui-select")
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
@@ -87,17 +92,23 @@ return {
 				vim.keymap.set(mode, keys, func, { desc = "Telescope: " .. desc })
 			end
 
-			map("<leader>tt", "<cmd> Telescope <cr>", "Open")
-			map("<leader>tc", "<cmd> Telescope commands<cr>", "Commands")
-			map("<leader>tk", builtin.keymaps, "Keymaps")
+			map("<leader>?h", builtin.help_tags, "Help for Neovim plugins")
+			map("<leader>?t", "<cmd> Telescope <cr>", "Overview")
 
-			map("<leader>sm", "<cmd> Telescope man_pages<cr>", "Man pages")
-			map("<leader>sh", builtin.help_tags, "Help")
+			map("<leader>sc", "<cmd> Telescope commands<cr>", "Commands")
+			map("<leader>sk", builtin.keymaps, "Keymaps")
+			map("<leader>sm", function()
+				builtin.man_pages({ sections = { "ALL" } })
+			end, "Man pages")
+			map("<leader>sn", function()
+				builtin.find_files({ cwd = vim.fn.stdpath("config") })
+			end, "Telescope search Neovim files")
+
 			map("<leader>sf", builtin.find_files, "Find Files")
 			map("<leader>st", builtin.grep_string, "Find current Word")
 			map("<leader>ss", builtin.live_grep, "Find by Grep")
-			map("<leader>sr", builtin.resume, "Resume")
 			map("<leader>s.", builtin.oldfiles, "Find Recent Files ('.' for repeat)")
+			map("<leader>sr", builtin.resume, "Resume")
 			map("<leader>sb", builtin.buffers, "Find in all openned buffers")
 
 			-- Slightly advanced example of overriding default behavior and theme
@@ -117,12 +128,6 @@ return {
 					prompt_title = "Live Grep in Open Files",
 				})
 			end, "Search / in Open Files")
-
-			--
-			-- Shortcut for searching your Neovim configuration files
-			map("<leader>tn", function()
-				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, "Telescope search Neovim files")
 		end,
 	},
 }

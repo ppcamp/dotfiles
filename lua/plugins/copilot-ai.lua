@@ -6,7 +6,8 @@ return {
 	config = function()
 		vim.keymap.set("i", "<C-y>", 'copilot#Accept("\\<CR>")', {
 			expr = true,
-			replace_keycodes = false,
+			replace_keycodes = true,
+			noremap = true,
 		})
 	end,
 }

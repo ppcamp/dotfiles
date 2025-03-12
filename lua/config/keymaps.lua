@@ -39,9 +39,6 @@ map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" }
 map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
--- Copilot
-map("n", "<leader>ta", ":Copilot help", { desc = "Copilot: Help" })
-
 -- Conditional maps to file openned only
 --
 -- NOTE: that we already have the next/prev line by typing in normal mode
@@ -71,14 +68,15 @@ wk.add({
 	{ "<leader>c", group = "Code", mode = { "n", "x" } },
 	{ "<leader>d", group = "Document" },
 	{ "<leader>s", group = "Search" },
+	{ "<leader>?", group = "Help", icon = { icon = "", color = "green" } },
 	{
-		"<leader>?",
+		"<leader>?w",
 		function()
 			require("which-key").show({ global = false })
 		end,
 		desc = "Keymaps (which-key)",
-		icon = { icon = "", color = "green" },
 	},
+	{ "<leader>?c", ":Copilot help<CR>", desc = "Copilot: Help" },
 	{
 		"<leader>tb",
 		desc = "Functions: My",

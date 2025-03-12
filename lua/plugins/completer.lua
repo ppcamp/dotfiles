@@ -115,11 +115,15 @@ return {
 					-- <c-l> will move you to the right of each of the expansion locations.
 					-- <c-h> is similar, except moving you backwards.
 
+					["<C-e>"] = cmp.mapping.abort(),
+
+					["<C-l>"] = cmp.mapping.confirm({ select = true }),
+
 					["<Tab>"] = cmp.mapping(function(fallback)
-						if luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						elseif cmp.visible() then
+						if cmp.visible() then
 							cmp.confirm()
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
 						else
 							fallback()
 						end
