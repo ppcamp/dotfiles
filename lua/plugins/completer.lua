@@ -79,7 +79,7 @@ return {
 					end, { "i" }),
 
 					-- Scroll the documentation window [b]ack / [f]orward
-					["b"] = cmp.mapping(function(fallback)
+					["<PageDown>"] = cmp.mapping(function(fallback)
 						if cmp.visible_docs() then
 							cmp.mapping.scroll_docs(-4)
 						else
@@ -87,7 +87,7 @@ return {
 						end
 					end, { "i" }),
 
-					["f"] = cmp.mapping(function(fallback)
+					["<PageUp>"] = cmp.mapping(function(fallback)
 						if cmp.visible_docs() then
 							cmp.mapping.scroll_docs(4)
 						else
@@ -139,7 +139,7 @@ return {
 						end
 					end, { "i" }),
 
-					["<TAB>"] = cmp.mapping(function(fallback)
+					["<C-j>"] = cmp.mapping(function(fallback)
 						if luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
 						else
