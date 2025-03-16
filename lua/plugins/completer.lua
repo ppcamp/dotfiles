@@ -61,7 +61,7 @@ return {
 				-- No, but seriously. Please read `:help ins-completion`, it is really good!
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
-					["<DOWN>"] = cmp.mapping(function(fallback)
+					["<C-J>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
 						else
@@ -70,7 +70,7 @@ return {
 					end, { "i" }),
 
 					-- Select the [p]revious item
-					["<UP>"] = cmp.mapping(function(fallback)
+					["<C-K>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
 						else
@@ -117,7 +117,7 @@ return {
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
 					--  completions whenever it has completion options available.
-					["<C-.>"] = cmp.mapping.complete({}),
+					["<C-Space>"] = cmp.mapping.complete({}),
 
 					-- Think of <c-l> as moving to the right of your snippet expansion.
 					--  So if you have a snippet that's like:
@@ -128,10 +128,9 @@ return {
 					-- <c-l> will move you to the right of each of the expansion locations.
 					-- <c-h> is similar, except moving you backwards.
 
-					["<C-a>"] = cmp.mapping.abort(),
-					["<C-Space>"] = cmp.mapping.abort(),
+					["<C-e>"] = cmp.mapping.abort(),
 
-					["<RIGHT>"] = cmp.mapping(function(fallback)
+					["<C-L>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							return cmp.confirm({ select = true })
 						else
@@ -139,7 +138,7 @@ return {
 						end
 					end, { "i" }),
 
-					["<C-j>"] = cmp.mapping(function(fallback)
+					["<C-n>"] = cmp.mapping(function(fallback)
 						if luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
 						else

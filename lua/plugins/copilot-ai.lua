@@ -3,6 +3,7 @@
 -- To setup local, run :Copilot setup
 return {
 	"github/copilot.vim",
+	enabled = false,
 	config = function()
 		-- vim.keymap.set("i", "<C-y>", 'copilot#Accept("\\<CR>")', {
 		-- 	expr = true,

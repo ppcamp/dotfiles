@@ -15,7 +15,7 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>", { silent = true })
 map("n", "<Tab>", ":bnext<CR>", { desc = "While hit tab, will change to next buffer" })
 map("n", "<S-Tab>", ":bprevious<CR>", { desc = "While hit Shift+tab, will change to next buffer" })
-map("n", "<C-d>", "<C-q>", { noremap = true, desc = "Similar to multicursor approach" })
+-- map("n", "<C-d>", "<C-q>", { noremap = true, desc = "Similar to multicursor approach" })
 map(
 	"n",
 	"<C-q>",
