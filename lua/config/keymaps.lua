@@ -39,6 +39,11 @@ map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" }
 map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
+-- Jump LSP errors
+map("n", "]g", vim.diagnostic.goto_next)
+map("n", "[g", vim.diagnostic.goto_prev)
+-- We also have more features in vim-go
+
 -- Conditional maps to file openned only
 --
 -- NOTE: that we already have the next/prev line by typing in normal mode
