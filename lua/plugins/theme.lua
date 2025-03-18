@@ -1,3 +1,32 @@
+return {
+	-- "catppuccin/nvim",
+	-- name = "catppuccin",
+
+	-- "polirritmico/monokai-nightasty.nvim",
+	-- name = "catppuccin",
+
+	-- "folke/tokyonight.nvim",
+
+	"rose-pine/neovim",
+	name = "rose-pine",
+
+	-- "Mofiqul/dracula.nvim",
+
+	priority = 1000,
+	config = function()
+		vim.cmd("colorscheme rose-pine")
+	end,
+}
+
+-- return {
+--     "ViViDboarder/wombat.nvim",
+--     dependencies = { { "rktjmp/lush.nvim" } },
+--     opts = {
+--         -- You can optionally specify the name of the ansi colors you wish to use
+--         -- This defaults to nil and will use the default ansi colors for the theme
+--         ansi_colors_name = nil,
+--     },
+-- }
 -- return {
 --   { -- You can easily change to a different colorscheme.
 --     -- Change the name of the colorscheme plugin below, and then
@@ -16,64 +45,6 @@
 --       vim.cmd.hi 'Comment gui=none'
 --     end,
 --   },
--- }
-
-
-
--- Monokai
--- return {
---     {
---         "polirritmico/monokai-nightasty.nvim",
---         lazy = false,
---         priority = 1000,
---     }
--- }
-
--- lua/plugins/rose-pine.lua
--- return {
---     "rose-pine/neovim",
---     name = "rose-pine",
---     config = function()
---         vim.cmd("colorscheme rose-pine")
---     end
--- }
-
--- Catppuccin
--- return {
---     "catppuccin/nvim",
---     name = "catppuccin",
---     priority = 1000
--- }
-
--- return {
---     "ViViDboarder/wombat.nvim",
---     dependencies = { { "rktjmp/lush.nvim" } },
---     opts = {
---         -- You can optionally specify the name of the ansi colors you wish to use
---         -- This defaults to nil and will use the default ansi colors for the theme
---         ansi_colors_name = nil,
---     },
--- }
-
--- tokyonight
-return {
-
-  "folke/tokyonight.nvim",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    vim.cmd("colorscheme tokyonight")
-  end
-}
-
--- Dracula
--- return {
---     {
---         "Mofiqul/dracula.nvim",
---         config = function()
---             vim.cmd("colorscheme dracula")
---         end
---     },
 -- }
 
 -- vim: ts=2 sts=2 sw=2 et
