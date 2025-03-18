@@ -16,6 +16,10 @@ return {
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true },
+	-- Inlay hints plugin
+	{
+		"lvimuser/lsp-inlayhints.nvim",
+	},
 	{
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
@@ -33,6 +37,8 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
+			--
+
 			-- Brief aside: **What is LSP?**
 			--
 			-- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -59,6 +65,8 @@ return {
 			-- and elegantly composed help section, `:help lsp-vs-treesitter`
 
 			local wk = require("which-key")
+			local cmd = vim.api.nvim_create_autocmd
+			local augroup = vim.api.nvim_create_augroup
 
 			---Alternative to map
 			---@param keys string
@@ -74,8 +82,9 @@ return {
 			--    That is to say, every time a new file is opened that is associated with
 			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
 			--    function will be executed to configure the current buffer
-			vim.api.nvim_create_autocmd("LspAttach", {
-				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+
+			cmd("LspAttach", {
+				group = augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
 					-- Add group icon
 					-- It needs to be added here, otherwise, vim.bo.filetype will be empty
@@ -143,44 +152,41 @@ return {
 					--  For example, in C this would take you to the header.
 					map("<leader>nD", vim.lsp.buf.declaration, "Goto Declaration")
 
+					map("<leader>lh", function()
+						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+					end, "Toggle Inlay Hints")
+
 					-- The following two autocommands are used to highlight references of the
 					-- word under your cursor when your cursor rests there for a little while.
 					--    See `:help CursorHold` for information about when this is executed
 					--
 					-- When you move your cursor, the highlights will be cleared (the second autocommand).
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+					vim.lsp.inlay_hint.enable(true)
+					require("lsp-inlayhints").on_attach(client, event.buf)
+
+					cmd("LspDetach", {
+						group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+						callback = function(event2)
+							vim.lsp.buf.clear_references()
+							vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+						end,
+					})
+
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-						local highlight_augroup =
-							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+						local highlight_augroup = augroup("kickstart-lsp-highlight", { clear = false })
+						cmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
 							callback = vim.lsp.buf.document_highlight,
 						})
 
-						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+						cmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
 							callback = vim.lsp.buf.clear_references,
 						})
-
-						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-							callback = function(event2)
-								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-							end,
-						})
-					end
-
-					-- The following code creates a keymap to toggle inlay hints in your
-					-- code, if the language server you are using supports them
-					--
-					-- This may be unwanted, since they displace some of your code
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-						map("<leader>lh", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-						end, "Toggle Inlay Hints")
 					end
 				end,
 			})
@@ -194,7 +200,7 @@ return {
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-			--
+
 			--  Add any additional override configuration in the following tables. Available keys are:
 			--  - cmd (table): Override the default command used to start the server
 			--  - filetypes (table): Override the default list of associated filetypes for the server
@@ -217,6 +223,15 @@ return {
 								modernize = true,
 							},
 							staticcheck = true,
+							hints = {
+								rangeVariableTypes = true,
+								parameterNames = true,
+								constantValues = true,
+								assignVariableTypes = true,
+								compositeLiteralFields = true,
+								compositeLiteralTypes = true,
+								functionTypeParameters = true,
+							},
 						},
 					},
 				},
