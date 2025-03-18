@@ -3,7 +3,7 @@
 -- With this, we'll be able to generate and accept suggestions from LSP
 
 return {
-	{ -- Autocompletion
+	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
@@ -34,15 +34,10 @@ return {
 				},
 			},
 			"saadparwaiz1/cmp_luasnip",
-
-			-- Adds other completion capabilities.
-			--  nvim-cmp does not ship with all sources by default. They are split
-			--  into multiple repos for maintenance purposes.
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 		},
 		config = function()
-			-- See `:help cmp`
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 
@@ -55,12 +50,9 @@ return {
 					end,
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
-				-- For an understanding of why these mappings were
-				-- chosen, you will need to read `:help ins-completion`
-				--
-				-- No, but seriously. Please read `:help ins-completion`, it is really good!
 				mapping = cmp.mapping.preset.insert({
-					-- Select the [n]ext item
+					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 					["<C-J>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -68,8 +60,6 @@ return {
 							fallback()
 						end
 					end, { "i" }),
-
-					-- Select the [p]revious item
 					["<C-K>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
@@ -77,60 +67,31 @@ return {
 							fallback()
 						end
 					end, { "i" }),
-
-					-- Scroll the documentation window [b]ack / [f]orward
-					["<PageDown>"] = cmp.mapping(function(fallback)
+					["<UP>"] = cmp.mapping(function(fallback)
 						if cmp.visible_docs() then
 							cmp.mapping.scroll_docs(-4)
 						else
 							fallback()
 						end
 					end, { "i" }),
-
-					["<PageUp>"] = cmp.mapping(function(fallback)
+					["<DOWN>"] = cmp.mapping(function(fallback)
 						if cmp.visible_docs() then
 							cmp.mapping.scroll_docs(4)
 						else
 							fallback()
 						end
 					end, { "i" }),
-
 					["<C-g>"] = cmp.mapping(function() -- Alternativaly, use K while "n"
 						if cmp.visible_docs() then
 							return cmp.close_docs()
 						else
 							return not cmp.open_docs() or vim.lsp.buf.hover()
 						end
-					end, { "i" }),
-
-					-- Accept ([y]es) the completion.
-					--  This will auto-import if your LSP supports it.
-					--  This will expand snippets if the LSP sent a snippet.
+					end, { "i", "n" }),
 					["<Enter>"] = cmp.mapping.confirm({ select = true }),
+					-- note that you cannot use c-i, otherwise, tab will be impacted
+					["<C-y>"] = cmp.mapping.complete({}),
 					["<C-Space>"] = cmp.mapping.confirm({ select = true }),
-
-					-- If you prefer more traditional completion keymaps,
-					-- you can uncomment the following lines
-					-- ["<Tab>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-					--['<Tab>'] = cmp.mapping.select_next_item(),
-					--['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-					-- Manually trigger a completion from nvim-cmp.
-					--  Generally you don't need this, because nvim-cmp will display
-					--  completions whenever it has completion options available.
-					["<C-i>"] = cmp.mapping.complete({}),
-
-					-- Think of <c-l> as moving to the right of your snippet expansion.
-					--  So if you have a snippet that's like:
-					--  function $name($args)
-					--    $body
-					--  end
-					--
-					-- <c-l> will move you to the right of each of the expansion locations.
-					-- <c-h> is similar, except moving you backwards.
-
-					["<C-e>"] = cmp.mapping.abort(),
-
 					["<C-L>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							return cmp.confirm({ select = true })
@@ -138,7 +99,6 @@ return {
 							fallback()
 						end
 					end, { "i" }),
-
 					["<C-n>"] = cmp.mapping(function(fallback)
 						if luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
@@ -146,17 +106,6 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-
-					-- ["<C-h>"] = cmp.mapping(function(fallback)
-					-- 	if luasnip.locally_jumpable(-1) then
-					-- 		luasnip.jump(-1)
-					-- 	else
-					-- 		fallback()
-					-- 	end
-					-- end, { "i", "s" }),
-
-					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 				}),
 				sources = {
 					{
