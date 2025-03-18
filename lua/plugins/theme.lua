@@ -3,18 +3,14 @@ return {
 	-- name = "catppuccin",
 
 	-- "polirritmico/monokai-nightasty.nvim",
-	-- name = "catppuccin",
-
 	-- "folke/tokyonight.nvim",
-
-	"rose-pine/neovim",
-	name = "rose-pine",
-
-	-- "Mofiqul/dracula.nvim",
+	-- "rose-pine/neovim",
+	"Mofiqul/dracula.nvim",
 
 	priority = 1000,
 	config = function()
-		vim.cmd("colorscheme rose-pine")
+		vim.cmd("colorscheme dracula")
+		-- vim.cmd("colorscheme dracula-soft")
 	end,
 }
 
@@ -27,6 +23,7 @@ return {
 --         ansi_colors_name = nil,
 --     },
 -- }
+
 -- return {
 --   { -- You can easily change to a different colorscheme.
 --     -- Change the name of the colorscheme plugin below, and then
