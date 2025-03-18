@@ -10,7 +10,8 @@ vim.g.have_nerd_font = true
 opt.cursorline = true -- highlight current line
 
 opt.number = true -- Set line numbering
-opt.ignorecase = true -- Ignore case when searching
+opt.ignorecase = true -- Set to ignore case
+opt.smartcase = true -- Ignore case only when there's no Uppercase char
 
 -- Set indentation options
 opt.expandtab = true -- Use spaces instead of tabs
