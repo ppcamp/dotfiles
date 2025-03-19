@@ -100,8 +100,8 @@ return {
 						{ "<leader>nt", icon = icon },
 						{ "<leader>sw", icon = icon },
 						{ "<leader>sW", icon = icon },
-						{ "<leader>le", icon = icon },
-						{ "<leader>la", icon = icon },
+						{ "<leader>sq", icon = icon },
+						{ "<leader>ca", icon = icon },
 					})
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
@@ -132,12 +132,12 @@ return {
 					map("<leader>sW", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
 
 					-- Diagnostics
-					map("<leader>le", require("telescope.builtin").diagnostics, "Diagnostics")
+					map("<leader>sq", require("telescope.builtin").diagnostics, "Diagnostics")
 
 					--
 
 					-- Diagnostic keymaps
-					map("<leader>cq", vim.diagnostic.setloclist, "Open Quickfix list")
+					map("<leader>cq", vim.diagnostic.setloclist, "Quickfix panel")
 
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.
@@ -145,7 +145,7 @@ return {
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
-					map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+					map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
 					map("<C-.>", vim.lsp.buf.code_action, "Code Action", { "i" })
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.

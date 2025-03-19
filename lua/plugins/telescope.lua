@@ -1,5 +1,3 @@
--- Telescope allow you to have a dynamic fuzzy finder for a lot of terms,
--- such as keymaps, words, symbols, files, and so goes on.
 --
 -- The dependencies are proper plugin specifications as well - anything
 -- you do for a plugin at the top level, you can do for a dependency.
@@ -105,17 +103,17 @@ return {
 			end, "Telescope search Neovim files")
 
 			map("<leader>sf", builtin.find_files, "Find Files")
-			map("<leader>st", builtin.grep_string, "Find current Word")
+			map("<leader>s*", builtin.grep_string, "Workspace search word under cursor")
 			map("<leader>ss", builtin.live_grep, "Find by Grep")
-			map("<leader>s.", builtin.oldfiles, "Find Recent Files ('.' for repeat)")
-			map("<leader>sr", builtin.resume, "Resume")
+			map("<leader>sr", builtin.oldfiles, "Find Old Files")
+			map("<leader>s.", builtin.resume, "Resume")
 			map("<leader>sb", builtin.buffers, "Find in all openned buffers")
 
 			-- Slightly advanced example of overriding default behavior and theme
 			map("<leader>/", function()
 				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-					winblend = 10,
+					-- winblend = 10,
 					previewer = false,
 				}))
 			end, "Search in current buffer")

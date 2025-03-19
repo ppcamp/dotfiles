@@ -32,13 +32,13 @@ return {
 		config = function()
 			vim.keymap.set(
 				"n",
-				"<leader>se",
+				"<leader>st",
 				"<cmd>TodoTelescope<cr>",
-				{ desc = "TODO: search", noremap = true, silent = true }
+				{ desc = "TODO: telescope todos search", noremap = true, silent = true }
 			)
 			vim.keymap.set(
 				"n",
-				"<leader>td",
+				"<leader>ct",
 				"<cmd>TodoQuickFix<CR>",
 				{ desc = "TODO: Quickfix panel", noremap = true, silent = true }
 			)
