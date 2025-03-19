@@ -1,3 +1,5 @@
+-- Line bar showing extra informations
+
 return {
 	{
 		-- https://www.nerdfonts.com/cheat-sheet
@@ -7,25 +9,32 @@ return {
 				return os.date(" %Y/%m/%d %H:%M")
 			end
 
-			local function curr_cursor_pos()
-				local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-				-- formats the cursor position as line:column
-				return string.format("%d:%d", row, col)
+			local function clock()
+				return os.date(" %Y/%m/%d %H:%M")
 			end
 
 			require("lualine").setup({
 				options = {
 					theme = "auto",
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					component_separators = "",
+					section_separators = "", -- { left = "", right = "" },
 				},
 				sections = {
-					lualine_a = { "mode" },
+					lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
 					lualine_b = {
 						"branch",
-						{ "diff", symbols = { added = " ", modified = " ", removed = " " } },
+						{
+							"diff",
+							symbols = {
+								added = " ",
+								modified = " ",
+								removed = " ",
+							},
+						},
+						"nvim-dap-ui",
 					},
 					lualine_c = {
+						"%=",
 						{
 							"filename",
 							file_status = true,
@@ -33,15 +42,39 @@ return {
 							symbols = { modified = " ", readonly = " " },
 						},
 					},
-					lualine_x = { "diagnostics", "encoding", "fileformat", "filetype" }, -- Error status
+					lualine_x = {
+						"nvim-dap-ui",
+						"diagnostics",
+						"quickfix",
+					},
 					lualine_y = {
-						"progress",
-						curr_cursor_pos,
+						-- "progress",
+						"location",
+						"filetype",
+						"fileformat",
+						"encoding",
 					},
 					lualine_z = {
-						--"location",
-						{ clock, color = { fg = "#ffffff", bg = "gray" } }, --, gui = "bold"
+						{ clock, separator = { right = "" }, left_padding = 2 },
 					},
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {},
+				},
+				tabline = {},
+				extensions = {
+					"lazy",
+					"man",
+					"mason",
+					"nvim-dap-ui",
+					"nvim-tree",
+					"quickfix",
+					"symbols-outline",
 				},
 			})
 		end,
