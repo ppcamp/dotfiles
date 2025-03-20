@@ -9,7 +9,12 @@ return {
 	-- Optional dependency
 	dependencies = { "hrsh7th/nvim-cmp" },
 	config = function()
-		require("nvim-autopairs").setup({})
+		require("nvim-autopairs").setup({
+			check_ts = true, -- enable treesitter integration
+			disable_filetype = { "TelescopePrompt", "vim" },
+			enable_afterquote = true, -- auto close after quote
+		})
+
 		-- If you want to automatically add `(` after selecting a function or method
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local cmp = require("cmp")
