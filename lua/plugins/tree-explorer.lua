@@ -31,7 +31,7 @@ end
 return {
 	{
 		"nvim-tree/nvim-tree.lua",
-		opts = { on_attach = on_attach },
+		opts = { on_attach = on_attach, ignore = false },
 		-- open it by typing :NvimTreeToggle
 		-- and then, you can type "a"
 
