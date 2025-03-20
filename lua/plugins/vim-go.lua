@@ -1,3 +1,5 @@
+-- Way more features, such as interface generation, debugging, etc,
+--
 return {
 	"fatih/vim-go",
 }

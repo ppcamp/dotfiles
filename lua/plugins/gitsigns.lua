@@ -1,3 +1,5 @@
+-- GitSigns support (with line blame, change color)
+--
 return {
 	"lewis6991/gitsigns.nvim",
 	config = function()

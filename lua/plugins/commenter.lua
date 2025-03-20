@@ -1,11 +1,13 @@
 -- Shortcut to toggle comment lines based on language
+--
+-- type gcc or gc to toggle, or ctrl+/
 return {
 	{
 		"tpope/vim-commentary",
 		options = {},
 		config = function()
-			-- alternativaly, you can use gcc
-			vim.keymap.set("i", "<C-/>", "<cmd>Commentary<CR>", { silent = true, desc = "Comment" })
+			-- alternativaly, u can use gcc
+			vim.keymap.set("i", "<C-_>", "<cmd>Commentary<CR>", { silent = true, desc = "Comment" })
 		end,
 	},
 }

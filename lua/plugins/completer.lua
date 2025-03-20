@@ -7,8 +7,10 @@ return {
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
-			{
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-path",
+			{ -- Snippet Engine & its associated nvim-cmp source
 				"L3MON4D3/LuaSnip",
 				build = (function()
 					-- Build Step is needed for regex support in snippets.
@@ -33,10 +35,8 @@ return {
 					},
 				},
 			},
-			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
 		},
+
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
@@ -49,7 +49,9 @@ return {
 						luasnip.lsp_expand(args.body)
 					end,
 				},
+
 				completion = { completeopt = "menu,menuone,noinsert" },
+
 				mapping = cmp.mapping.preset.insert({
 					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
 					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -107,6 +109,7 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
+
 				sources = {
 					{
 						name = "lazydev",
