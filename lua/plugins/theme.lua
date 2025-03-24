@@ -1,16 +1,18 @@
 return {
-	-- "catppuccin/nvim",
-	-- name = "catppuccin",
+	"catppuccin/nvim",
+	name = "catppuccin",
 
 	-- "polirritmico/monokai-nightasty.nvim",
 	-- "folke/tokyonight.nvim",
 	-- "rose-pine/neovim",
-	"Mofiqul/dracula.nvim",
+	-- "Mofiqul/dracula.nvim",
 
 	priority = 1000,
 	config = function()
-		vim.cmd("colorscheme dracula")
+		-- vim.cmd("colorscheme dracula")
 		-- vim.cmd("colorscheme dracula-soft")
+		-- vim.cmd.colorscheme("tokyonight-storm")
+		vim.cmd.colorscheme("catppuccin-mocha")
 	end,
 }
 
@@ -37,9 +39,6 @@ return {
 --       -- Like many other themes, this one has different styles, and you could load
 --       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
 --       vim.cmd.colorscheme 'tokyonight-night'
-
---       -- You can configure highlights by doing something like:
---       vim.cmd.hi 'Comment gui=none'
 --     end,
 --   },
 -- }

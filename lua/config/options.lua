@@ -3,6 +3,9 @@ local is_wsl = require("utils.os").is_wsl
 local opt = vim.opt
 local extras = vim.o
 
+-- You can configure highlights by doing something like:
+-- vim.cmd.hi 'Comment gui=none'
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
