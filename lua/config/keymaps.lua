@@ -1,6 +1,5 @@
 local map = vim.keymap.set
 local wk = require("which-key")
-local autocmd = vim.api.nvim_create_autocmd
 
 --#region Keybindings
 
@@ -39,9 +38,12 @@ map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" }
 map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
 map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
 -- Jump LSP errors
 map("n", "]g", vim.diagnostic.goto_next)
 map("n", "[g", vim.diagnostic.goto_prev)
+
 -- We also have more features in vim-go
 
 -- Conditional maps to file openned only

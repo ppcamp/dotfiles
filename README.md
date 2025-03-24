@@ -4,6 +4,7 @@ When using the NvimTree, you can use `space+sw` to open current file manager.
 
 A simple nvim setup for my use
 
+When using `vim-go`, type `GoInstallBinaries` to install required tools
 
 > Based on [kickstart-modular-nvim]
 

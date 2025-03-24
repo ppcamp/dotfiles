@@ -6,7 +6,11 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
+
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+		---@module "nvim-treesitter.configs"
+		---@type TSConfig
+		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			ensure_installed = {
 				"bash",
@@ -20,6 +24,9 @@ return {
 				"query",
 				"vim",
 				"vimdoc",
+				"go",
+				"gomod",
+				"gosum",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,

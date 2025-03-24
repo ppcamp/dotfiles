@@ -109,6 +109,8 @@ return {
 			map("<leader>s.", builtin.resume, "Resume")
 			map("<leader>sb", builtin.buffers, "Find in all openned buffers")
 
+			map("<leader>tt", builtin.colorscheme, "Theme switch")
+
 			-- Slightly advanced example of overriding default behavior and theme
 			map("<leader>/", function()
 				-- You can pass additional configuration to Telescope to change the theme, layout, etc.

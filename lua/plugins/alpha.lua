@@ -1,8 +1,10 @@
+-- Nvim startpage
+
 return {
 	"goolord/alpha-nvim",
+
 	config = function()
 		local theme = require("alpha.themes.startify").config
-
 		require("alpha").setup(theme)
 	end,
 }
