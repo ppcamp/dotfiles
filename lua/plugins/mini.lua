@@ -19,6 +19,6 @@ return { -- Collection of various small independent plugins/modules
 
 		-- Add notification plugin popup
 		-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-notify.md
-		require("mini.notify").setup()
+		-- require("mini.notify").setup({})
 	end,
 }

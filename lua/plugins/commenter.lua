@@ -5,6 +5,7 @@ return {
 	{
 		"tpope/vim-commentary",
 		options = {},
+		priority = 80,
 		config = function()
 			-- alternativaly, u can use gcc
 			vim.keymap.set("i", "<C-_>", "<cmd>Commentary<CR>", { silent = true, desc = "Comment" })

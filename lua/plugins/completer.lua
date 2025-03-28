@@ -1,3 +1,4 @@
+--
 -- Autocompletion support.
 --
 -- With this, we'll be able to generate and accept suggestions from LSP
@@ -6,6 +7,7 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
+		priority = 500,
 		dependencies = {
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-nvim-lsp",
@@ -49,74 +51,15 @@ return {
 						luasnip.lsp_expand(args.body)
 					end,
 				},
-
 				completion = { completeopt = "menu,menuone,noinsert" },
-
-				mapping = cmp.mapping.preset.insert({
-					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-					["<C-J>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						else
-							fallback()
-						end
-					end, { "i" }),
-					["<C-K>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						else
-							fallback()
-						end
-					end, { "i" }),
-					["<UP>"] = cmp.mapping(function(fallback)
-						if cmp.visible_docs() then
-							cmp.mapping.scroll_docs(-4)
-						else
-							fallback()
-						end
-					end, { "i" }),
-					["<DOWN>"] = cmp.mapping(function(fallback)
-						if cmp.visible_docs() then
-							cmp.mapping.scroll_docs(4)
-						else
-							fallback()
-						end
-					end, { "i" }),
-					["<C-g>"] = cmp.mapping(function() -- Alternativaly, use K while "n"
-						if cmp.visible_docs() then
-							return cmp.close_docs()
-						else
-							return not cmp.open_docs() or vim.lsp.buf.hover()
-						end
-					end, { "i", "n" }),
-					["<Enter>"] = cmp.mapping.confirm({ select = true }),
-					-- note that you cannot use c-i, otherwise, tab will be impacted
-					["<C-y>"] = cmp.mapping.complete({}),
-					["<C-Space>"] = cmp.mapping.confirm({ select = true }),
-					["<C-L>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							return cmp.confirm({ select = true })
-						else
-							fallback()
-						end
-					end, { "i" }),
-					["<C-n>"] = cmp.mapping(function(fallback)
-						if luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-
+				mapping = {},
 				sources = {
+					{ name = "copilot" },
 					{
 						name = "lazydev",
 						-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
 						group_index = 0,
 					},
-					{ name = "copilot" },
 					{ name = "buffer" },
 					{ name = "nvim_lua" },
 					{ name = "nvim_lsp" },
@@ -124,6 +67,89 @@ return {
 					{ name = "path" },
 				},
 			})
+
+			--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+			local map = function(lhs, rhs, mode, opts)
+				opts = opts or {}
+				mode = mode or "i"
+				opts.silent = true
+				opts.noremap = true
+				vim.keymap.set(mode, lhs, rhs, opts)
+			end
+
+			map("<C-J>", function(fallback)
+				if cmp.visible() then
+					cmp.select_next_item()
+				else
+					fallback()
+				end
+			end)
+
+			map("<C-K>", function(fallback)
+				if cmp.visible() then
+					cmp.select_prev_item()
+				else
+					fallback()
+				end
+			end)
+
+			map("<Up>", function(fallback)
+				if cmp.visible_docs() then
+					cmp.mapping.scroll_docs(-4)
+				else
+					fallback()
+				end
+			end)
+
+			map("<Down>", function(fallback)
+				if cmp.visible_docs() then
+					cmp.mapping.scroll_docs(4)
+				else
+					fallback()
+				end
+			end)
+
+			map("<C-g>", function() -- Alternativaly, use K while "n"
+				if cmp.visible_docs() then
+					return cmp.close_docs()
+				else
+					return not cmp.open_docs() or vim.lsp.buf.hover()
+				end
+			end)
+
+			-- note that you cannot use c-i, otherwise, tab will be impacted
+			-- how to	 create a shortcut to ctrl+.?
+			map("<C-p>", function()
+				if cmp.visible() then
+					cmp.close({})
+				else
+					cmp.complete()
+				end
+			end)
+
+			map("<C-Space>", function()
+				if cmp.visible() then
+					cmp.confirm({ select = true })
+				else
+					return -- fallback()
+				end
+			end)
+
+			map("<C-L>", function(fallback)
+				if cmp.visible() then
+					return cmp.confirm({ select = true })
+				else
+					fallback()
+				end
+			end)
+
+			map("<C-n>", function(fallback)
+				if luasnip.expand_or_jumpable() then
+					luasnip.expand_or_jump()
+				else
+					fallback()
+				end
+			end)
 		end,
 	},
 }

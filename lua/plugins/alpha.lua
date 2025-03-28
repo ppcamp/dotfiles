@@ -2,7 +2,7 @@
 
 return {
 	"goolord/alpha-nvim",
-
+	priority = 900,
 	config = function()
 		local theme = require("alpha.themes.startify").config
 		require("alpha").setup(theme)
