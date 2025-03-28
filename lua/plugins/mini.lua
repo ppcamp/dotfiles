@@ -7,6 +7,7 @@ return { -- Collection of various small independent plugins/modules
 		--  - va)  - [V]isually select [A]round [)]paren
 		--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
 		--  - ci'  - [C]hange [I]nside [']quote
+		-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 		require("mini.ai").setup({ n_lines = 500 })
 
 		-- Add/delete/replace surroundings (brackets, quotes, etc.)
@@ -15,5 +16,9 @@ return { -- Collection of various small independent plugins/modules
 		-- - sd'   - [S]urround [D]elete [']quotes
 		-- - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
+
+		-- Add notification plugin popup
+		-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-notify.md
+		require("mini.notify").setup()
 	end,
 }
