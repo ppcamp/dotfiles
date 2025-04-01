@@ -16,10 +16,10 @@ map("n", "<Tab>", ":bnext<CR>", { desc = "While hit tab, will change to next buf
 map("n", "<S-Tab>", ":bprevious<CR>", { desc = "While hit Shift+tab, will change to next buffer" })
 -- map("n", "<C-d>", "<C-q>", { noremap = true, desc = "Similar to multicursor approach" })
 map(
-	"n",
-	"<C-q>",
-	":bd<CR>",
-	{ noremap = true, silent = true, desc = "While in insert mode, when hit Ctrl+Q, will close the current buffer" }
+  "n",
+  "<C-q>",
+  ":bd<CR>",
+  { noremap = true, silent = true, desc = "While in insert mode, when hit Ctrl+Q, will close the current buffer" }
 )
 
 -- Keybinds to make split navigation easier.
@@ -31,18 +31,14 @@ map("n", "<C-l>", "<C-w><C-l>", { desc = "Window: Move focus to the right" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "Window: Move focus to the lower" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "Window: Move focus to the upper" })
 
--- Git
-map("n", "<leader>gs", ":Telescope git_stash<CR>", { desc = "Git: Stash" })
-map("n", "<leader>gc", ":Telescope git_commits<CR>", { desc = "Git: Commits" })
-map("n", "<leader>gb", ":Telescope git_branches<CR>", { desc = "Git: Branches" })
-map("n", "<leader>gf", ":Telescope git_files<CR>", { desc = "Git: Files" })
-map("n", "<leader>gt", ":Telescope git_status<CR>", { desc = "Git: Status" })
 
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Jump LSP errors
 map("n", "]g", vim.diagnostic.goto_next)
 map("n", "[g", vim.diagnostic.goto_prev)
+
+
 
 -- We also have more features in vim-go
 
@@ -69,28 +65,28 @@ map("n", "[g", vim.diagnostic.goto_prev)
 --#region icons
 -- Add extra icons and texts
 wk.add({
-	{ "<leader>g", group = "Git" },
-	{ "<leader>t", icon = "", group = "Tools" },
-	{ "<leader>n", icon = "󱣱", group = "Navigation" },
-	{ "<leader>c", group = "Code", mode = { "n", "x" } },
-	{ "<leader>d", group = "Document" },
-	{ "<leader>s", group = "Search" },
-	{ "<leader>?", group = "Help", icon = { icon = "", color = "green" } },
-	{
-		"<leader>?w",
-		function()
-			require("which-key").show({ global = false })
-		end,
-		desc = "Keymaps (which-key)",
-	},
-	{ "<leader>?c", ":Copilot help<CR>", desc = "Copilot: Help" },
-	{
-		"<leader>tb",
-		desc = "Functions: My",
-		function()
-			print("Type of current file is " .. vim.bo.filetype)
-		end,
-	},
+  { "<leader>g", group = "Git" },
+  { "<leader>t", icon = "", group = "Tools" },
+  { "<leader>n", icon = "󱣱", group = "Navigation" },
+  { "<leader>c", group = "Code", mode = { "n", "x" } },
+  { "<leader>d", group = "Document" },
+  { "<leader>s", group = "Search" },
+  { "<leader>?", group = "Help", icon = { icon = "", color = "green" } },
+  {
+    "<leader>?w",
+    function()
+      require("which-key").show({ global = false })
+    end,
+    desc = "Keymaps (which-key)",
+  },
+  { "<leader>?c", ":Copilot help<CR>", desc = "Copilot: Help" },
+  {
+    "<leader>tb",
+    desc = "Functions: My",
+    function()
+      print("Type of current file is " .. vim.bo.filetype)
+    end,
+  },
 })
 --#endregion
 
