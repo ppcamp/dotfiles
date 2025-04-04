@@ -12,18 +12,18 @@ return {
 			vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 		end
 
-		map("<leader>gd", "<cmd>DiffviewOpen<CR>")
-		map("<leader>gD", "<cmd>DiffviewClose<CR>")
-		map("<leader>gr", "<cmd>DiffviewRefresh<CR>")
-		map("<leader>gv", "<cmd>DiffviewToggleFiles<CR>")
-		map("<leader>gp", "<cmd>DiffviewFileHistory %<CR>")
+		map("<leader>gdd", "<cmd>DiffviewOpen<CR>")
+		map("<leader>gdD", "<cmd>DiffviewClose<CR>")
+		map("<leader>gdr", "<cmd>DiffviewRefresh<CR>")
+		map("<leader>gdv", "<cmd>DiffviewToggleFiles<CR>")
+		map("<leader>gdp", "<cmd>DiffviewFileHistory %<CR>")
 
 		require("which-key").add({
-			{ "<leader>gd", desc = "DiffView: Open" },
-			{ "<leader>gD", desc = "DiffView: Close" },
-			{ "<leader>gr", desc = "DiffView: Refresh" },
-			{ "<leader>gv", desc = "DiffView: Toggle Files" },
-			{ "<leader>gp", desc = "DiffView: File History" },
+			{ "<leader>gd", desc = "DiffView" },
+			-- { "<leader>gD", desc = "DiffView: Close" },
+			-- { "<leader>gr", desc = "DiffView: Refresh" },
+			-- { "<leader>gv", desc = "DiffView: Toggle Files" },
+			-- { "<leader>gp", desc = "DiffView: File History" },
 		})
 	end,
 }

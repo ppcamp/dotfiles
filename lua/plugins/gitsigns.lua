@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- GitSigns support (with line blame, change color)
 --
 return {
@@ -27,61 +29,63 @@ return {
 		end
 
 		-- Navigation
-		map('n', ']c', function()
+		map("n", "]c", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ ']c', bang = true })
+				vim.cmd.normal({ "]c", bang = true })
 			else
-				gitsigns.nav_hunk('next')
+				gitsigns.nav_hunk("next")
 			end
-		end, 'Next hunk')
+		end, "Next hunk")
 
-		map('n', '[c', function()
+		map("n", "[c", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ '[c', bang = true })
+				vim.cmd.normal({ "[c", bang = true })
 			else
-				gitsigns.nav_hunk('prev')
+				gitsigns.nav_hunk("prev")
 			end
-		end, 'Previous hunk')
+		end, "Previous hunk")
 
 		-- Actions
-		map('n', '<leader>ghs', gitsigns.stage_hunk, 'Stage hunk')
-		map('n', '<leader>ghr', gitsigns.reset_hunk, 'Reset hunk')
+		map("n", "<leader>ghs", gitsigns.stage_hunk, "Stage hunk")
+		map("n", "<leader>ghr", gitsigns.reset_hunk, "Reset hunk")
 
-		map('v', '<leader>ghs', function()
-			gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-		end, 'Stage hunk')
+		map("v", "<leader>ghs", function()
+			gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+		end, "Stage hunk")
 
-		map('v', '<leader>ghr', function()
-			gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-		end, 'Reset hunk')
+		map("v", "<leader>ghr", function()
+			gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+		end, "Reset hunk")
 
-		map('n', '<leader>ghS', gitsigns.stage_buffer, 'Stage buffer')
-		map('n', '<leader>ghR', gitsigns.reset_buffer, 'Reset buffer')
-		map('n', '<leader>ghp', gitsigns.preview_hunk, 'Preview hunk')
-		map('n', '<leader>ghi', gitsigns.preview_hunk_inline, 'Preview hunk inline')
+		map("n", "<leader>ghS", gitsigns.stage_buffer, "Stage buffer")
+		map("n", "<leader>ghR", gitsigns.reset_buffer, "Reset buffer")
+		map("n", "<leader>ghp", gitsigns.preview_hunk, "Preview hunk")
+		map("n", "<leader>ghi", gitsigns.preview_hunk_inline, "Preview hunk inline")
+		map("n", "<leader>ghh", gitsigns.refresh, "Refresh")
 
-		map('n', '<leader>hb', function()
+		map("n", "<leader>ghb", function()
 			gitsigns.blame_line({ full = true })
-		end, 'Blame line')
+		end, "Blame line")
 
-
-		map('n', '<leader>ghQ', function() gitsigns.setqflist('all') end, 'Set quickfix list')
-		map('n', '<leader>ghq', gitsigns.setqflist, 'Set quickfix list (current file)')
+		map("n", "<leader>ghQ", function()
+			gitsigns.setqflist("all")
+		end, "Set quickfix list")
+		map("n", "<leader>ghq", gitsigns.setqflist, "Set quickfix list (current file)")
 
 		-- Toggles
-		map('n', '<leader>gtb', gitsigns.toggle_current_line_blame, 'Toggle current line blame')
-		map('n', '<leader>gtd', gitsigns.toggle_deleted, 'Toggle deleted')
-		map('n', '<leader>gtw', gitsigns.toggle_word_diff, 'Toggle word diff')
+		map("n", "<leader>gho", gitsigns.toggle_current_line_blame, "Toggle current line blame")
+		map("n", "<leader>ghT", gitsigns.toggle_deleted, "Toggle deleted")
+		map("n", "<leader>ght", gitsigns.toggle_word_diff, "Toggle word diff")
 
 		-- Text object
-		map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Select hunk')
+		map({ "o", "x" }, "ih", gitsigns.select_hunk, "Select hunk")
 
-		-- map('n', '<leader>ghd', gitsigns.diffthis, 'Diff this')
-		-- map('n', '<leader>ghD', function()
-		-- 	gitsigns.diffthis('~')
-		-- end, 'Diff this against working directory')
+		map("n", "<leader>ghd", gitsigns.diffthis, "Diff this")
+		map("n", "<leader>ghD", function()
+			gitsigns.diffthis("~")
+		end, "Diff this against working directory")
 
-		require("which-key").add({ { "<leader>gh", group = 'Hunk actions' } })
+		require("which-key").add({ { "<leader>gh", group = "Hunk actions" } })
 
 		--- Search related
 		map("n", "<leader>gs", ":Telescope git_stash<CR>", "Search Stash")
@@ -89,5 +93,10 @@ return {
 		map("n", "<leader>gb", ":Telescope git_branches<CR>", "Search Branches")
 		map("n", "<leader>gf", ":Telescope git_files<CR>", "Search Files")
 		map("n", "<leader>gt", ":Telescope git_status<CR>", "Search Status")
+
+		-- ]c - next hunk
+		-- [c - prev hunk
+
+		map("n", "<leader>ghc", ":only<CR>", "Close window")
 	end,
 }
