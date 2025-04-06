@@ -10,6 +10,11 @@ local api = vim.api
 -- Add a line with the vim format to the end of the file
 cmd("AddVimFormatLine", function()
 	local replacement = {
+		-- tabstop (ts)       - number of spaces that a <Tab> counts for
+		-- softtabstop (sts)  - number of spaces that a <Tab> counts for while editing
+		-- shiftwidth (sw)    - number of spaces to use for each step of (auto)indent
+		-- expandtab (et)     - use spaces instead of tabs
+		-- noexpandtab (noet) - use tabs instead of spaces
 		"vim: ts=2 sts=2 sw=2 et",
 		"",
 	}

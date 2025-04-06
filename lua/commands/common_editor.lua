@@ -2,22 +2,6 @@
 
 local cmd = vim.api.nvim_create_autocmd
 
--- Fix imports golang
-cmd("BufWritePre", {
-	pattern = "*.go",
-	command = "silent !goimports -w %",
-})
-
--- Fold methodology for bash filetypes
-cmd("FileType", {
-	pattern = "bash",
-	callback = function()
-		vim.opt_local.foldmethod = "expr"
-		vim.opt_local.foldexpr =
-			"getline(v:lnum) =~ '^\\s*\\(function\\|[a-zA-Z_][a-zA-Z0-9_]*\\)\\s*(.*)\\s*{$' ? '>' : '<'"
-	end,
-})
-
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`

@@ -17,7 +17,7 @@ require("config.plugins")
 require("config.keymaps")
 
 -- load all autocmds, this is optional and should be used if you want to have
-require("config.autocmd")
+-- require("config.autocmd")
 
 -- load local settings, this is optional and should be used if you want to have
 -- a local configuration for your vim setup

@@ -4,7 +4,7 @@ local M = {}
 
 ---Create a vim binding/command to a function.
 ---@param command string The command shortcut name.
----@param cb function The callback to be executed
+---@param cb function The callback to be executed (with args depending on the passed `nargs` option)
 ---@param opts ? vim.api.keyset.user_command Args to pass to callback
 M.command = function(command, cb, opts)
 	local keyset = opts or {}
