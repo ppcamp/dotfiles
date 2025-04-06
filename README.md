@@ -2,6 +2,8 @@
 
 When using the NvimTree, you can use `space+sw` to open current file manager.
 
+[Vim shortcuts and tips](https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8)
+
 A simple nvim setup for my use
 
 When using `vim-go`, type `GoInstallBinaries` to install required tools
@@ -45,6 +47,8 @@ See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 For nvim to work with sudo account, you'll need to create a copy or a link into the `root/home` directory
 `sudo ln -s /opt/nvim-config /root/.config/nvim`
 
+
+https://github.com/folke/noice.nvim
 
 ## To remove it 
 
