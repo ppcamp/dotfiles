@@ -1,5 +1,7 @@
--- Show a explorer view, with folders, and file icons
+-- vim: ts=2 sts=2 sw=2 et
 
+-- Show a explorer view, with folders, and file icons
+--
 --- Define your custom on_attach_change function
 --- @param bufnr integer
 -- local on_attach_change = function(bufnr)
@@ -44,5 +46,3 @@ return {
 		end,
 	},
 }
-
--- vim: ts=2 sts=2 sw=2 et

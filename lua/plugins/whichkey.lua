@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- This is often very useful to both group configuration, as well as handle
 -- lazy loading plugins that don't need to be loaded immediately at startup.
 --
@@ -66,5 +68,3 @@ return {
 		},
 	},
 }
-
--- vim: ts=2 sts=2 sw=2 et

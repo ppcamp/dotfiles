@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- LSP Plugins
 --
 -- Language server protocol (used to generate editors errors, code navigation, etc)
@@ -79,6 +81,10 @@ return {
 				mode = mode or "n"
 				vim.keymap.set(mode, keys, func, { desc = "LSP: " .. desc })
 			end
+
+			-- Jump LSP errors
+			map("]g", vim.diagnostic.goto_next, "Goto next")
+			map("[g", vim.diagnostic.goto_prev, "Goto previous")
 
 			--  This function gets run when an LSP attaches to a particular buffer.
 			--    That is to say, every time a new file is opened that is associated with
@@ -415,4 +421,3 @@ return {
 		end,
 	},
 }
--- vim: ts=2 sts=2 sw=2 et

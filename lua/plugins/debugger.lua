@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- debug.lua
 --
 -- Shows how to use the DAP plugin to debug your code.
@@ -99,5 +101,3 @@ return {
 		})
 	end,
 }
-
--- vim: ts=2 sts=2 sw=2 et

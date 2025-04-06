@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local M = {}
 
 local d = require("utils.log").info
@@ -33,5 +35,3 @@ M.keys = function(...)
 end
 
 return M
-
--- vim: ts=2 sts=2 sw=2 et

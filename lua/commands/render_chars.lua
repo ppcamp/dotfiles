@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local cmd = require("utils.command").command
 
 -- Alternativaly, you can try to use od -c file.txt to see the characters

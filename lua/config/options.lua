@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local is_wsl = require("utils.os").is_wsl
 
 local opt = vim.opt
@@ -118,5 +120,3 @@ if is_wsl() then
 	-- else
 	-- 	print("Not WSL")
 end
-
--- vim: ts=2 sts=2 sw=2 et

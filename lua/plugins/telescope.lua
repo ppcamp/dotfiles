@@ -1,4 +1,5 @@
---
+-- vim: ts=2 sts=2 sw=2 et
+
 -- The dependencies are proper plugin specifications as well - anything
 -- you do for a plugin at the top level, you can do for a dependency.
 --
@@ -131,5 +132,3 @@ return {
 		end,
 	},
 }
-
--- vim: ts=2 sts=2 sw=2 et

@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 return {
 	"rebelot/kanagawa.nvim",
 	-- "marko-cerovac/material.nvim",
@@ -42,5 +44,3 @@ return {
 --         ansi_colors_name = nil,
 --     },
 -- }
-
--- vim: ts=2 sts=2 sw=2 et

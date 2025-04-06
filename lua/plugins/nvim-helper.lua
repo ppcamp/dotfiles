@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- It shows nvim cheatsheet
 
 return {
@@ -17,4 +19,3 @@ return {
 		)
 	end,
 }
--- vim: ts=2 sts=2 sw=2 et

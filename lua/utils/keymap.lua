@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local M = {}
 
 ---Forward an keycombination event
@@ -26,5 +28,3 @@ M.expr = function(mode, keycombination, expression)
 end
 
 return M
-
--- vim: ts=2 sts=2 sw=2 et

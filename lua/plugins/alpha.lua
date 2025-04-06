@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- Nvim startpage
 
 return {
@@ -8,5 +10,3 @@ return {
 		require("alpha").setup(theme)
 	end,
 }
-
--- vim: ts=2 sts=2 sw=2 et

@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local M = {}
 
 ---Create a vim binding/command to a function.

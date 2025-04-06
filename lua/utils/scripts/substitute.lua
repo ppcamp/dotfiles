@@ -1,5 +1,5 @@
 -- vim: ts=2 sts=2 sw=2 et
---
+
 -- All extra commands that I think usefull
 
 local M = {}

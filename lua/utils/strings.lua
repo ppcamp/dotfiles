@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local M = {}
 
 ---Remove empty lines and spaces
@@ -9,5 +11,3 @@ M.trim = function(buf)
 end
 
 return M
-
--- vim: ts=2 sts=2 sw=2 et

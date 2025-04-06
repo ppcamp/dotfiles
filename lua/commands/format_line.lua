@@ -1,5 +1,5 @@
 -- vim: ts=2 sts=2 sw=2 et
---
+
 -- All extra commands that I think usefull
 
 --
@@ -9,8 +9,19 @@ local api = vim.api
 
 -- Add a line with the vim format to the end of the file
 cmd("AddVimFormatLine", function()
-	local line_count = api.nvim_buf_line_count(0)
-	local text = "vim: ts=2 sts=2 sw=2 et"
-	api.nvim_buf_set_lines(0, line_count, line_count, false, { text })
-	api.nvim_win_set_cursor(0, { line_count + 1, 0 })
+	local replacement = {
+		"vim: ts=2 sts=2 sw=2 et",
+		"",
+	}
+	-- local lines = api.nvim_buf_line_count(buf)
+	local begin_ = 0 -- lines
+	local exclude = 0 -- do not replace any lines
+
+	local buf = api.nvim_get_current_buf()
+	local window = api.nvim_get_current_win()
+
+	-- api.nvim_buf_set_lines(buf, lines, lines, false, { text })
+	-- api.nvim_win_set_cursor(buf, { lines + 1, 0 })
+	api.nvim_buf_set_lines(buf, begin_, exclude, false, replacement)
+	api.nvim_win_set_cursor(window, { 1, 0 })
 end)

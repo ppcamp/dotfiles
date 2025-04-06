@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 local cmd = vim.api.nvim_create_autocmd
 
 -- Fix imports golang
@@ -33,5 +35,3 @@ cmd("CursorHold", {
 		vim.diagnostic.open_float(nil, { focusable = false, scope = "cursor", border = "rounded" })
 	end,
 })
-
--- vim: ts=2 sts=2 sw=2 et

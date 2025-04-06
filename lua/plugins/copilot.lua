@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- Copilot AI configuration for Neovim
 --
 -- To setup local, run :Copilot setup
@@ -12,20 +14,18 @@
 -- <ctrl+alt+Right> Accept the next line of the current suggestion. <Plug>(copilot-accept-line)
 
 return {
-  "github/copilot.vim",
-  enabled = true,
-  priority = 200,
-  config = function()
-    local map = function(lhs, rhs, mode, opts)
-      opts = opts or {}
-      mode = mode or "i"
-      opts.silent = true
-      opts.noremap = true
-      vim.keymap.set(mode, lhs, rhs, opts)
-    end
+	"github/copilot.vim",
+	enabled = true,
+	priority = 200,
+	config = function()
+		local map = function(lhs, rhs, mode, opts)
+			opts = opts or {}
+			mode = mode or "i"
+			opts.silent = true
+			opts.noremap = true
+			vim.keymap.set(mode, lhs, rhs, opts)
+		end
 
-    map("<C-]>", "<Plug>(copilot-dismiss)")
-  end,
+		map("<C-]>", "<Plug>(copilot-dismiss)")
+	end,
 }
-
--- vim: ts=2 sts=2 sw=2 et

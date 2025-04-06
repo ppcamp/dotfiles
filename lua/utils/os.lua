@@ -1,3 +1,5 @@
+-- vim: ts=2 sts=2 sw=2 et
+
 -- Usefull system related functions
 
 local trim = require("utils.strings").trim
@@ -23,5 +25,3 @@ M.is_wsl = function()
 end
 
 return M
-
--- vim: ts=2 sts=2 sw=2 et
