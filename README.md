@@ -15,9 +15,16 @@ As a suggestion, use a [nerdfont], which contains icons for your files, and afte
 set it as font that should be used for your terminal emulator, after that, go to `lua/config/options.lua`
 and enabled it.
 
+
 ## Todo
 
-- Telescope git as in buffer: https://chatgpt.com/share/67c8c4eb-d404-800e-a407-926c8629eb63
+- [ ] Replace `nvim-cmp` with `blink-nvim`
+    > https://cmp.saghen.dev/installation.html
+    >
+    > https://www.youtube.com/watch?v=GKIxgCcKAq4&list=PLy68GuC77sURrnMNi2XR1h58m674KOvLG&index=6
+
+
+## Setup
 
 1. Install neovim https://github.com/neovim/neovim/blob/master/INSTALL.md
     ```bash
@@ -39,6 +46,8 @@ For nvim to work with sudo account, you'll need to create a copy or a link into 
 `sudo ln -s /opt/nvim-config /root/.config/nvim`
 
 
+## To remove it 
+
 ```sh
 # Linux / MacOS (unix)
 rm -rf ~/.config/nvim
@@ -59,7 +68,7 @@ rm -Force ~\AppData\Local\nvim
 rm -Force ~\AppData\Local\nvim-data
 ```
 
-
+<!----------------------------------------------------------------------------->
 [kickstart-modular-nvim]: https://github.com/dam9000/kickstart-modular.nvim
 [nerdfont]: https://www.nerdfonts.com/font-downloads
 
