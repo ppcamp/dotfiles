@@ -110,6 +110,8 @@
     unstage-all = unstage -S .
     add-all = add -A
     patch = !git add -N . && git diff HEAD > patch
+    dift = difftool
+    unmodule = submodule deinit -f 
 ```
 </details>
 	
