@@ -31,7 +31,18 @@ return {
 		-- C-k: Toggle signature help (if signature.enabled = true)
 		--
 		-- See :h blink-cmp-config-keymap for defining your own keymap
-		keymap = { preset = "default" },
+		keymap = {
+			preset = "default",
+
+			["<Tab>"] = {
+				"select_and_accept",
+				"fallback",
+			},
+			["<Enter>"] = {
+				"select_and_accept",
+				"fallback",
+			},
+		},
 
 		appearance = {
 			-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -48,6 +59,18 @@ return {
 			default = { "lsp", "path", "snippets", "buffer" },
 		},
 
+		cmdline = {
+			-- Default list of enabled providers for cmdline
+			-- You can override this in your cmdline config
+			-- default = { "path", "buffer" },
+			enabled = false, -- doc unclear, but when enabled, freezes when using terminal commands
+			completion = {
+				menu = {
+					-- guarantee to not bug it with huge amount of system completions
+					auto_show = false,
+				},
+			},
+		},
 		-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
 		-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
 		-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
