@@ -36,7 +36,7 @@ return {
 						"nvim-dap-ui",
 					},
 					lualine_c = {
-						"%=",
+						-- "%=", -- center text section
 						{
 							"filename",
 							file_status = true,
