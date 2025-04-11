@@ -8,6 +8,9 @@ local wk = require("which-key")
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("v", ";", "<Esc>")
+-- Exit terminal mode
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -32,9 +35,6 @@ map("n", "<C-h>", "<C-w><C-h>", { desc = "Window: Move focus to the left" })
 map("n", "<C-l>", "<C-w><C-l>", { desc = "Window: Move focus to the right" })
 map("n", "<C-j>", "<C-w><C-j>", { desc = "Window: Move focus to the lower" })
 map("n", "<C-k>", "<C-w><C-k>", { desc = "Window: Move focus to the upper" })
-
--- Exit terminal mode
-map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 --#region icons
 -- Add extra icons and texts
