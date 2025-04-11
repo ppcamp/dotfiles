@@ -11,6 +11,7 @@ return { -- Collection of various small independent plugins/modules
 		--  - va)  - [V]isually select [A]round [)]paren
 		--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
 		--  - ci'  - [C]hange [I]nside [']quote
+		--  - ci`  - [C]hange [I]nside [`]backtick
 		-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 		require("mini.ai").setup({ n_lines = 500 })
 
