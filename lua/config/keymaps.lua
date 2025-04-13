@@ -12,6 +12,10 @@ map("v", ";", "<Esc>")
 -- Exit terminal mode
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+-- Split vertical
+map("n", "<leader>%", ":slit<CR>", { desc = "Split vertically" })
+map("n", "<leader>e", ":enew<CR>", { desc = "New buffer" })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map("i", "jk", "<Esc>", { noremap = true, desc = "Exit from edit mode" })

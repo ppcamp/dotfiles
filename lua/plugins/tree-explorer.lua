@@ -40,7 +40,7 @@ return {
 		config = function()
 			local map = vim.keymap.set
 
-			map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle Explorer" })
+			map("n", "<leader><leader>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle Explorer" })
 
 			require("nvim-tree").setup()
 		end,
