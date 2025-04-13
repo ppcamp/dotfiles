@@ -32,6 +32,6 @@ return {
 	opts = {},
 	config = function(_, opts)
 		require("marks").setup(opts)
-		vim.keymap.set("n", "<leader>m", "<cmd>MarksListAll<cr>", { desc = "Toggle marks" })
+		-- vim.keymap.set("n", "<leader>m", "<cmd>MarksListAll<cr>", { desc = "Toggle marks" })
 	end,
 }

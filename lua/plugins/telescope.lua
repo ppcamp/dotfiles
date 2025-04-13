@@ -96,7 +96,7 @@ return {
 
 			map("<leader>sc", "<cmd> Telescope commands<cr>", "Commands")
 			map("<leader>sk", builtin.keymaps, "Keymaps")
-			map("<leader>sm", function()
+			map("<leader>sp", function()
 				builtin.man_pages({ sections = { "ALL" } })
 			end, "Man pages")
 			map("<leader>sn", function()
@@ -106,29 +106,31 @@ return {
 			map("<leader>sf", builtin.find_files, "Find Files")
 			map("<leader>s*", builtin.grep_string, "Workspace search word under cursor")
 			map("<leader>ss", builtin.live_grep, "Find by Grep")
-			map("<leader>sr", builtin.oldfiles, "Find Old Files")
+			map("<leader>sr", builtin.oldfiles, "Find Recent Files")
 			map("<leader>s.", builtin.resume, "Resume")
-			map("<leader>sb", builtin.buffers, "Find in all openned buffers")
+			map("<leader>sb", builtin.buffers, "Search openned buffers")
+			map("<leader>sm", builtin.marks, "Find in all marks")
+			map("<leader>sR", builtin.registers, "Show registers values")
 
 			map("<leader>tt", builtin.colorscheme, "Theme switch")
 
 			-- Slightly advanced example of overriding default behavior and theme
-			map("<leader>/", function()
-				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-					-- winblend = 10,
-					previewer = false,
-				}))
-			end, "Search in current buffer")
+			-- map("<leader>/", function()
+			-- 	-- You can pass additional configuration to Telescope to change the theme, layout, etc.
+			-- 	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+			-- 		-- winblend = 10,
+			-- 		previewer = false,
+			-- 	}))
+			-- end, "Search in current buffer")
 
 			-- It's also possible to pass additional configuration options.
 			--  See `:help telescope.builtin.live_grep()` for information about particular keys
-			map("<leader>s/", function()
-				builtin.live_grep({
-					grep_open_files = true,
-					prompt_title = "Live Grep in Open Files",
-				})
-			end, "Search / in Open Files")
+			-- map("<leader>s/", function()
+			-- 	builtin.live_grep({
+			-- 		grep_open_files = true,
+			-- 		prompt_title = "Live Grep in Open Files",
+			-- 	})
+			-- end, "Search / in Open Files")
 		end,
 	},
 }
