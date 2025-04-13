@@ -13,7 +13,7 @@ map("v", ";", "<Esc>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Split vertical
-map("n", "<leader>%", ":slit<CR>", { desc = "Split vertically" })
+map("n", "<leader>%", ":vsplit<CR>", { desc = "Split vertically" })
 map("n", "<leader>e", ":enew<CR>", { desc = "New buffer" })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -27,7 +27,7 @@ map("n", "<S-Tab>", ":bprevious<CR>", { desc = "While hit Shift+tab, will change
 map(
 	"n",
 	"<C-q>",
-	":bd<CR>",
+	":q<CR>", -- quit works for split and buffers/windows
 	{ noremap = true, silent = true, desc = "While in insert mode, when hit Ctrl+Q, will close the current buffer" }
 )
 
