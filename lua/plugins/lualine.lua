@@ -6,11 +6,13 @@ return {
 	{
 		-- https://www.nerdfonts.com/cheat-sheet
 		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			{
+				"SmiteshP/nvim-navic",
+				dependencies = { "neovim/nvim-lspconfig" },
+			},
+		},
 		config = function()
-			local function clock()
-				return os.date(" %Y/%m/%d %H:%M")
-			end
-
 			local function clock()
 				return os.date(" %Y/%m/%d %H:%M")
 			end
@@ -36,13 +38,14 @@ return {
 						"nvim-dap-ui",
 					},
 					lualine_c = {
-						-- "%=", -- center text section
 						{
 							"filename",
 							file_status = true,
 							path = 1,
 							symbols = { modified = " ", readonly = " " },
 						},
+						"%=", -- center text section
+						{ "navic", color_correction = nil, navic_opts = { separator = " > " } },
 					},
 					lualine_x = {
 						"nvim-dap-ui",
