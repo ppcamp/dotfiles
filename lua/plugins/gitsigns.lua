@@ -87,13 +87,6 @@ return {
 
 		require("which-key").add({ { "<leader>gh", group = "Hunk actions" } })
 
-		--- Search related
-		map("n", "<leader>gs", ":Telescope git_stash<CR>", "Search Stash")
-		map("n", "<leader>gc", ":Telescope git_commits<CR>", "Search Commits")
-		map("n", "<leader>gb", ":Telescope git_branches<CR>", "Search Branches")
-		map("n", "<leader>gf", ":Telescope git_files<CR>", "Search Files")
-		map("n", "<leader>gt", ":Telescope git_status<CR>", "Search Status")
-
 		-- ]c - next hunk
 		-- [c - prev hunk
 

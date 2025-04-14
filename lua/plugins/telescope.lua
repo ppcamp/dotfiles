@@ -9,7 +9,7 @@ return {
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
-		branch = "0.1.x",
+		branch = "master", -- "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -75,8 +75,8 @@ return {
 			})
 
 			-- Enable Telescope extensions if they are installed
-			pcall(telescope.load_extension, "fzf")
-			pcall(telescope.load_extension, "ui-select")
+			telescope.load_extension("fzf")
+			telescope.load_extension("ui-select")
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
@@ -113,6 +113,26 @@ return {
 			map("<leader>sR", builtin.registers, "Show registers values")
 
 			map("<leader>tt", builtin.colorscheme, "Theme switch")
+
+			--- Search related
+			map("<leader>gS", builtin.git_stash, "Search Stash")
+			map("<leader>gC", builtin.git_commits, "Search ALL Commits")
+			map("<leader>gb", builtin.git_branches, "Search Branches")
+			map("<leader>gf", builtin.git_files, "Search Files")
+			map("<leader>gs", builtin.git_status, "Search Status")
+			map("<leader>gc", builtin.git_bcommits, "Search Commits in current buffer")
+			map("<leader>gc", function()
+				-- Get the start and end positions of the visual selection
+				local _, start_line, _, _ = unpack(vim.fn.getpos("v"))
+				local _, end_line, _, _ = unpack(vim.fn.getpos("."))
+
+				builtin.git_bcommits_range({
+					prompt_title = "Search Commits in current range",
+					multi_select = true,
+					from = start_line,
+					to = end_line,
+				})
+			end, "Search Commits in current range", "v")
 
 			-- Slightly advanced example of overriding default behavior and theme
 			-- map("<leader>/", function()
