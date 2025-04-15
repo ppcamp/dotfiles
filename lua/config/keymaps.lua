@@ -27,7 +27,7 @@ map("n", "<S-Tab>", ":bprevious<CR>", { desc = "While hit Shift+tab, will change
 map(
 	"n",
 	"<C-q>",
-	":q<CR>", -- quit works for split and buffers/windows
+	":bd<CR>", -- quit works for buffers/quickfix panels (for splits, use ctrl+w q )
 	{ noremap = true, silent = true, desc = "While in insert mode, when hit Ctrl+Q, will close the current buffer" }
 )
 
