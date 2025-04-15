@@ -41,11 +41,20 @@ return {
 						{
 							"filename",
 							file_status = true,
-							path = 1,
+							path = 4, -- filename and path (0:filename, 1:relative path)
 							symbols = { modified = " ", readonly = " " },
 						},
 						"%=", -- center text section
-						{ "navic", color_correction = nil, navic_opts = { separator = " > " } },
+						{
+							"navic",
+							color_correction = nil,
+							navic_opts = {
+								highlight = true,
+								depth_limit = 3,
+								separator = "  ",
+								click = true,
+							},
+						},
 					},
 					lualine_x = {
 						"nvim-dap-ui",
