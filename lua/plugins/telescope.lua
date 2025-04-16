@@ -29,6 +29,13 @@ return {
 
 			-- Useful for getting pretty icons, but requires a Nerd Font.
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+
+			{
+				"nvim-telescope/telescope-live-grep-args.nvim",
+				-- This will not install any breaking changes.
+				-- For major updates, this must be adjusted manually.
+				version = "^1.0.0",
+			},
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -105,7 +112,8 @@ return {
 
 			map("<leader>sf", builtin.find_files, "Find Files")
 			map("<leader>s*", builtin.grep_string, "Workspace search word under cursor")
-			map("<leader>ss", builtin.live_grep, "Find by Grep")
+			-- map("<leader>ss", builtin.live_grep, "Find by Grep")
+			map("<leader>ss", telescope.extensions.live_grep_args.live_grep_args, "Find by Grep")
 			map("<leader>so", builtin.oldfiles, "Find Recent Files")
 			map("<leader>sr", builtin.resume, "Redo last search")
 			map("<leader>sb", builtin.buffers, "Search openned buffers")
