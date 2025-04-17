@@ -113,10 +113,10 @@ return {
 			map("<leader>sf", builtin.find_files, "Find Files")
 			map("<leader>s*", builtin.grep_string, "Workspace search word under cursor")
 			-- map("<leader>ss", builtin.live_grep, "Find by Grep")
-			map("<leader>ss", telescope.extensions.live_grep_args.live_grep_args, "Find by Grep")
+			map("<leader>sS", telescope.extensions.live_grep_args.live_grep_args, "Find by Grep with args")
+			map("<leader>ss", builtin.live_grep, "Find by Grep")
 			map("<leader>so", builtin.oldfiles, "Find Recent Files")
 			map("<leader>sr", builtin.resume, "Redo last search")
-			map("<leader>sb", builtin.buffers, "Search openned buffers")
 			map("<leader>sm", builtin.marks, "Find in all marks")
 			map("<leader>sR", builtin.registers, "Show registers values")
 
@@ -140,7 +140,7 @@ return {
 					from = start_line,
 					to = end_line,
 				})
-			end, "Search Commits in current range", "v")
+			end, "Search Commits in current visual selection", "v")
 
 			-- Slightly advanced example of overriding default behavior and theme
 			-- map("<leader>/", function()
@@ -159,6 +159,8 @@ return {
 			-- 		prompt_title = "Live Grep in Open Files",
 			-- 	})
 			-- end, "Search / in Open Files")
+
+			map("<leader>b", builtin.buffers, "Search openned buffers")
 		end,
 	},
 }

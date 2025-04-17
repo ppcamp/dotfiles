@@ -85,7 +85,7 @@ return {
 			gitsigns.diffthis("~")
 		end, "Diff this against working directory")
 
-		require("which-key").add({ { "<leader>gh", group = "Hunk actions" } })
+		require("which-key").add({ { "<leader>gh", mode = { "n", "v" }, group = "Hunk actions" } })
 
 		-- ]c - next hunk
 		-- [c - prev hunk

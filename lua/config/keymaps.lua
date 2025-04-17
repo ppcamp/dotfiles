@@ -43,13 +43,13 @@ map("n", "<C-k>", "<C-w><C-k>", { desc = "Window: Move focus to the upper" })
 --#region icons
 -- Add extra icons and texts
 wk.add({
-	{ "<leader>g", group = "Git" },
-	{ "<leader>t", icon = "", group = "Tools" },
-	{ "<leader>n", icon = "󱣱", group = "Navigation" },
+	{ "<leader>g", group = "Git", mode = { "n", "v" } },
+	{ "<leader>t", icon = "", group = "Tools", mode = { "n", "v" } },
+	{ "<leader>n", icon = "󱣱", group = "Navigation", mode = { "n", "v" } },
 	{ "<leader>c", group = "Code", mode = { "n", "x" } },
 	{ "<leader>d", group = "Document" },
-	{ "<leader>s", group = "Search" },
-	{ "<leader>?", group = "Help", icon = { icon = "", color = "green" } },
+	{ "<leader>s", group = "Search", mode = { "n", "v" } },
+	{ "<leader>?", group = "Help", icon = { icon = "", color = "green" }, mode = { "n", "v" } },
 	{
 		"<leader>?w",
 		function()
