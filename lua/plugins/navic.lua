@@ -13,5 +13,11 @@ return {
 				auto_attach = true,
 			},
 		})
+
+		-- To be able to print at the top
+		--
+		-- vim.o.statusline = "%{%v:lua.require'nvim-navic'.get_location()%}"
+		--  OR
+		-- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 	end,
 }

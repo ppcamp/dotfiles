@@ -115,7 +115,7 @@ return {
 			-- map("<leader>ss", builtin.live_grep, "Find by Grep")
 			map("<leader>sS", telescope.extensions.live_grep_args.live_grep_args, "Find by Grep with args")
 			map("<leader>ss", builtin.live_grep, "Find by Grep")
-			map("<leader>so", builtin.oldfiles, "Find Recent Files")
+			map("<leader>sF", builtin.oldfiles, "Find Recent Files")
 			map("<leader>sr", builtin.resume, "Redo last search")
 			map("<leader>sm", builtin.marks, "Find in all marks")
 			map("<leader>sR", builtin.registers, "Show registers values")
