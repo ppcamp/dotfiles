@@ -42,7 +42,33 @@ return {
 
 			map("n", "<leader><leader>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle Explorer" })
 
-			require("nvim-tree").setup()
+			require("nvim-tree").setup({
+				view = {
+					float = {
+						enable = true,
+						open_win_config = function()
+							local columns = vim.o.columns
+							local lines = vim.o.lines
+
+							local width = math.floor(columns * 0.5)
+							local height = math.floor(lines * 0.6)
+
+							return {
+								relative = "editor",
+								border = "rounded",
+								width = width,
+								height = height,
+								row = math.floor((lines - height) / 2),
+								col = math.floor((columns - width) / 2),
+							}
+						end,
+					},
+					-- Disable default fixed position
+					adaptive_size = false,
+					side = "left",
+					width = 30,
+				},
+			})
 		end,
 	},
 }
