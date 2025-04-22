@@ -41,7 +41,8 @@ return {
 						{
 							"filename",
 							file_status = true,
-							path = 4, -- filename and path (0:filename, 1:relative path)
+							-- path = 4, -- filename and path (0:filename, 1:relative path)
+							path = 0,
 							symbols = { modified = " ", readonly = " " },
 						},
 						"%=", -- center text section
