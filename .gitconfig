@@ -65,39 +65,42 @@
 [push]
     autoSetupRemote = true
 
-[alias]
+[alias]    
+    add-all = add -A
     alias = config --get-regexp alias
-    ll = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --name-only --decorate --date=short # alternative to <git log>, example: <git ls>
-    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short # alternative to <git log>, example: <git ls>
+    authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
+    c = commit
+    ck = !git branch | fzf | xargs git checkout # (checkout by showing and selecting) example: <git c>
+    cm = commit -m
+    conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
+    curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
+    delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
+    delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
+    dift = difftool
+    exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
+    f = fetch --prune
     graph = log --graph --oneline --decorate # example: <git graph develop feature/some-14> or just <git graph>
     graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
-    curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
-    conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
-    authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
-    recent-branches = !git branch --sort=-committerdate | head # (show recent branches) example: <git recent-branches>
-    local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }' # (show local only branches) example: <git local-branches>
-    s = status
-    f = fetch --prune
-    p = pull
-    c = !git branch | fzf | xargs git checkout # (checkout by showing and selecting) example: <git c>
-    sync = !git f && git p # (fetch and pull) example: <git sync>
-    pushf = push --force --progress # (force push) example: <git pushf>
-    reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
-    reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
-    reset-all = !git reset-untracked && git reset-hard # (clean all- (un)tracked files) example: <git reset-all>
-    delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
-    new = checkout -B # (create new branches) example: <git new branchName>
+    history = !git log --oneline --color | fzf --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
     list = branch -v # (list local branches) example: <git list>
     list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
+    ll = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --name-only --decorate --date=short # alternative to <git log>, example: <git ls>
+    local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }' # (show local only branches) example: <git local-branches>
+    log-deleted = log --diff-filter=D -- # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
+    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short # alternative to <git log>, example: <git ls>
+    new = checkout -B # (create new branches) example: <git new branchName>
+    p = pull
+    patch = !git add -N . && git diff HEAD > patch
+    pushf = push --force --progress # (force push) example: <git pushf>
+    recent-branches = !git branch --sort=-committerdate | head # (show recent branches) example: <git recent-branches>
     # git branch -m <branch=new-branch-name>; git push origin <branch>; git push origin --delete <current=$(git curr)>
     rename = branch -m # (rename branch locally, remember to <git push origin branch> + <git delete-remote>) example: <git rename newName>
-    delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
-    exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
-    history = !git log --oneline --color | fzf --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
-    log-deleted = log --diff-filter=D -- # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
+    reset-all = !git reset-untracked && git reset-hard # (clean all- (un)tracked files) example: <git reset-all>
+    reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
+    reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
+    s = status
+    sw = !git switch $(git branch | fzf)
+    sync = !git f && git p # (fetch and pull) example: <git sync>
+    unmodule = submodule deinit -f 
     unstage = restore --staged
     unstage-all = unstage -S .
-    add-all = add -A
-    patch = !git add -N . && git diff HEAD > patch
-    dift = difftool
-    unmodule = submodule deinit -f 
