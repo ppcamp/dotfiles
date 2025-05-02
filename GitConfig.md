@@ -76,4 +76,7 @@ Note that this **won't work if you changed the external tool for git**, it **mus
 
 </details>
 
+- https://pre-commit.com/
+- https://git-scm.com/book/ms/v2/Customizing-Git-Git-Hooks
+- https://git-scm.com/book/en/v2/Git-Tools-Submodules
 	
