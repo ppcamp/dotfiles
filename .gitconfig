@@ -69,12 +69,11 @@
 [alias]
     # remember that any external command must be found placed at /bin/ or /usr/bin
     # TODO: replace all references to fzf-git-* plugin, to the actual code, since I cannot call it from here
-    add-all = add -A
     alias = config --get-regexp alias
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
     c = commit
     ca = commit --amend
-    cm = commit -m
+    cmsg = commit -m
     conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
     #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
     current = branch --show-current # (current branch) example: <git curr>
@@ -88,6 +87,7 @@
     graphx = log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ar)%C(reset)' --all
     graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
     history = !git log --oneline --color | fzf --border-label-pos=2 --border-label=" 🧻 History " --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
+    lazy = !LANG=en_US.UTF-8 lazygit # (execute lazygit cmd)
     list = branch -v # (list local branches) example: <git list>
     list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
     ll = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --name-only --decorate --date=short # alternative to <git log>, example: <git ls>
