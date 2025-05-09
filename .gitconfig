@@ -65,7 +65,9 @@
 [push]
     autoSetupRemote = true
 
-[alias]    
+[alias]
+    # remember that any external command must be found placed at /bin/ or /usr/bin
+    # TODO: replace all references to fzf-git-* plugin, to the actual code, since I cannot call it from here
     add-all = add -A
     alias = config --get-regexp alias
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
@@ -103,7 +105,7 @@
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     s = status
     stashes = !fzf-git-stashes-widget # (it requires to have installed the fzf-git plugin)
-    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=" 🌲 Branches " --preview="git log --oneline --graph --color=always {}" --height=40%)
+    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=' 🌲 Branches ' --preview='git log --oneline --graph --color=always {}' --height=40%)
     swx = !fzf-git-branches-widget # (it requires to have installed the fzf-git plugin)
     sync = !git f && git p # (fetch and pull) example: <git sync>
     tags = !fzf-git-tags-widget # (it requires to have installed the fzf-git plugin)
