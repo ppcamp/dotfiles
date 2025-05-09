@@ -1,3 +1,10 @@
+[user]
+    name = Pedro Santos
+    email = pedro.santos@emailprovider.com
+    
+[commit]
+    template = ~/.git-template
+
 [safe]
 	directory = /usr/share/nvim
 
@@ -13,12 +20,6 @@
 [init]
     defaultBranch = main
 
-[commit]
-    template = ~/.git-template
-
-[user]
-    name = Pedro Santos
-    email = pedro.santos@emailprovider.com
 [core]
     editor = nvim #code --wait
     pager = less -IR -
@@ -105,7 +106,7 @@
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     s = status
     stashes = !fzf-git-stashes-widget # (it requires to have installed the fzf-git plugin)
-    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=' 🌲 Branches ' --preview='git log --oneline --graph --color=always {}' --height=40%)
+    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=' 🌲 Branches ' --preview='git log --oneline --graph --color=always {}' --border=rounded)
     swx = !fzf-git-branches-widget # (it requires to have installed the fzf-git plugin)
     sync = !git f && git p # (fetch and pull) example: <git sync>
     tags = !fzf-git-tags-widget # (it requires to have installed the fzf-git plugin)
