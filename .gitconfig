@@ -70,19 +70,21 @@
     alias = config --get-regexp alias
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
     c = commit
-    ck = !git branch | fzf | xargs git checkout # (checkout by showing and selecting) example: <git c>
+    ca = commit --amend
     cm = commit -m
     conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
-    curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
-    delete = !git branch --list | fzf | xargs git branch --delete # example: <git delete>
+    #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
+    current = branch --show-current # (current branch) example: <git curr>
+    delete = !git branch --list | fzf --border-label-pos=2 --border-label=" 🌲 Delete branch " | xargs git branch --delete # example: <git delete>
     delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
+    d = difftool
     dift = difftool
     exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
     f = fetch --prune
     graph = log --graph --oneline --decorate # example: <git graph develop feature/some-14> or just <git graph>
     graphx = log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ar)%C(reset)' --all
     graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
-    history = !git log --oneline --color | fzf --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
+    history = !git log --oneline --color | fzf --border-label-pos=2 --border-label=" 🧻 History " --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
     list = branch -v # (list local branches) example: <git list>
     list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
     ll = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --name-only --decorate --date=short # alternative to <git log>, example: <git ls>
@@ -100,8 +102,13 @@
     reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     s = status
-    sw = !git switch $(git branch | fzf)
+    stashes = !fzf-git-stashes-widget # (it requires to have installed the fzf-git plugin)
+    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=" 🌲 Branches " --preview="git log --oneline --graph --color=always {}" --height=40%)
+    swx = !fzf-git-branches-widget # (it requires to have installed the fzf-git plugin)
     sync = !git f && git p # (fetch and pull) example: <git sync>
+    tags = !fzf-git-tags-widget # (it requires to have installed the fzf-git plugin)
     unmodule = submodule deinit -f 
     unstage = restore --staged
     unstage-all = unstage -S .
+    wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
+    worktrees = !fzf-git-worktrees-widget # (it requires to have installed the fzf-git plugin)
