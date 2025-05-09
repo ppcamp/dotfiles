@@ -66,6 +66,10 @@
 [push]
     autoSetupRemote = true
 
+[rebase]
+    autoStash = true
+    autoSquash = true
+
 [alias]
     # remember that any external command must be found placed at /bin/ or /usr/bin
     # TODO: replace all references to fzf-git-* plugin, to the actual code, since I cannot call it from here
