@@ -80,6 +80,7 @@
     exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
     f = fetch --prune
     graph = log --graph --oneline --decorate # example: <git graph develop feature/some-14> or just <git graph>
+    graphx = log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ar)%C(reset)' --all
     graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
     history = !git log --oneline --color | fzf --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
     list = branch -v # (list local branches) example: <git list>
