@@ -109,13 +109,13 @@
     reset-hard = reset --hard HEAD # (clean tracked files) example: <git reset-hard>
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     s = status
-    stashes = !fzf-git-stashes-widget # (it requires to have installed the fzf-git plugin)
+    stashes = !fzf-git --run stashes # (it requires to have installed the fzf-git plugin)
     sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=' 🌲 Branches ' --preview='git log --oneline --graph --color=always {}' --border=rounded)
-    swx = !fzf-git-branches-widget # (it requires to have installed the fzf-git plugin)
+    swx = !fzf-git --run branches # (it requires to have installed the fzf-git plugin)
     sync = !git f && git p # (fetch and pull) example: <git sync>
-    tags = !fzf-git-tags-widget # (it requires to have installed the fzf-git plugin)
-    unmodule = submodule deinit -f 
+    tags = !fzf-git --run tags # (it requires to have installed the fzf-git plugin)
+    unmodule = submodule deinit -f
     unstage = restore --staged
     unstage-all = unstage -S .
     wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
-    worktrees = !fzf-git-worktrees-widget # (it requires to have installed the fzf-git plugin)
+    worktrees = !fzf-git --run worktrees # (it requires to have installed the fzf-git plugin)
