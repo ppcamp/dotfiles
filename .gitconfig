@@ -72,7 +72,7 @@
 
 [alias]
     # remember that any external command must be found placed at /bin/ or /usr/bin
-    # TODO: replace all references to fzf-git-* plugin, to the actual code, since I cannot call it from here
+    # fzf-git: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
     alias = config --get-regexp alias
     authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
     c = commit
