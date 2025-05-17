@@ -1,30 +1,24 @@
 # nvim basic setup
 
-When using the NvimTree, you can use `space+sw` to open current file manager.
+A simple nvim setup for my use.
 
-[Vim shortcuts and tips](https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8)
+**When using `vim-go`, type `GoInstallBinaries` to install required tools**
 
-A simple nvim setup for my use
+> [!NOTE]
+>
+> Based on [kickstart-modular-nvim], [lazyvim-pm], [Lazyvim] with some
+> modifications.
 
-When using `vim-go`, type `GoInstallBinaries` to install required tools
+> [!TIP]
+>
+> [Check my gist with tips for vim][gist], and 
+> [Vim shortcuts and tips]
+>
+> As a suggestion, use a [nerdfont], which contains icons for your files, and after install it,
+> set it as font that should be used for your terminal emulator, after that, go to `lua/config/options.lua`
+> and enabled it.
 
-> Based on [kickstart-modular-nvim]
-
-
-[Check my gist with tips for vim](https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8)
-
-As a suggestion, use a [nerdfont], which contains icons for your files, and after install it,
-set it as font that should be used for your terminal emulator, after that, go to `lua/config/options.lua`
-and enabled it.
-
-
-## Todo
-
-- [ ] Replace `nvim-cmp` with `blink-nvim`
-    > https://cmp.saghen.dev/installation.html
-    >
-    > https://www.youtube.com/watch?v=GKIxgCcKAq4&list=PLy68GuC77sURrnMNi2XR1h58m674KOvLG&index=6
-
+---
 
 ## Setup
 
@@ -41,6 +35,9 @@ and enabled it.
 	```
 3. Run `nvim .`
 
+---
+
+## Extras
 
 See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 
@@ -75,4 +72,7 @@ rm -Force ~\AppData\Local\nvim-data
 <!----------------------------------------------------------------------------->
 [kickstart-modular-nvim]: https://github.com/dam9000/kickstart-modular.nvim
 [nerdfont]: https://www.nerdfonts.com/font-downloads
-
+[gist]: https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8
+[Vim shortcuts and tips]: https://gist.github.com/ppcamp/40ad98ab0622324e751fedb4504061c8
+[lazyvim-pm]: https://lazy.folke.io/spec
+[lazyvim]: https://www.lazyvim.org/

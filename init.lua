@@ -8,10 +8,8 @@ local load_modules = require("utils.modules").load_folder
 require("config.options")
 
 -- core library, used to load the whole environment (plugins)
-require("config.lazy")
-
 -- load all plugins and also register some of keymaps internally
-require("config.plugins")
+require("config.lazy")
 
 -- register extra keymaps/shortcuts
 require("config.keymaps")
