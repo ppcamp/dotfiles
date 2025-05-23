@@ -74,33 +74,32 @@
     # remember that any external command must be found placed at /bin/ or /usr/bin
     # fzf-git: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
     alias = config --get-regexp alias
-    authors = !git log --format='%aN <%aE>' | grep -v 'users.noreply.github.com' | sort -u --ignore-case # (all authors that commited) example: <git authors>
+    authors = !fzf-git --run authors # (all authors that commited) example: <git authors>
     c = commit
     ca = commit --amend
-    cmsg = commit -m
+    cm = commit -m
     conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
     #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
     current = branch --show-current # (current branch) example: <git curr>
-    delete = !git branch --list | fzf --border-label-pos=2 --border-label=" 🌲 Delete branch " | xargs git branch --delete # example: <git delete>
-    delete-remote = git push origin --delete # (delete a given branch in remote) example: <git delete-remote branchName>
-    d = difftool
+    delete = !fzf-git --run delete # example: <git delete>
+    delete-remote = !fzf-git --run delete -r # (delete a given branch in remote) example: <git delete-remote branchName>
+    dt = difftool
     dift = difftool
     exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
     f = fetch --prune
-    graph = log --graph --oneline --decorate # example: <git graph develop feature/some-14> or just <git graph>
-    graphx = log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ar)%C(reset)' --all
-    graph-vs = !git graph $(git curr) # (git graph vs current) example: <git graph-vs SomeBranchName>
-    history = !git log --oneline --color | fzf --border-label-pos=2 --border-label=" 🧻 History " --ansi --preview 'git show --color=always $(echo {} | cut -d\" \" -f1)' | cut -d\" \" -f1 | xargs -I {} git diff {}
+    graph = ll --graph # example: <git graph develop feature/some-14> or just <git graph>
+    graphx = graph --abbrev-commit --all
+    history = !fzf-git --run hashes # (it requires to have installed the fzf-git plugin)
     lazy = !LANG=en_US.UTF-8 lazygit # (execute lazygit cmd)
     list = branch -v # (list local branches) example: <git list>
     list-remotes = branch --remotes # (list remote branches ref) example: <git list-remotes>
-    ll = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --name-only --decorate --date=short # alternative to <git log>, example: <git ls>
+    ll = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
     local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }' # (show local only branches) example: <git local-branches>
     log-deleted = log --diff-filter=D -- # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
-    ls = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%C(red)%d\\ %C(reset)%s%C(blue)\\ [%cn]" --decorate --date=short # alternative to <git log>, example: <git ls>
+    ls = ll --name-only  # alternative to <git log>, example: <git ls>
     new = checkout -B # (create new branches) example: <git new branchName>
     p = pull
-    patch = !git add -N . && git diff HEAD > patch
+    patch = !git add -N . && git diff HEAD
     pushf = push --force --progress # (force push) example: <git pushf>
     recent-branches = !git branch --sort=-committerdate | head # (show recent branches) example: <git recent-branches>
     # git branch -m <branch=new-branch-name>; git push origin <branch>; git push origin --delete <current=$(git curr)>
@@ -110,8 +109,7 @@
     reset-untracked = clean -df # (clean untracked files) example: <git reset-clean>
     s = status
     stashes = !fzf-git --run stashes # (it requires to have installed the fzf-git plugin)
-    sw = !git switch $(git branch | fzf --border-label-pos=2 --border-label=' 🌲 Branches ' --preview='git log --oneline --graph --color=always {}' --border=rounded)
-    swx = !fzf-git --run branches # (it requires to have installed the fzf-git plugin)
+    sw = !fzf-git --run branches # (it requires to have installed the fzf-git plugin)
     sync = !git f && git p # (fetch and pull) example: <git sync>
     tags = !fzf-git --run tags # (it requires to have installed the fzf-git plugin)
     unmodule = submodule deinit -f
