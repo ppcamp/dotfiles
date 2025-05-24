@@ -1,3 +1,14 @@
+{{- /*
+
+This file is render before everything, thus, you can't reference the
+`.chezmoidata.yaml` file.
+
+ALL CUSTOMS VARIABLES MUST BE HERE. You CANNOT USE PROMPTS INSIDE TEMPLATES
+DIRECTLY.
+
+*/ -}}
+
+
 {{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
 {{- $interactive := stdinIsATTY -}}
 
@@ -5,20 +16,20 @@
 {{- /* If name was previously set, reuses it */ -}}
 {{- /* Otherwise, if running interactively, prompts for a name */ -}}
 
-{{- $name := (env "GIT_NAME") -}}
+{{- $name := "Pedro Campos" -}}
 {{- if hasKey . "name" -}}
 {{-   $name = .name -}}
 {{- else if $interactive -}}
-{{-   $name = promptString "name" $name -}}
+{{-   $name = promptString "git name" $name -}}
 {{- end -}}
 
 {{- /* Does the same for the email */ -}}
 
-{{- $email := (env "GIT_EMAIL") -}}
+{{- $email := "p.augustocampos@gmail.com" -}}
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
-{{-   $email = promptString "email" $email -}}
+{{-   $email = promptString "git email" $email -}}
 {{- end -}}
 
 {{- if $interactive -}}
