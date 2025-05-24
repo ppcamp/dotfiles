@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Can use templates
+
+{{ $gitx := joinPath .chezmoi.sourceDir "tools" "scripts" "gitx" | quote }}
+
+# copy with permission
+sudo cp -p {{ $gitx }} /usr/bin

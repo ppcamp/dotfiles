@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl -sLo - https://github.com/asdf-vm/asdf/releases/download/v0.16.5/asdf-v0.16.5-linux-amd64.tar.gz |
+    sudo tar -xzC /usr/bin
+# sudo rm /usr/bin/asdf

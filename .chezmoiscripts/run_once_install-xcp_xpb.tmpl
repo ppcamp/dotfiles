@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Can use templates
+
+{{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote }}
+{{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote }}
+
+# copy with permission
+sudo cp -p {{ $xcp }} {{ $xpb }} /usr/bin
