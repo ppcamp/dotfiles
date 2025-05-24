@@ -1,5 +1,0 @@
-source /home/ppcamp/.config/shell/init.zsh
-
-export PATH="$PATH:/home/ppcamp/.asdf/installs/golang/1.24.0/packages/bin"
-export PATH="$PATH:/home/ppcamp/.asdf/installs/rust/1.85.0/bin"
-export PATH="$PATH:/home/ppcamp/.asdf/installs/nodejs/lts/bin"

@@ -1,4 +1,5 @@
 #!/bin/bash
 
-curl -Lo - https://github.com/mvdan/sh/releases/download/v3.11.0/shfmt_v3.11.0_linux_amd64 | \
-    tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
+sudo curl -Lo /usr/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.11.0/shfmt_v3.11.0_linux_amd64
+
+sudo chmod +x /usr/bin/shfmt
