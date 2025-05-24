@@ -1,0 +1,50 @@
+#compdef fzf
+
+_fzf() {
+  local -a options
+  options=(
+    '--height[Set the height of the fzf window (e.g., 40%)]'
+    '--reverse[Reverse the layout (bottom-up)]'
+    '--border[Draw border around the finder]'
+    '--inline-info[Show info inline instead of at the bottom]'
+    '--multi[Enable multi-select mode]'
+    '--no-sort[Disable sorting of the input]'
+    '--no-mouse[Disable mouse support]'
+    '--cycle[Enable cyclic scrolling]'
+    '--tac[Reverse the order of input lines]'
+    '--query[Start with an initial query]:query string'
+    '--select-1[Automatically select the only match]'
+    '--exit-0[Exit immediately if there are no matches]'
+    '--exact[Perform exact match instead of fuzzy search]'
+    '--delimiter[Set the field delimiter (default: whitespace)]:delimiter'
+    '--nth[Specify which fields to match on]:field numbers (e.g., 1,3..5)'
+    '--with-nth[Transform the display output]:field numbers'
+    '--header[Show a custom header]:header text'
+    '--header-lines[Specify the number of header lines]:number'
+    '--prompt[Customize the prompt]:prompt text'
+    '--layout[Choose layout: default or reverse-list]:layout type'
+    '--bind[Bind a key to an action]:key-binding'
+    '--color[Customize color scheme]:color settings'
+    '--margin[Set the margin (e.g., 1,2,3,4)]:margin size'
+    '--padding[Set the padding (e.g., 1,2,3,4)]:padding size'
+    '--preview[Show a preview window with command output]:preview command'
+    '--preview-window[Control preview window layout]:layout options'
+    '--phony[Disable search and treat query as literal string]'
+    '--sync[Enable synchronous search mode]'
+    '--disabled[Disable user interaction]'
+    '--filter[Only return results that match the query]:filter string'
+    '--listen[Enable server mode to listen for input]:port number'
+    '--print-query[Print the query instead of results]'
+    '--expect[Bind keys to return immediately]:keys (e.g., enter,ctrl-x)'
+    '--multi[Allow multiple selections]'
+    '--no-hscroll[Disable horizontal scrolling]'
+    '--no-info[Hide info line]'
+    '--no-separator[Do not show separator between preview and input]'
+    '--filepath-word[Use file path word boundaries for navigation]'
+  )
+
+  _arguments -s $options
+}
+
+compdef _fzf fzf
+
