@@ -1,3 +1,11 @@
+# My Dotfiles
+
+
+## TODO
+
+- [ ] Delete remo ppcamp/nvim
+- [ ] Delete repo ppcamp/shell
+
 
 ## Links
 

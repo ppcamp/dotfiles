@@ -72,24 +72,24 @@ autoSquash = true
 
 [alias]
 # remember that any external command must be found placed at /bin/ or /usr/bin
-# fzf-git: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
+# gitx: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
 alias = config --get-regexp alias
-authors = !fzf-git --run authors # (all authors that commited) example: <git authors>
+authors = !gitx --run authors # (all authors that commited) example: <git authors>
 c = commit
 ca = commit --amend
 cm = commit -m
 conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
 #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
 current = branch --show-current          # (current branch) example: <git curr>
-delete = !fzf-git --run delete           # example: <git delete>
-delete-remote = !fzf-git --run delete -r # (delete a given branch in remote) example: <git delete-remote branchName>
+delete = !gitx --run delete           # example: <git delete>
+delete-remote = !gitx --run delete -r # (delete a given branch in remote) example: <git delete-remote branchName>
 dt = difftool
 dift = difftool
 exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
 f = fetch --prune
 graph = ls --graph # example: <git graph develop feature/some-14> or just <git graph>
 graphx = graph --abbrev-commit --all
-history = !fzf-git --run hashes                                                                                                # (it requires to have installed the fzf-git plugin)
+history = !gitx --run hashes                                                                                                # (it requires to have installed the gitx plugin)
 lazy = !LANG=en_US.UTF-8 lazygit                                                                                               # (execute lazygit cmd)
 list = branch -v                                                                                                               # (list local branches) example: <git list>
 list-remotes = branch --remotes                                                                                                # (list remote branches ref) example: <git list-remotes>
@@ -108,12 +108,12 @@ reset-all = !git reset-untracked && git reset-hard # (clean all- (un)tracked fil
 reset-hard = reset --hard HEAD                     # (clean tracked files) example: <git reset-hard>
 reset-untracked = clean -df                        # (clean untracked files) example: <git reset-clean>
 s = status
-stashes = !fzf-git --run stashes # (it requires to have installed the fzf-git plugin)
-sw = !fzf-git --run branches     # (it requires to have installed the fzf-git plugin)
+stashes = !gitx --run stashes # (it requires to have installed the gitx plugin)
+sw = !gitx --run branches     # (it requires to have installed the gitx plugin)
 sync = !git f && git p           # (fetch and pull) example: <git sync>
-tags = !fzf-git --run tags       # (it requires to have installed the fzf-git plugin)
+tags = !gitx --run tags       # (it requires to have installed the gitx plugin)
 unmodule = submodule deinit -f
 unstage = restore --staged
 unstage-all = unstage -S .
 wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
-worktrees = !fzf-git --run worktrees     # (it requires to have installed the fzf-git plugin)
+worktrees = !gitx --run worktrees     # (it requires to have installed the gitx plugin)
