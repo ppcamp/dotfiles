@@ -1,5 +1,12 @@
 # My Dotfiles
 
+> [!TIP]
+>
+> Installing chezmoi
+> ```sh
+> sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:ppcamp/dotfiles.git
+> ```
+
 
 ## TODO
 
@@ -9,8 +16,8 @@
 
 ## Links
 
-- https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/
-- https://www.chezmoi.io/
+- [chezmoi dotfiles config](https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/)
+- [chezmoi]
 
 
 ## Commands
@@ -25,3 +32,5 @@ chezmoi edit-config
 chezmoi data
 chezmoi cd
 ```
+
+[chezmoi]: https://www.chezmoi.io/
