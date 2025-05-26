@@ -6,12 +6,12 @@ export FZF_CTRL_R_OPTS="
   --bind 'alt-s:execute(pet new --tag {2..})+abort'"
 
 ############################# Search in your pet config bookmarks
-# The command below requires PET to be installed
-function pet-select() {
-  BUFFER=$(pet search  --color --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle redisplay
+pet-view() {
+    local query=$LBUFFER                # keep previous cmdline value
+    zle -I                              # Clears any pending input/output
+    BUFFER=""                           # Clears the line buffer
+    zle accept-line                     # Refresh/remove line buffer (previous data)
+    pet search --color --query="$query" # run query with previous cmd value
 }
-zle -N pet-select
-stty -ixon
-bindkey '^s' pet-select
+zle -N pet-view
+bindkey '^s' pet-view
