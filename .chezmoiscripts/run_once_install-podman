@@ -1,0 +1,8 @@
+#!/bin/bash
+
+version=$(apt search podman --version)
+
+echo "Installing bsdtar version ${version} directly from apt"
+
+sudo apt install -qq -y podman >/dev/null 2>&1
+# sudo apt autopurge -y podman

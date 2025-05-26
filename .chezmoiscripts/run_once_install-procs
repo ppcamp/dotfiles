@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# getting latest version
+version=$(curl -s https://api.github.com/repos/dalance/procs/releases/latest | jq -r .tag_name)
+
+echo "Installing procs $version"
+
+curl -sLo - https://github.com/dalance/procs/releases/latest/download/procs-$version-x86_64-linux.zip |
+    bsdtar -xC $HOME/.local/bin # --transform='s|eza|ls|'
+
+# echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh

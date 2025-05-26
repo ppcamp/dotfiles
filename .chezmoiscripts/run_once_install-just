@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# getting latest version
+version=$(curl -s https://api.github.com/repos/casey/just/releases/latest | jq -r .tag_name)
+
+echo "Installing just $version"
+
+curl -sLo - https://github.com/casey/just/releases/latest/download/just-${version#v}-x86_64-unknown-linux-musl.tar.gz |
+    tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
+
+# echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh

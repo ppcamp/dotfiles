@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Installing btop latest"
+
+curl -sLo - https://github.com/aristocratos/btop/releases/latest/download/btop-x86_64-linux-musl.tbz |
+    bsdtar -xjC /tmp
+
+mv /tmp/btop/bin/btop $HOME/.local/bin

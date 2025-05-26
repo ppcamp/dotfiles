@@ -3,6 +3,7 @@
 # Install usefull debugging tools for debian
 
 pkg=(
+    #"lbzip2"   # required for bzip2 compression/decompression (required by tar)
     "make"     # usually required for many tool
     "cmake"    # required for asdf and other tool
     "g++"      # required by asdf and some building tools
