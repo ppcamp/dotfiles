@@ -8,7 +8,7 @@ export FZF_CTRL_R_OPTS="
 ############################# Search in your pet config bookmarks
 # The command below requires PET to be installed
 function pet-select() {
-  BUFFER=$(pet search --query "$LBUFFER")
+  BUFFER=$(pet search  --color --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle redisplay
 }
