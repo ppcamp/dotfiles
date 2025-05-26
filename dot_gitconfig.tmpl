@@ -106,10 +106,10 @@ lazy = !LANG=en_US.UTF-8 lazygit                                                
 list = branch -v                                                                                                               # (list local branches) example: <git list>
 list-remotes = branch --remotes                                                                                                # (list remote branches ref) example: <git list-remotes>
 ll = ls --name-only                                                                                                            # alternative to <git log>, example: <git ls>
-lp = ls --first-parent # only show parent related commits
 local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'                                                        # (show local only branches) example: <git local-branches>
 log-deleted = log --diff-filter=D --                                                                                           # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
 ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
+lsp = ls --first-parent # only show parent related commits
 new = checkout -B                                                                                                              # (create new branches) example: <git new branchName>
 p = pull
 patch = !git add -N . && git diff HEAD
