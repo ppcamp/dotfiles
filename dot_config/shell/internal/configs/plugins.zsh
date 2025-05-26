@@ -9,10 +9,9 @@ local PLUGINS=(
   "$folder/fzf"                                # add support to fzf keybindings (ctrl+t, alt+c,ctrl+r)
   "zsh-users/zsh-autosuggestions.git"          # virtual suggestions
   "zdharma-continuum/fast-syntax-highlighting" # fast syntax highlighting
-  "ppcamp/fzf-git"                             # fzf git keybindings/shorcuts for zsh
-  "ppcamp/zsh-pet"                             # completion and ctrl+r saving option
   "ppcamp/zsh-fzf-rg"                          # rg+fzf search widget with live preview
   "$folder/zoxide"                             # zoxide (cd improved) integration and init
+  "$folder/pet"                                # completion and ctrl+r saving option
 )
 
 # load each plugin
