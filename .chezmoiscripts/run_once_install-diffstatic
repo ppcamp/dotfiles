@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Installing diffstatic (dift) latest"
+
+curl -sLo - https://github.com/Wilfred/difftastic/releases/latest/download/difft-x86_64-unknown-linux-musl.tar.gz |
+    tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'

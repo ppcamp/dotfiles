@@ -1,4 +1,8 @@
 #!/bin/bash
 
-sudo apt install -y libarchive-tools
+version=$(apt search libarchive-tools --version)
+
+echo "Installing bsdtar version ${version} directly from apt"
+
+sudo apt install -qq -y libarchive-tools >/dev/null 2>&1
 # sudo apt autopurge -y libarchive-tools

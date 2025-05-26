@@ -1,5 +1,10 @@
 #!/bin/bash
 
-curl -sLo - https://github.com/asdf-vm/asdf/releases/download/v0.16.5/asdf-v0.16.5-linux-amd64.tar.gz |
+# getting latest version
+version=$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | jq -r .tag_name)
+
+echo "Installing asdf $version"
+
+curl -sLo - https://github.com/asdf-vm/asdf/releases/download/${version}/asdf-${version}-linux-amd64.tar.gz |
     sudo tar -xzC /usr/bin
 # sudo rm /usr/bin/asdf

@@ -2,6 +2,8 @@
 
 # Can use templates
 
+echo "Installing xcp and xpb shell"
+
 {{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote }}
 {{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote }}
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-curl -Lo - https://github.com/eza-community/eza/releases/download/v0.20.24/eza_x86_64-unknown-linux-musl.tar.gz | \
+echo "Installing eza latest"
+
+curl -sLo - https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz |
     tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
 
 # echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh

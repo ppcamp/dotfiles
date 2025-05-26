@@ -1,4 +1,6 @@
 #!/bin/bash
 
+echo "Installing zsh latest version"
+
 sudo apt install zsh
 chsh -s $(which zsh)

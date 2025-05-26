@@ -1,11 +1,19 @@
 #!/bin/bash
 
 # Install usefull debugging tools for debian
-sudo apt update
-sudo apt install g++ make cmake gcc
-sudo apt install binutils gdb strace lsof file
-	# binutils   includes objdump, readelf, nm, etc.
-	# gdb        for debugging.
-	# strace     for system calls.
-	# lsof       for open file descriptors.
-	# file       inspeact the type of the file
+
+pkg=(
+    "make"     # usually required for many tool
+    "cmake"    # required for asdf and other tool
+    "g++"      # required by asdf and some building tools
+    "gcc"      # c++ compiler required for asdf
+    "binutils" # includes objdump, readelf, nm, etc.
+    "gdb"      # for debugging.
+    "strace"   # for system calls.
+    "lsof"     # for open file descriptors.
+    "file"     # inspeact the type of the file
+)
+
+echo "Installed debugging tools: ${pkg[*]}"
+
+sudo apt install -qq -y "${pkg[@]}" >/dev/null 2>&1
