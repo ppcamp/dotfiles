@@ -3,22 +3,24 @@
 > [!TIP]
 >
 > Installing chezmoi
+>
 > ```sh
-> sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:ppcamp/dotfiles.git
+> # Install chezmoi
+> sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+>
+> # initialize chezmoi (without install)
+> chezmoi init --apply https://github.com/ppcamp/dotfiles
 > ```
-
 
 ## TODO
 
 - [ ] Delete remo ppcamp/nvim
 - [ ] Delete repo ppcamp/shell
 
-
 ## Links
 
 - [chezmoi dotfiles config](https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/)
 - [chezmoi]
-
 
 ## Commands
 
@@ -34,3 +36,4 @@ chezmoi cd
 ```
 
 [chezmoi]: https://www.chezmoi.io/
+
