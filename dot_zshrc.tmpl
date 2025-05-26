@@ -1,1 +1,12 @@
 source {{ joinPath .chezmoi.homeDir ".config" "shell" "init.zsh" }}
+
+{{ if .enabled.sshAgent }}
+############################# SSH Agent plugin config
+zstyle :zen:plugins:ssh-agent agent-forwarding yes
+zstyle :zen:plugins:ssh-agent lifetime 1h
+zstyle :zen:plugins:ssh-agent identities $HOME/.ssh/file
+zstyle :zen:plugins:ssh-agent quiet yes
+
+zinit ice wait"0a" lucid
+zinit light $ZEN/pkg/ssh-agent
+{{ end }}

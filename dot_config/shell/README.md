@@ -72,10 +72,10 @@ export PATH="$PATH:/home/asapcard-note-h1y/.asdf/installs/nodejs/20.18.3"
 
 
 ############################# SSH Agent plugin config
-zstyle :omz:plugins:ssh-agent agent-forwarding yes
-zstyle :omz:plugins:ssh-agent lifetime 1h
-zstyle :omz:plugins:ssh-agent identities ~/.ssh/{bitbucket_,sftp_*}
-zstyle :omz:plugins:ssh-agent quiet yes
+zstyle :zen:plugins:ssh-agent agent-forwarding yes
+zstyle :zen:plugins:ssh-agent lifetime 1h
+zstyle :zen:plugins:ssh-agent identities ~/.ssh/{bitbucket_,sftp_*}
+zstyle :zen:plugins:ssh-agent quiet yes
 
 zinit ice wait"0a" lucid
 zinit light $HOME/.config/shell/plugins/ssh-agent

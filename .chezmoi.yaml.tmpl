@@ -32,6 +32,14 @@ DIRECTLY.
 {{-   $email = promptString "git email" $email -}}
 {{- end -}}
 
+
+{{- $useSSHClient := false -}}
+{{- if hasKey . "useSSHClient" -}}
+{{-   $useSSHClient = .useSSHClient -}}
+{{- else if $interactive -}}
+{{-   $useSSHClient = promptBool "Register ssh client" false -}}
+{{- end -}}
+
 {{- if $interactive -}}
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
@@ -42,3 +50,5 @@ data:
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
+  enabled:
+    sshAgent: {{ $useSSHClient }}
