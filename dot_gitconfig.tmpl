@@ -38,7 +38,7 @@ tool = difft # code
 prompt = false
 
 [difftool "difft"]
-cmd = difft --tab-width 2 --context 0 "$LOCAL" "$REMOTE"
+cmd = difft --tab-width 2 --context 0 --display json "$LOCAL" "$REMOTE"
 
 [difftool "vscode"]
 cmd = code --wait --diff $LOCAL $REMOTE
@@ -73,16 +73,27 @@ autoSquash = true
 [alias]
 # remember that any external command must be found placed at /bin/ or /usr/bin
 # gitx: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
+aa = add -A
+ap = add --patch
 alias = config --get-regexp alias
 authors = !gitx --run authors # (all authors that commited) example: <git authors>
+bm = branch --merged
+bed = branch --edit-description
+bsd = branch --show-description
 c = commit
 ca = commit --amend
+cane = commit --amend --no-edit
+ci = commit --interactive
 cm = commit -m
 conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
+cp = cherry-pick
+cpn = cherry-pick -n
 #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
 current = branch --show-current          # (current branch) example: <git curr>
 delete = !gitx --run delete           # example: <git delete>
 delete-remote = !gitx --run delete -r # (delete a given branch in remote) example: <git delete-remote branchName>
+d = diff
+dd = diff --check --dirstat --find-copies --find-renames --histogram --color
 dt = difftool
 dift = difftool
 exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
