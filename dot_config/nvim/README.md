@@ -11,7 +11,7 @@ A simple nvim setup for my use.
 
 > [!TIP]
 >
-> [Check my gist with tips for vim][gist], and
+> [Check my gist with tips for vim][gist], and 
 > [Vim shortcuts and tips]
 >
 > As a suggestion, use a [nerdfont], which contains icons for your files, and after install it,
@@ -47,7 +47,7 @@ For nvim to work with sudo account, you'll need to create a copy or a link into 
 
 https://github.com/folke/noice.nvim
 
-## To remove it
+## To remove it 
 
 ```sh
 # Linux / MacOS (unix)

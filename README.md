@@ -12,8 +12,11 @@
 > chezmoi init --apply https://github.com/ppcamp/dotfiles
 > ```
 
+
+
 ## TODO
 
+- [ ] Fix [lazygit nvim plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins)
 - [ ] Delete remo ppcamp/nvim
 - [ ] Delete repo ppcamp/shell
 

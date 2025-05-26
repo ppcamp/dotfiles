@@ -1,9 +1,5 @@
 -- vim: ts=2 sts=2 sw=2 et
 
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
-
 local is_wsl = require("utils.os").is_wsl
 
 local opt = vim.opt
@@ -102,25 +98,25 @@ opt.scrolloff = 10
 opt.confirm = true
 
 if is_wsl() then
-  -- print("WSL")
+	-- print("WSL")
 
-  -- if set, it'll overwrite the internal clipboard to always use the system,
-  -- which in windows, will add the carriage return char at the end of simple
-  -- commands such as dd or p
-  -- opt.clipboard = "unnamed" -- or unnamed plus
-  opt.clipboard = ""
-  vim.g.clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-      ["+"] = "clip.exe",
-      ["*"] = "clip.exe",
-    },
-    paste = {
-      ["+"] = "powershell.exe -noprofile -command Get-Clipboard",
-      ["*"] = "powershell.exe -noprofile -command Get-Clipboard",
-    },
-    cache_enabled = 0,
-  }
-  -- else
-  -- 	print("Not WSL")
+	-- if set, it'll overwrite the internal clipboard to always use the system,
+	-- which in windows, will add the carriage return char at the end of simple
+	-- commands such as dd or p
+	-- opt.clipboard = "unnamed" -- or unnamed plus
+	opt.clipboard = ""
+	vim.g.clipboard = {
+		name = "win32yank-wsl",
+		copy = {
+			["+"] = "clip.exe",
+			["*"] = "clip.exe",
+		},
+		paste = {
+			["+"] = "powershell.exe -noprofile -command Get-Clipboard",
+			["*"] = "powershell.exe -noprofile -command Get-Clipboard",
+		},
+		cache_enabled = 0,
+	}
+	-- else
+	-- 	print("Not WSL")
 end
