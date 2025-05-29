@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Installing nvim latest version"
+echo "🚀 Installing nvim latest version"
 
 # Download and install nvim
 sudo rm -rf /opt/nvim

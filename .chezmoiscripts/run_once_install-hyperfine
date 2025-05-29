@@ -3,7 +3,7 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | jq -r .tag_name)
 
-echo "Installing hyperfine $version"
+echo "🚀 Installing hyperfine $version"
 
 curl -sLo - "https://github.com/sharkdp/hyperfine/releases/latest/download/hyperfine-${version}-x86_64-unknown-linux-musl.tar.gz" |
-    sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/bin

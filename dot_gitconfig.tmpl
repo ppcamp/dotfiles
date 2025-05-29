@@ -74,6 +74,7 @@ autoSquash = true
 [alias]
 # remember that any external command must be found placed at /bin/ or /usr/bin
 # gitx: plugin needs to be installed in the /usr/bin (you can find it in "shell" repo)
+a = add
 aa = add -A
 ap = add --patch
 alias = config --get-regexp alias
@@ -112,6 +113,7 @@ ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s%C(bold blue)%d%
 lsp = ls --first-parent                                                                                                                                # only show parent related commits
 new = checkout -B                                                                                                                                      # (create new branches) example: <git new branchName>
 p = pull
+pr = pull --rebase
 patch = !git add -N . && git diff HEAD
 pushf = push --force --progress                            # (force push) example: <git pushf>
 optmize = gc --agressive                                   # clean

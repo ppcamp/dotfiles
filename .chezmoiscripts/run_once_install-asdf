@@ -6,7 +6,7 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | jq -r .tag_name)
 
-echo "Installing asdf $version"
+echo "🚀 Installing asdf $version"
 
 curl -sLo - https://github.com/asdf-vm/asdf/releases/download/${version}/asdf-${version}-linux-amd64.tar.gz |
   sudo tar -xzC /usr/bin

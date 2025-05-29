@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "Installing starship latest version"
+echo "🚀 Installing starship latest version"
 
 curl -sS https://starship.rs/install.sh | sh -s -- -y 2>&1 >/dev/null

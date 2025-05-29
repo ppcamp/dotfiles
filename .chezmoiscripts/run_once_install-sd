@@ -3,9 +3,9 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/chmln/sd/releases/latest | jq -r .tag_name)
 
-echo "Installing sd $version"
+echo "🚀 Installing sd $version"
 
 curl -sLo - https://github.com/chmln/sd/releases/latest/download/sd-$version-x86_64-unknown-linux-musl.tar.gz |
-    tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
+  tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
 
 # echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh

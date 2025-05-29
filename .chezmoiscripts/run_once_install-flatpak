@@ -1,0 +1,29 @@
+#!/bin/bash
+
+version=$(apt search flatpak --version)
+
+############################## Flatpak installation
+echo "🚀 Installing flatpak version ${version} directly from apt"
+sudo apt install -qq -y flatpak >/dev/null 2>&1
+
+############################## Gnome Software plugin for Flatpak
+if apt list --installed gnome-software | grep -q gnome-software; then
+  echo "⚙️ GNOME Software is installed. Configuring it to support Flatpak applications."
+  sudo apt install -qq -y gnome-software-plugin-flatpak >/dev/null 2>&1
+fi
+
+############################## Flathub repository
+echo "⚙️ Configuring flathub"
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+############################## Flatpak fix themes for GNOME
+echo "🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
+# with this, all applications will use the Adwaita dark theme.
+#
+# Fixes:
+# - dbeaver issue
+# - insomnia issue
+# - libreoffice issue
+flatpak override --user --env=GTK_THEME=Adwaita:dark
+
+# sudo apt autopurge -y flatpak

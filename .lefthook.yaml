@@ -1,0 +1,56 @@
+# Lefthook configuration file
+#
+# https://lefthook.dev/configuration/run.html
+# https://lefthook.dev/examples/index.html
+# https://evilmartians.com/chronicles/5-cool-and-surprising-ways-to-configure-lefthook-for-automation-joy
+#
+# export LEFTHOOK_VERBOSE=1
+# `lefthook install` to install the hooks
+
+pre-commit:
+  piped: true # Stop if previous command failed
+  # follow: true
+  commands:
+    avoid-commit:
+      priority: 1
+      only:
+        # - ref: main
+        - ref: develop
+        - ref: release*
+      run: echo "❗️ Avoid committing in main" && exit 1
+    step-1:
+      priority: 2
+      skip:
+        - merge
+        - rebase
+      run: printf "✅ Step 1\n\n"
+      stage_fixed: true
+    fail-step:
+      priority: 3
+      skip: true
+      run: printf "❌ Failing...\n\n" && exit 1
+    step-2:
+      priority: 4
+      run: echo "✅ This should NOT run"
+
+
+# pre-commit:
+#   parallel: false  # run commands sequentially
+#   commands:
+#     install:
+#       run: echo "⚙️ This is a pre-push hook. You can run 'git push' to trigger this command"
+#     format:
+#       run: echo "⚙️ Can be used to format code before pushing"
+#     should-fail:
+#       run: echo "❗️ This command is expected to fail" && exit 1
+#     lint-example:
+#       run: echo "⚙️ Some linting command"
+# test:
+#   commands:
+#     testing:
+#       run: echo "👁️‍🗨️ You can run 'git hook run test' to execute this command"
+
+# pre-push:
+#   commands:
+#     testing:
+#       run: echo "📤 Command to run before pushing commits."

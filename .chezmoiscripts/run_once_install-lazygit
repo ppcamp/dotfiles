@@ -3,7 +3,7 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | jq -r .tag_name)
 
-echo "Installing lazygit $version"
+echo "🚀 Installing lazygit $version"
 
 curl -sLo - "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${version#v}_Linux_x86_64.tar.gz" |
-    sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/bin

@@ -110,3 +110,6 @@ alias lazy='LANG=en_US.UTF-8 lazygit'
 
 ## Chezmoi
 alias cz='chezmoi'
+
+### Lefthook
+alias lh='lefthook'

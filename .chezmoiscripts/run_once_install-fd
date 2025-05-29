@@ -5,10 +5,10 @@ f="$ZEN/internal/completions/"
 # getting latest version of fd
 version=$(curl -s https://api.github.com/repos/sharkdp/fd/releases/latest | jq -r .tag_name)
 
-echo "Installing fd $version"
+echo "🚀 Installing fd $version"
 
 curl -sLo - https://github.com/sharkdp/fd/releases/latest/download/fd-$version-x86_64-unknown-linux-musl.tar.gz |
-    tar -xzC /tmp
+  tar -xzC /tmp
 
 sudo mv /tmp/fd-$version-x86_64-unknown-linux-musl/fd /usr/bin
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo "Installing zsh latest version"
+echo "🚀 Installing zsh latest version"
+sudo apt install -qq -y zsh
 
-sudo apt install zsh
+echo "⚙️ Setting zsh as default shell"
 chsh -s $(which zsh)

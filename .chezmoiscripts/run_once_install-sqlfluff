@@ -1,0 +1,8 @@
+#!/bin/bash
+
+version=$(apt search sqlfluff --version)
+
+echo "🚀 Installing sqlfluff version ${version} directly from apt"
+
+echo "    Install IT BY TYPING: sudo apt install -qq -y sqlfluff >/dev/null 2>&1"
+# sudo apt autopurge -y sqlfluff

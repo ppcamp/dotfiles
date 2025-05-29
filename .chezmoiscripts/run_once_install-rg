@@ -3,10 +3,10 @@
 # getting latest version of fd
 version=$(curl -s https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r .tag_name)
 
-echo "Installing rg $version"
+echo "🚀 Installing rg $version"
 
 curl -sLo - https://github.com/BurntSushi/ripgrep/releases/download/$version/ripgrep-$version-x86_64-unknown-linux-musl.tar.gz |
-    tar -xzC /tmp
+  tar -xzC /tmp
 
 sudo mv /tmp/ripgrep-$version-x86_64-unknown-linux-musl/rg /usr/bin
 

@@ -3,9 +3,9 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/knqyf263/pet/releases/latest | jq -r .tag_name)
 
-echo "Installing pet $version"
+echo "🚀 Installing pet $version"
 
 curl -sLo - https://github.com/knqyf263/pet/releases/latest/download/pet_${version#v}_linux_amd64.tar.gz |
-    tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
+  tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
 
 # echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh

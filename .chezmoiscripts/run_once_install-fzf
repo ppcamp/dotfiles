@@ -3,7 +3,7 @@
 # getting latest version
 version=$(curl -s https://api.github.com/repos/junegunn/fzf/releases/latest | jq -r .tag_name)
 
-echo "Installing fzf $version"
+echo "🚀 Installing fzf $version"
 
 curl -sLo - "https://github.com/junegunn/fzf/releases/latest/download/fzf-${version#v}-linux_amd64.tar.gz" |
-    sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/bin
