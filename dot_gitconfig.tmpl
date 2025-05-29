@@ -90,7 +90,7 @@ conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git co
 cp = cherry-pick
 cpn = cherry-pick -n
 #curr = rev-parse --abbrev-ref HEAD # (current branch) example: <git curr>
-current = branch --show-current          # (current branch) example: <git curr>
+current = branch --show-current       # (current branch) example: <git curr>
 delete = !gitx --run delete           # example: <git delete>
 delete-remote = !gitx --run delete -r # (delete a given branch in remote) example: <git delete-remote branchName>
 d = diff --word-diff --check --dirstat --find-copies --find-renames --histogram --color
@@ -101,20 +101,20 @@ f = fetch --prune
 gg = grep --break --heading --line-number --color
 graph = ls --graph # example: <git graph develop feature/some-14> or just <git graph>
 graphx = graph --abbrev-commit --all
-history = !gitx --run hashes                                                                                                # (it requires to have installed the gitx plugin)
-lazy = !LANG=en_US.UTF-8 lazygit                                                                                               # (execute lazygit cmd)
-list = branch -v                                                                                                               # (list local branches) example: <git list>
-list-remotes = branch --remotes                                                                                                # (list remote branches ref) example: <git list-remotes>
-ll = ls --name-only                                                                                                            # alternative to <git log>, example: <git ls>
-local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'                                                        # (show local only branches) example: <git local-branches>
-log-deleted = log --diff-filter=D --                                                                                           # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
-ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s %C(dim white)%an (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
-lsp = ls --first-parent # only show parent related commits
-new = checkout -B                                                                                                              # (create new branches) example: <git new branchName>
+history = !gitx --run hashes                                                                                                                           # (it requires to have installed the gitx plugin)
+lazy = !LANG=en_US.UTF-8 lazygit                                                                                                                       # (execute lazygit cmd)
+list = branch -v                                                                                                                                       # (list local branches) example: <git list>
+list-remotes = branch --remotes                                                                                                                        # (list remote branches ref) example: <git list-remotes>
+ll = ls --name-only                                                                                                                                    # alternative to <git log>, example: <git ls>
+local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'                                                                                # (show local only branches) example: <git local-branches>
+log-deleted = log --diff-filter=D --                                                                                                                   # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
+ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s%C(bold blue)%d%C(reset) %C(dim white)%an (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
+lsp = ls --first-parent                                                                                                                                # only show parent related commits
+new = checkout -B                                                                                                                                      # (create new branches) example: <git new branchName>
 p = pull
 patch = !git add -N . && git diff HEAD
 pushf = push --force --progress                            # (force push) example: <git pushf>
-optmize = gc --agressive # clean
+optmize = gc --agressive                                   # clean
 recent-branches = !git branch --sort=-committerdate | head # (show recent branches) example: <git recent-branches>
 # git branch -m <branch=new-branch-name>; git push origin <branch>; git push origin --delete <current=$(git curr)>
 rename = branch -m                                 # (rename branch locally, remember to <git push origin branch> + <git delete-remote>) example: <git rename newName>
@@ -124,7 +124,7 @@ reset-untracked = clean -df                        # (clean untracked files) exa
 s = status
 stashes = !gitx --run stashes # (it requires to have installed the gitx plugin)
 sw = !gitx --run branches     # (it requires to have installed the gitx plugin)
-sync = !git f && git p           # (fetch and pull) example: <git sync>
+sync = !git f && git p        # (fetch and pull) example: <git sync>
 tags = !gitx --run tags       # (it requires to have installed the gitx plugin)
 unmodule = submodule deinit -f
 unstage = restore --staged
@@ -132,4 +132,4 @@ unstage-all = unstage -S .
 what = whatchanged
 who = shortlog --summary --email --numbered --no-merges
 wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
-worktrees = !gitx --run worktrees     # (it requires to have installed the gitx plugin)
+worktrees = !gitx --run worktrees        # (it requires to have installed the gitx plugin)
