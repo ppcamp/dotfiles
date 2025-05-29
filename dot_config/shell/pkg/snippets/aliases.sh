@@ -73,6 +73,7 @@ alias h='history'
 alias hist='history'
 alias historyclear='history -a -p'
 alias table='column -t'
+alias now='date +"%Y-%m-%dT%H:%M:%SZ"'
 
 ### open files
 # see https://pt.linux-console.net/?p=19677
@@ -82,7 +83,7 @@ alias -s {py,go,mod,html,js,ts,zsh,md}=nvim
 alias icat='kitten icat'
 
 ### Github
-alias gists='gh gist'
+alias gist='gh gist'
 alias copilot='gh copilot'
 
 ### Podman

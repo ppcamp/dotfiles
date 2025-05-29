@@ -1,10 +1,13 @@
 #!/bin/bash
 
+### NOTE: This script is run once on the first run of chezmoi
+# This script installs asdf, a version manager for multiple languages
+
 # getting latest version
 version=$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | jq -r .tag_name)
 
 echo "Installing asdf $version"
 
 curl -sLo - https://github.com/asdf-vm/asdf/releases/download/${version}/asdf-${version}-linux-amd64.tar.gz |
-    sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/bin
 # sudo rm /usr/bin/asdf
