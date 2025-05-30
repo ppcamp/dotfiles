@@ -31,7 +31,7 @@ pre-commit:
       run: printf "❌ Failing...\n\n" && exit 1
     step-2:
       priority: 4
-      run: echo "✅ This should NOT run"
+      run: echo "✅ This should NOT run IF the previous command failed"
 
 
 # pre-commit:
