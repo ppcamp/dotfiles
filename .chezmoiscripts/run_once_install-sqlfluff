@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# SQL linter and formatter
+# https://github.com/sqlfluff/sqlfluff/tree/main
+
 version=$(apt search sqlfluff --version)
 
 echo "🚀 Installing sqlfluff version ${version} directly from apt"

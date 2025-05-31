@@ -8,4 +8,8 @@ echo "🚀 Installing xcp and xpb shell"
 {{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote }}
 
 # copy with permission
-sudo cp -p {{ $xcp }} {{ $xpb }} /usr/bin
+# sudo cp -p {{ $xcp }} {{ $xpb }} /usr/local/bin
+
+# or use the system utils to set proper permissions/groups for this folder
+
+install -m 755 ./my_program /usr/local/bin/

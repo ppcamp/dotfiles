@@ -6,4 +6,4 @@ version=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | jq 
 echo "🚀 Installing bat $version"
 
 curl -sLo - "https://github.com/sharkdp/bat/releases/latest/download/bat-${version}-x86_64-unknown-linux-musl.tar.gz" |
-  sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/local/bin

@@ -6,3 +6,6 @@ curl -sLo - https://github.com/eza-community/eza/releases/latest/download/eza_x8
   tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
 
 # echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh
+
+# eza comes with improved permission viewing, (With human and octal permissions)
+# it also comes with colouring by default and allow to show a "tree view" of directories

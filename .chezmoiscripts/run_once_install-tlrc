@@ -6,4 +6,4 @@ version=$(curl -s https://api.github.com/repos/tldr-pages/tlrc/releases/latest |
 echo "🚀 Installing tlrc $version"
 
 curl -sLo - https://github.com/tldr-pages/tlrc/releases/latest/download/tlrc-$version-x86_64-unknown-linux-musl.tar.gz |
-  sudo tar -xzC /usr/bin
+  sudo tar -xzC /usr/local/bin

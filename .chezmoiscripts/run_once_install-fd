@@ -10,9 +10,9 @@ echo "🚀 Installing fd $version"
 curl -sLo - https://github.com/sharkdp/fd/releases/latest/download/fd-$version-x86_64-unknown-linux-musl.tar.gz |
   tar -xzC /tmp
 
-sudo mv /tmp/fd-$version-x86_64-unknown-linux-musl/fd /usr/bin
+sudo mv /tmp/fd-$version-x86_64-unknown-linux-musl/fd /usr/local/bin
 
 mv /tmp/fd-$version-x86_64-unknown-linux-musl/autocomplete/_fd $f
 
 rm -rfd /tmp/fd-$version-x86_64-unknown-linux-musl
-# sudo rm /usr/bin/asdf
+# sudo rm /usr/local/bin/asdf

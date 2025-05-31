@@ -7,4 +7,4 @@ echo "🚀 Installing gitx script"
 {{ $gitx := joinPath .chezmoi.sourceDir "tools" "scripts" "gitx" | quote }}
 
 # copy with permission
-sudo cp -p {{ $gitx }} /usr/bin
+sudo cp -p {{ $gitx }} /usr/local/bin

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 local file=gh_2.69.deb
 pushd $(pwd)
