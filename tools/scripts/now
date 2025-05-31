@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+// The #! line above is called a shebang and it tells the system to use Node.js
+// to run this script.
+//
+// The env command allows the script to be run in any environment where
+// Node.js is installed (allows asdf, nvm, or other version managers to work).
+
+// This script outputs the current date and time in ISO 8601 format.
+'use strict';
+
+const date = new Date();
+
+console.log(date.toISOString());

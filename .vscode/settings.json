@@ -1,5 +1,7 @@
 {
   "yaml.schemas": {
     "https://raw.githubusercontent.com/evilmartians/lefthook/master/schema.json": "file:///home/ppcamp/.local/share/chezmoi/.lefthook.yaml"
-  }
+  },
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.autoImportCompletions": true
 }
