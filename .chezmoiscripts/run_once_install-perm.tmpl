@@ -1,0 +1,13 @@
+{{- if hasKey .scripts "perm" -}}
+#!/usr/bin/env bash
+
+echo "🚀 Installing perm script to shell"
+{{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "perm" | quote -}}
+
+# copy with permission
+cp -p {{ $xcp }} {{ .installDirs.home }}
+
+# or use the system utils to set proper permissions/groups for this folder
+# install -m 755 ./my_program {{ .installDirs.home }}
+
+{{- end -}}

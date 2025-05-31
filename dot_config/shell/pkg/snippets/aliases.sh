@@ -18,7 +18,7 @@ alias sudo='sudo env PATH=$PATH'
 alias duh='du -sh'
 
 ### permissions
-alias perm='stat --format="%a %n"'
+#alias perm='stat --format="%a %n"'
 
 ### Dir stack (see pushd and popd)
 alias dirs='dirs -v'

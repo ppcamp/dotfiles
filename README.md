@@ -13,9 +13,17 @@
 > ```
 
 
+<figure>
+  <img src="./docs/imgs/execution.png" alt="chezmoi execution" width="500px">
+  <figcaption>ChezMoi execution</figcaption>
+</figure>
 
 ## TODO
 
+- [ ] Use `install -m 755` for scripts in `.installDirs.main` and `.installDirs.home`
+- [ ] Clean up any wrong script installed previously in `/usr/bin/` and `/usr/local/bin/` and `/bin/`
+> [!WARNING]
+> Some scripts installed the whole tarball in those folders.
 - [ ] Fix [lazygit nvim plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins)
 - [ ] Delete repo ppcamp/nvim
 - [ ] Delete repo ppcamp/shell

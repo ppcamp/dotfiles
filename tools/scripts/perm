@@ -1,0 +1,193 @@
+#!/usr/bin/env python3
+
+# Alternativaly, you can use the following command to run this script:
+# alias perm='stat --format="%a %n"'
+
+import os
+import sys
+import argparse
+from typing import List
+
+
+parser = argparse.ArgumentParser(
+    description="Show permissions. Or convert them.",
+    epilog="\n".join(
+        [
+            "Examples:",
+            "# Show permissions of a file in octal:",
+            "  perm -f myfile.txt -o",
+            "",
+            "# Show permissions of a file in symbolic (WRX) format:",
+            "  perm -f myfile.txt -p",
+            "",
+            "# Convert octal to symbolic:",
+            "  perm 755",
+            "",
+            "# Convert symbolic to octal:",
+            "  perm rwxr-xr-x",
+            "",
+            "# Convert multiple permissions at once:",
+            "  perm 644 600 rwxr-xr-x",
+            "",
+            "# Convert permissions from a file:",
+            "  perm -f myfile.txt",
+            "",
+            "# Convert permissions from multiple files:",
+            "  perm -f file1.txt file2.txt",
+            "",
+            "# Convert permissions from a file and symbolic input:",
+            "  perm -p -f file1 file2 -- wrxrwxwrx",
+        ]
+    ),
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+)
+
+
+def get_file_permissions_octal(file_path: str):
+    if not os.path.exists(file_path):
+        parser.error(f"File '{file_path}' does not exist.")
+        return
+
+    return oct(os.stat(file_path).st_mode)[-3:]
+
+
+def convert_perms(permission: str, *, octal: bool = False, pretty: bool = False) -> str:
+    """
+    Convert file permission representations between octal and symbolic formats.
+
+    Args:
+      permission (str): The permission to convert. Can be an octal string (e.g., '755'),
+        an integer (e.g., 0o755), or a symbolic string (e.g., 'rwxr-xr-x').
+      octal (bool, optional): If True, output will be in octal format. Defaults to False.
+      pretty (bool, optional): If True, output will be in symbolic (rwx) format. Defaults to False.
+
+    Returns:
+      str: The converted permission string in the requested format.
+
+    Raises:
+      SystemExit: If the permission format is invalid.
+
+    Notes:
+      - If the input is octal and octal output is requested, returns the input as-is.
+      - If the input is symbolic and pretty output is requested, returns the input as-is.
+      - Converts octal to symbolic or symbolic to octal as needed.
+      - Exits with an error message if the input format is invalid.
+    """
+
+    isInt = permission.isdigit()
+    isStr = not isInt
+
+    if isStr and len(permission) != 9 or isInt and len(permission) != 3:
+        parser.error(f"Invalid permission format: {permission}")
+
+    if (isInt and octal) or (isStr and pretty):
+        return f"{permission}"
+
+    # otherwise, swipe conversion
+    if isInt:
+        intPerm: int = permission if isinstance(permission, int) else int(permission, 8)
+        if intPerm < 0 or intPerm > 0o777:
+            parser.error(f"Invalid octal permission: {permission}")
+
+        def oct_digit_to_rwx(digit: int) -> str:
+            return "".join(
+                c if digit & mask else "-" for c, mask in zip("rwx", [4, 2, 1])
+            )
+
+        user_perms = oct_digit_to_rwx((intPerm & 0o700) >> 6)
+        group_perms = oct_digit_to_rwx((intPerm & 0o070) >> 3)
+        other_perms = oct_digit_to_rwx(intPerm & 0o007)
+
+        return f"{user_perms}{group_perms}{other_perms}"
+
+    # Convert symbolic (rwxrwxrwx) to octal
+    if isStr and all(c in "rwx-" for c in permission):
+        perm_map = {"r": 4, "w": 2, "x": 1, "-": 0}
+        octal_digits = [
+            sum(perm_map[c] for c in permission[i : i + 3]) for i in range(0, 9, 3)
+        ]
+        return "".join(str(d) for d in octal_digits)
+
+    parser.error(
+        "Invalid permission format. Use octal (e.g., 755) or symbolic (e.g., rwxr-xr-x)."
+    )
+
+
+def print_permissions(
+    permissions: List[str], *, octal: bool = False, pretty: bool = False
+):
+    min_spacing = 1
+    max_len = 0
+    results: List[str] = []
+    for perm in permissions:
+        results.append(convert_perms(perm, octal=octal, pretty=pretty))
+        max_len = max(max_len, len(perm))
+
+    # Only print header if output is a terminal (not being captured by subshell or piped)
+    if sys.stdout.isatty():
+        max_len = max(max_len, len("Input"))
+        spacing = max_len - len("Input") + min_spacing
+        print("Input{}Converted".format(" " * spacing))
+
+    for i, perm in enumerate(permissions):
+        spacing = max_len - len(perm) + min_spacing
+        print("{}{}{}".format(perm, " " * spacing, results[i]))
+
+
+def main():
+    """
+    Main entry point for the permission utility script.
+    Parses command-line arguments to determine the mode of operation:
+    - If a file is specified with '-f/--file', displays its permissions in either octal or WRX format.
+    - If permission strings or integers are provided as positional arguments, converts and displays them in the requested format.
+    - Supports mutually exclusive output formats: octal ('-o/--octal') or pretty WRX ('-p/--pretty').
+    - Prints a header if output is to a terminal.
+    - Exits with code 1 and prints help if no permissions are provided and no file is specified.
+    Returns:
+      None
+    """
+
+    parser.add_argument(
+        "-f", "--file", nargs="+", help="Specify one or more file paths."
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "-o", "--octal", action="store_true", help="Show permissions in octal format."
+    )
+    group.add_argument(
+        "-p",
+        "--pretty",
+        action="store_true",
+        help="Show permissions in WRX mode.",
+    )
+
+    parser.add_argument(
+        "permissions",
+        nargs="*",
+        help="Permission string or integer to convert.",
+    )
+
+    parsed = parser.parse_args()  # type: ignore
+
+    # Type annotation for args
+    class Args:
+        file: List[str] | None
+        octal: bool
+        pretty: bool
+        permissions: list[str]
+
+    args: Args = parsed  # type: ignore
+
+    if args.file:
+        for file_path in args.file:
+            args.permissions.append(get_file_permissions_octal(file_path))
+
+    if len(args.permissions) < 1:
+        parser.error("You should provide at least one permission or a file to check.")
+
+    print_permissions(args.permissions, octal=args.octal, pretty=args.pretty)
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

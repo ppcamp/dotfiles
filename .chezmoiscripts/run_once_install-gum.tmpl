@@ -12,7 +12,7 @@ curl -sLo - "https://github.com/charmbracelet/gum/releases/latest/download/gum_$
 completions="$ZEN/internal/completions/"
 f=gum_${version#v}_Linux_x86_64
 
-sudo mv /tmp/$f/gum {{ .installDirs.home }}
+mv /tmp/$f/gum {{ .installDirs.home }}
 mv /tmp/$f/completions/gum.zsh $completions
 rm -rfd /tmp/$f
 
