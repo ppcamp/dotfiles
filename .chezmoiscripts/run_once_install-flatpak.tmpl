@@ -1,5 +1,7 @@
-#!/bin/bash
+{{- if or (hasKey .scripts "flatpak") (hasKey .scripts "flatpak-fix-dark-theme") -}}
+#!/usr/bin/env bash
 
+{{- if hasKey .scripts "flatpak" }}
 version=$(apt search flatpak --version)
 
 ############################## Flatpak installation
@@ -16,9 +18,14 @@ fi
 echo "⚙️ Configuring flathub"
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
+{{- end -}}
+
+{{- if hasKey .scripts "flatpak-fix-dark-theme" }}
 ############################## Flatpak fix themes for GNOME
 echo "🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
 # with this, all applications will use the Adwaita dark theme.
+#
+# See https://gist.github.com/ppcamp/8646e69eddb9293cff732aa0c820f64a
 #
 # Fixes:
 # - dbeaver issue
@@ -27,3 +34,6 @@ echo "🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
 flatpak override --user --env=GTK_THEME=Adwaita:dark
 
 # sudo apt autopurge -y flatpak
+{{ end -}}
+
+{{ end -}}

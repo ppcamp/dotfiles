@@ -5,7 +5,7 @@
 fpath+=("$ZEN/internal/completions")
 
 # Use modern completion system
-# autoload -Uz compinit # NOTE: already done by zinit
+# autoload -Uz compinit # already done by zinit
 
 zinit ice lucid wait blockf atinit"zpcompinit" # fast version of `compinit` execution
 zinit light zsh-users/zsh-completions          # additional completions

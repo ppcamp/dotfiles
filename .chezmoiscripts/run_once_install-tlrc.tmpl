@@ -1,9 +1,12 @@
-#!/bin/bash
+{{- if hasKey .scripts "tlrc" -}}
+#!/usr/bin/env bash
 
-# getting latest version of fd
+# getting latest version of tlrc
 version=$(curl -s https://api.github.com/repos/tldr-pages/tlrc/releases/latest | jq -r .tag_name)
 
 echo "🚀 Installing tlrc $version"
 
 curl -sLo - https://github.com/tldr-pages/tlrc/releases/latest/download/tlrc-$version-x86_64-unknown-linux-musl.tar.gz |
-  sudo tar -xzC /usr/local/bin
+  sudo tar -xzC {{ .installDirs.main }}
+
+{{ end -}}

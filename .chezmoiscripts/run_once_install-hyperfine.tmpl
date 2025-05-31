@@ -1,4 +1,5 @@
-#!/bin/bash
+{{- if hasKey .scripts "hyperfine" -}}
+#!/usr/bin/env bash
 
 # getting latest version
 version=$(curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | jq -r .tag_name)
@@ -6,4 +7,6 @@ version=$(curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest
 echo "🚀 Installing hyperfine $version"
 
 curl -sLo - "https://github.com/sharkdp/hyperfine/releases/latest/download/hyperfine-${version}-x86_64-unknown-linux-musl.tar.gz" |
-  sudo tar -xzC /usr/local/bin
+  sudo tar -xzC {{ .installDirs.main }}
+
+{{ end -}}

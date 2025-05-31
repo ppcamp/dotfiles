@@ -1,6 +1,8 @@
-#!/bin/bash
+{{- if hasKey .scripts "zoxide" -}}
+#!/usr/bin/env bash
 
 echo "🚀 Installing zoxide latest version"
 
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh 2>&1 >/dev/null
-# sudo rm /usr/local/bin/asdf
+
+{{ end -}}

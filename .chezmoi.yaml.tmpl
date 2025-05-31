@@ -6,8 +6,11 @@ This file is render before everything, thus, you can't reference the
 ALL CUSTOMS VARIABLES MUST BE HERE. You CANNOT USE PROMPTS INSIDE TEMPLATES
 DIRECTLY.
 
-*/ -}}
+See:
+- https://www.chezmoi.io/reference/templates/variables/
+- https://www.chezmoi.io/user-guide/command-overview/
 
+*/ -}}
 
 {{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
 {{- $interactive := stdinIsATTY -}}
@@ -20,7 +23,7 @@ DIRECTLY.
 {{- if hasKey . "name" -}}
 {{-   $name = .name -}}
 {{- else if $interactive -}}
-{{-   $name = promptString "git name" $name -}}
+{{-   $name = promptString " git name" $name -}}
 {{- end -}}
 
 {{- /* Does the same for the email */ -}}
@@ -29,18 +32,98 @@ DIRECTLY.
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
-{{-   $email = promptString "git email" $email -}}
+{{-   $email = promptString " git email" $email -}}
 {{- end -}}
+
+{{- /* Installation scripts selection */ -}}
+{{- $allChoices := list
+  "asdf"
+  "bat"
+  "bsdtar"
+  "btop"
+  "choose"
+  "debug-tools"
+  "diffstatic"
+  "eza"
+  "fd"
+  "flatpak"
+  "flatpak-fix-dark-theme"
+  "fzf"
+  "gum"
+  "hyperfine"
+  "just"
+  "lazygit"
+  "nvim"
+  "pet"
+  "podman"
+  "procs"
+  "rg"
+  "sd"
+  "shfmt"
+  "sqlfluff"
+  "starship"
+  "tlrc"
+  "xcp"
+  "xpb"
+  "zoxide"
+  "zsh"
+  "gitx"
+-}}
+{{- $defaultChoices := list
+  "asdf"
+  "bat"
+  "bsdtar"
+  "btop"
+  "choose"
+  "diffstatic"
+  "eza"
+  "fd"
+  "fzf"
+  "nvim"
+  "pet"
+  "rg"
+  "sd"
+  "tlrc"
+  "xcp"
+  "xpb"
+  "zoxide"
+  "gitx"
+-}}
+{{- $choices := promptMultichoice "󰯂 What should install (scripts to run)" $allChoices $defaultChoices -}}
+{{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}
 
 {{- if $interactive -}}
-{{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
+{{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
 {{- end -}}
 
-{{-   writeToStdout "⚙️ Once you install asdf, you need to install your plugins, to then, use `asdf install`.\n\tCheck your `.tool-versions` file.\n" -}}
+{{- writeToStdout "🛠️  For asdf, you need to install your plugins first, to then, use `asdf install`.\n\tCheck your `~/.tool-versions` file.\n" -}}
 
+{{- if eq .chezmoi.os "darwin" -}}
+{{- /*    🍎 macOS-specific code */ -}}
+{{ else if eq .chezmoi.os "linux" }}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{- /*    🪟 WSL-specific code */ -}}
+{{   else if eq .chezmoi.osRelease.id "debian" }}
+{{- /*    🌱 Debian-specific code */ -}}
+{{   else if eq .chezmoi.osRelease.id "fedora" }}
+{{- /*    🎩 Fedora-specific code */ -}}
+{{   else if eq .chezmoi.osRelease.id "fedora" }}
+{{- /*    🐧 ubuntu-specific code */ -}}
+{{-  end -}}
+{{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
+
+  installDirs:
+    main: /usr/local/bin
+    home: {{ joinPath .chezmoi.homeDir ".local" "bin" }}
+
+  scripts:
+    {{ range $choices -}}
+    {{.}}: true
+    {{ end }}
+

@@ -17,7 +17,7 @@
 ## TODO
 
 - [ ] Fix [lazygit nvim plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins)
-- [ ] Delete remo ppcamp/nvim
+- [ ] Delete repo ppcamp/nvim
 - [ ] Delete repo ppcamp/shell
 
 ## Links
@@ -27,15 +27,31 @@
 
 ## Commands
 
+Applying changes to your system:
 ```sh
 # to update
 chezmoi init --apply --data=false
+```
 
+Extra commands:
+```sh
 # to change anything
 chezmoi add /usr/bin/fzf-git
 chezmoi edit-config
 chezmoi data
 chezmoi cd
+```
+
+Clearing state of `chezmoi` scripts:
+```sh
+# testing template
+chezmoi execute-template < run_once_install-asdf.tmpl | bat
+
+# To clear the state of run_onchange_ scripts, run:
+chezmoi state delete-bucket --bucket=entryState
+
+# To clear the state of run_once_ scripts, run:
+chezmoi state delete-bucket --bucket=scriptState
 ```
 
 [chezmoi]: https://www.chezmoi.io/
@@ -52,8 +68,35 @@ chezmoi cd
 1. You must run
 
 ```sh
-echo "Removing previous binaries from /usr/bin, they now will be in /usr/local/bin"
-sudo rm -rf rg fd bat xcp xpb lazygit hyperfine gitx shfmt asdf diffstatic zoxide tlrc choose fzf
+echo "Removing previous binaries from /usr/bin and /bin, they now will be in /usr/local/bin"
+binaries=(
+  "bat"
+  "btop"
+  "choose"
+  "diffstatic"
+  "eza"
+  "fd"
+  "fzf"
+  "gitx"
+  "gum"
+  "hyperfine"
+  "just"
+  "lazygit"
+  "pet"
+  "procs"
+  "rg"
+  "sd"
+  "shfmt"
+  "tlrc"
+  "xcp"
+  "xpb"
+)
+for bin in $binaries; do
+  # --hidden to include hidden files
+  for result in $(fd --exclude '/mnt/' -tx "^$bin\$" /); do
+    sudo rm -i "$result"
+  done
+done
 ```
 
 </details>

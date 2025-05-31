@@ -1,4 +1,5 @@
-#!/bin/bash
+{{- if hasKey .scripts "pet" -}}
+#!/usr/bin/env bash
 
 # getting latest version
 version=$(curl -s https://api.github.com/repos/knqyf263/pet/releases/latest | jq -r .tag_name)
@@ -6,6 +7,8 @@ version=$(curl -s https://api.github.com/repos/knqyf263/pet/releases/latest | jq
 echo "🚀 Installing pet $version"
 
 curl -sLo - https://github.com/knqyf263/pet/releases/latest/download/pet_${version#v}_linux_amd64.tar.gz |
-  tar -xzC $HOME/.local/bin # --transform='s|eza|ls|'
+  tar -xzC {{ .installDirs.home }} # --transform='s|eza|ls|'
 
 # echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh
+
+{{ end -}}

@@ -1,0 +1,16 @@
+{{- if hasKey .scripts "podman" -}}
+#!/usr/bin/env bash
+
+version=$(apt search podman --version)
+
+echo "🚀 Installing bsdtar version ${version} directly from apt"
+
+sudo apt install -qq -y podman >/dev/null 2>&1
+# sudo apt autopurge -y podman
+
+
+# TODO: add new choice to install flatpah UI
+# https://flathub.org/pt-BR/apps/io.podman_desktop.PodmanDesktop
+# https://podman-desktop.io/
+
+{{ end -}}

@@ -1,0 +1,19 @@
+{{- if hasKey .scripts "gum" -}}
+#!/usr/bin/env bash
+
+# getting latest version
+version=$(curl -s https://api.github.com/repos/charmbracelet/gum/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing gum $version"
+
+curl -sLo - "https://github.com/charmbracelet/gum/releases/latest/download/gum_${version#v}_Linux_x86_64.tar.gz" |
+   tar -xzC /tmp # --transform='s|eza|ls|'
+
+completions="$ZEN/internal/completions/"
+f=gum_${version#v}_Linux_x86_64
+
+sudo mv /tmp/$f/gum {{ .installDirs.home }}
+mv /tmp/$f/completions/gum.zsh $completions
+rm -rfd /tmp/$f
+
+{{ end -}}

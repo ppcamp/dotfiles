@@ -1,4 +1,5 @@
-#!/bin/bash
+{{- if hasKey .scripts "gitx" -}}
+#!/usr/bin/env bash
 
 # Can use templates
 
@@ -7,4 +8,6 @@ echo "🚀 Installing gitx script"
 {{ $gitx := joinPath .chezmoi.sourceDir "tools" "scripts" "gitx" | quote }}
 
 # copy with permission
-sudo cp -p {{ $gitx }} /usr/local/bin
+sudo cp -p {{ $gitx }} {{ .installDirs.main }}
+
+{{ end -}}

@@ -1,5 +1,8 @@
-#!/bin/bash
+{{- if hasKey .scripts "asdf" -}}
+#!/usr/bin/env bash
 
 echo "🚀 Installing starship latest version"
 
 curl -sS https://starship.rs/install.sh | sh -s -- -y 2>&1 >/dev/null
+
+{{ end -}}

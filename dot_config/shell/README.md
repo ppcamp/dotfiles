@@ -83,15 +83,6 @@ zinit light $HOME/.config/shell/plugins/ssh-agent
 
 </details>
 
-### TODO
-
-- [ ] add the others dotfiles
-- [x] add scripts to install tools
-- [x] remove submodules, since they are not needed anymore (zinit support)
-- [x] improve load performance against omzshc config
-- [x] fzf completions not working
-- [x] fix paths wrapper import
-
 ## Notes
 
 [devhints]

@@ -1,15 +1,30 @@
-#!/bin/bash
+{{- if or (hasKey .scripts "xcp") (hasKey .scripts "xpb") -}}
+#!/usr/bin/env bash
 
-# Can use templates
+{{-   if hasKey .scripts "xcp" }}
 
-echo "🚀 Installing xcp and xpb shell"
-
-{{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote }}
-{{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote }}
+echo "🚀 Installing xcp to shell"
+{{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote -}}
 
 # copy with permission
-# sudo cp -p {{ $xcp }} {{ $xpb }} /usr/local/bin
+sudo cp -p {{ $xcp }} {{ .installDirs.main }}
 
 # or use the system utils to set proper permissions/groups for this folder
+# install -m 755 ./my_program {{ .installDirs.main }}
 
-install -m 755 ./my_program /usr/local/bin/
+{{-   end -}}
+
+{{-   if hasKey .scripts "xpb" }}
+
+echo "🚀 Installing xpb to shell"
+{{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote -}}
+
+# copy with permission
+sudo cp -p {{ $xpb }} {{ .installDirs.main }}
+
+# or use the system utils to set proper permissions/groups for this folder
+# install -m 755 ./my_program {{ .installDirs.main }}
+
+{{-    end -}}
+
+{{- end -}}

@@ -1,7 +1,11 @@
-#!/bin/bash
+{{- if hasKey .scripts "zsh" -}}
+#!/usr/bin/env bash
 
 echo "🚀 Installing zsh latest version"
 sudo apt install -qq -y zsh
 
+# TODO: add new choice to set as default
 echo "⚙️ Setting zsh as default shell"
 chsh -s $(which zsh)
+
+{{ end -}}
