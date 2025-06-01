@@ -2,6 +2,11 @@ tools/
 data/
 README.md
 BREAKING_CHANGES.md
+LICENSE
 docs/
 .lefthook.yaml
 zshrc.example
+
+{{ if .configs.disable.zsh }}
+.config/shell
+{{ end }}

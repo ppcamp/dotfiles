@@ -26,14 +26,24 @@ See:
 {{-   $name = promptString " git name" $name -}}
 {{- end -}}
 
-{{- /* Does the same for the email */ -}}
 
+{{- /* Does the same for the email */ -}}
 {{- $email := "p.augustocampos@gmail.com" -}}
 {{- if hasKey . "email" -}}
 {{-   $email = .email -}}
 {{- else if $interactive -}}
 {{-   $email = promptString " git email" $email -}}
 {{- end -}}
+
+
+{{- /* Check if should load zsh configs */ -}}
+{{- $loadZshConfigs := true -}}
+{{- if hasKey . "loadZshConfigs" -}}
+{{-   $loadZshConfigs = .loadZshConfigs -}}
+{{- else if $interactive -}}
+{{-   $loadZshConfigs = promptBool "⚙️ Load Zsh configs" $loadZshConfigs -}}
+{{- end -}}
+
 
 {{- /* Installation scripts selection */ -}}
 {{- $allChoices := list
@@ -116,6 +126,10 @@ See:
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
+  configs:
+    disable:
+      zsh: {{ not $loadZshConfigs }}
+
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
