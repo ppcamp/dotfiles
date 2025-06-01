@@ -4,7 +4,7 @@
 # zsh completion function for fd
 #
 # Based on ripgrep completion function.
-# Originally based on code from the zsh-users project — see copyright notice
+# Originally based on code from the zsh-users project ΓÇö see copyright notice
 # below.
 
 autoload -U is-at-least
@@ -47,7 +47,7 @@ _fd() {
   # We make heavy use of argument groups here to prevent the option specs from
   # growing unwieldy. These aren't supported in zsh <5.4, though, so we'll strip
   # them out below if necessary. This makes the exclusions inaccurate on those
-  # older versions, but oh well — it's not that big a deal
+  # older versions, but oh well ΓÇö it's not that big a deal
   fd_args=(
     + '(hidden)' # hidden files
     {-H,--hidden}'[search hidden files/directories]'

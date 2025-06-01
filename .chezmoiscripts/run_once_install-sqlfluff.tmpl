@@ -1,14 +1,16 @@
 {{- if hasKey .scripts "sqlfluff" -}}
 #!/usr/bin/env bash
 
+pkg=sqlfluff
+
 # SQL linter and formatter
 # https://github.com/sqlfluff/sqlfluff/tree/main
 
-version=$(apt search sqlfluff --version)
+version=$(apt search ${pkg} --version)
 
-echo "🚀 Installing sqlfluff version ${version} directly from apt"
+echo "🚀 Installing ${pkg} version ${version} directly from apt"
 
-echo "    Install IT BY TYPING: sudo apt install -qq -y sqlfluff >/dev/null 2>&1"
-# sudo apt autopurge -y sqlfluff
+sudo apt install -qq -y ${pkg} >/dev/null 2>&1
+# sudo apt autopurge -y ${pkg}
 
 {{ end -}}

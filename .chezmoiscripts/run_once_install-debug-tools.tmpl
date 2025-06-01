@@ -1,6 +1,7 @@
 {{- if hasKey .scripts "debug-tools" -}}
 #!/usr/bin/env bash
 
+
 # Install usefull debugging tools for debian
 
 pkg=(
@@ -16,7 +17,7 @@ pkg=(
   "file"     # inspeact the type of the file
 )
 
-echo "🚀 Installed debugging tools: ${pkg[*]}"
+echo "🚀 Installed debugging tools from apt: ${pkg[*]}"
 
 sudo apt install -qq -y "${pkg[@]}" >/dev/null 2>&1
 

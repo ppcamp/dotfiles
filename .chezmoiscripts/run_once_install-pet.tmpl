@@ -1,14 +1,25 @@
 {{- if hasKey .scripts "pet" -}}
 #!/usr/bin/env bash
 
+pkgCreator=knqyf263
+pkg=pet
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/knqyf263/pet/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing pet $version"
+echo "🚀 Installing $pkg $version"
 
-curl -sLo - https://github.com/knqyf263/pet/releases/latest/download/pet_${version#v}_linux_amd64.tar.gz |
-  tar -xzC {{ .installDirs.home }} # --transform='s|eza|ls|'
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_${version#v}_linux_amd64.tar.gz |
+  tar -xzC .
 
-# echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
 
 {{ end -}}

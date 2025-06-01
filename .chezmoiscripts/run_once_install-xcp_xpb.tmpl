@@ -7,10 +7,12 @@ echo "🚀 Installing xcp to shell"
 {{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote -}}
 
 # copy with permission
-sudo cp -p {{ $xcp }} {{ .installDirs.main }}
+# sudo cp -p {{ $xcp }} {{ .installDirs.main }}
 
-# or use the system utils to set proper permissions/groups for this folder
-# install -m 755 ./my_program {{ .installDirs.main }}
+# installing it
+sudo install -m 755 {{ $xcp }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main $xcp }}
 
 {{-   end -}}
 
@@ -22,8 +24,10 @@ echo "🚀 Installing xpb to shell"
 # copy with permission
 sudo cp -p {{ $xpb }} {{ .installDirs.main }}
 
-# or use the system utils to set proper permissions/groups for this folder
-# install -m 755 ./my_program {{ .installDirs.main }}
+# installing it
+sudo install -m 755 {{ $xpb }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main $xpb }}
 
 {{-    end -}}
 

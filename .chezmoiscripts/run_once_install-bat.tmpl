@@ -1,12 +1,25 @@
 {{- if hasKey .scripts "bat" -}}
 #!/usr/bin/env bash
 
+pkgCreator=sharkdp
+pkg=bat
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing bat $version"
+echo "🚀 Installing $pkg $version"
 
-curl -sLo - "https://github.com/sharkdp/bat/releases/latest/download/bat-${version}-x86_64-unknown-linux-musl.tar.gz" |
-  sudo tar -xzC {{ .installDirs.main }}
+# downloading package
+curl -sLo - "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version}-x86_64-unknown-linux-musl.tar.gz" |
+  tar -xzC . --transform='s|.*/||'
+
+# installing it
+sudo install -m 755 $pkg {{ .installDirs.main }}
+
+# sudo rm -rf {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}

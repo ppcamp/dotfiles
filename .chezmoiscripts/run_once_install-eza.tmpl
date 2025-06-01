@@ -1,12 +1,28 @@
 {{- if hasKey .scripts "eza" -}}
 #!/usr/bin/env bash
 
-echo "🚀 Installing eza latest"
+pkgCreator=eza-community
+pkg=eza
+tmp=$(mktemp -d)
 
-curl -sLo - https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-musl.tar.gz |
-  tar -xzC {{ .installDirs.home }} # --transform='s|eza|ls|'
+# openning tmp folder
+cd $tmp
 
-# echo 'alias ls="eza --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh
+# getting version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_x86_64-unknown-linux-musl.tar.gz |
+  tar -xzC . # --transform='s|$pkg|ls|'
+
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+# echo 'alias ls="$pkg --color=auto --git --icons"' >> $ZSH_CUSTOM/aliases.zsh
 
 # eza comes with improved permission viewing, (With human and octal permissions)
 # it also comes with colouring by default and allow to show a "tree view" of directories

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Version: 1.0.0
+#
 # Script modified from Junegunn
 # It must me installed at /usr/bin, and give exec perm (chmod +x fzf-git)
 # License can be found at:

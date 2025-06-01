@@ -1,13 +1,25 @@
 {{- if hasKey .scripts "gitx" -}}
 #!/usr/bin/env bash
 
+pkg=gitx
+version=1.0.0
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # Can use templates
 
-echo "🚀 Installing gitx script"
+echo "🚀 Installing $pkg $version"
 
 {{ $gitx := joinPath .chezmoi.sourceDir "tools" "scripts" "gitx" | quote }}
 
 # copy with permission
-sudo cp -p {{ $gitx }} {{ .installDirs.main }}
+# sudo cp -p {{ $gitx }} {{ .installDirs.main }}
+
+# installing it
+sudo install -m 755 {{ $gitx }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}

@@ -1,12 +1,25 @@
 {{- if hasKey .scripts "fzf" -}}
 #!/usr/bin/env bash
 
+pkgCreator=junegunn
+pkg=fzf
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/junegunn/fzf/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing fzf $version"
+echo "🚀 Installing ${pkg} $version"
 
-curl -sLo - "https://github.com/junegunn/fzf/releases/latest/download/fzf-${version#v}-linux_amd64.tar.gz" |
-  sudo tar -xzC {{ .installDirs.main }}
+# downloading package
+curl -sLo - "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-${version#v}-linux_amd64.tar.gz" |
+  sudo tar -xzC .
+
+# installing it
+sudo install -m 755 $pkg {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}

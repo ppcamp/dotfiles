@@ -1,9 +1,26 @@
 {{- if hasKey .scripts "diffstatic" -}}
 #!/usr/bin/env bash
 
-echo "🚀 Installing diffstatic (dift) latest"
+pkgCreator=Wilfred
+pkg=difftastic
+binName=difft
+tmp=$(mktemp -d)
 
-curl -sLo - https://github.com/Wilfred/difftastic/releases/latest/download/difft-x86_64-unknown-linux-musl.tar.gz |
-  sudo tar -xzC {{ .installDirs.home }} # --transform='s|eza|ls|'
+# openning tmp folder
+cd $tmp
+
+# getting version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/$binName-x86_64-unknown-linux-musl.tar.gz |
+  tar -xzC . # --transform='s|eza|ls|'
+
+# installing it
+sudo install -m 755 $binName {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main "$binName" }}
 
 {{ end -}}

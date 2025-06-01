@@ -1,12 +1,25 @@
 {{- if hasKey .scripts "hyperfine" -}}
 #!/usr/bin/env bash
 
+pkgCreator=sharkdp
+pkg=hyperfine
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/${pkg}/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing hyperfine $version"
+echo "🚀 Installing ${pkg} $version"
 
-curl -sLo - "https://github.com/sharkdp/hyperfine/releases/latest/download/hyperfine-${version}-x86_64-unknown-linux-musl.tar.gz" |
-  sudo tar -xzC {{ .installDirs.main }}
+# downloading package
+curl -sLo - "https://github.com/$pkgCreator/${pkg}/releases/latest/download/${pkg}-${version}-x86_64-unknown-linux-musl.tar.gz" |
+  sudo tar -xzC . --transform='s|.*/||'
+
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
 
 {{ end -}}

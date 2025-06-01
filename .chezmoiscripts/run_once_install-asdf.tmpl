@@ -1,16 +1,25 @@
 {{- if hasKey .scripts "asdf" -}}
 #!/usr/bin/env bash
 
-### NOTE: This script is run once on the first run of chezmoi
-# This script installs asdf, a version manager for multiple languages
+pkgCreator=asdf-vm
+pkg=asdf
+tmp=$(mktemp -d)
 
-# getting latest version
-version=$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | jq -r .tag_name)
+# openning tmp folder
+cd $tmp
 
-echo "🚀 Installing asdf $version"
+# getting version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-curl -sLo - https://github.com/asdf-vm/asdf/releases/download/${version}/asdf-${version}-linux-amd64.tar.gz |
-  sudo tar -xzC {{ .installDirs.main }}
-# sudo rm {{ joinPath .installDirs.main "asdf" }}
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/download/${version}/$pkg-${version}-linux-amd64.tar.gz |
+  sudo tar -xzC . --transform='s|.*/||'
+
+# installing it
+sudo install -m 755 $pkg {{ .installDirs.main }}
+
+# sudo rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}

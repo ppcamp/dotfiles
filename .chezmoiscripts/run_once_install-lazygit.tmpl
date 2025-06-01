@@ -1,12 +1,25 @@
 {{- if hasKey .scripts "lazygit" -}}
 #!/usr/bin/env bash
 
+pkgCreator=jesseduffield
+pkg=lazygit
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/${pkg}/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing lazygit $version"
+echo "🚀 Installing ${pkg} $version"
 
-curl -sLo - "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${version#v}_Linux_x86_64.tar.gz" |
-  sudo tar -xzC {{ .installDirs.home }}
+# downloading package
+curl -sLo - "https://github.com/$pkgCreator/${pkg}/releases/latest/download/${pkg}_${version#v}_Linux_x86_64.tar.gz" |
+  tar -xzC .
+
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
 
 {{ end -}}

@@ -1,19 +1,25 @@
 {{- if hasKey .scripts "gum" -}}
 #!/usr/bin/env bash
 
+pkgCreator=charmbracelet
+pkg=gum
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/charmbracelet/gum/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing gum $version"
+echo "🚀 Installing $pkg $version"
 
-curl -sLo - "https://github.com/charmbracelet/gum/releases/latest/download/gum_${version#v}_Linux_x86_64.tar.gz" |
-   tar -xzC /tmp # --transform='s|eza|ls|'
+# downloading package
+curl -sLo - "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_${version#v}_Linux_x86_64.tar.gz" |
+   tar -xzC . --strip-components=1 # --transform='s|eza|ls|'
 
-completions="$ZEN/internal/completions/"
-f=gum_${version#v}_Linux_x86_64
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
 
-mv /tmp/$f/gum {{ .installDirs.home }}
-mv /tmp/$f/completions/gum.zsh $completions
-rm -rfd /tmp/$f
+# rm {{ joinPath .installDirs.home "$pkg" }}
 
 {{ end -}}

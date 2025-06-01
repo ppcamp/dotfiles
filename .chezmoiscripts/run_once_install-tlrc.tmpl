@@ -1,12 +1,26 @@
 {{- if hasKey .scripts "tlrc" -}}
 #!/usr/bin/env bash
 
+pkgCreator=tldr-pages
+pkg=tlrc
+binName=tldr
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version of tlrc
-version=$(curl -s https://api.github.com/repos/tldr-pages/tlrc/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
 echo "🚀 Installing tlrc $version"
 
-curl -sLo - https://github.com/tldr-pages/tlrc/releases/latest/download/tlrc-$version-x86_64-unknown-linux-musl.tar.gz |
-  sudo tar -xzC {{ .installDirs.main }}
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-$version-x86_64-unknown-linux-musl.tar.gz |
+  tar -xzC .
+
+# installing it
+install -m 755 $binName {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$binName" }}
 
 {{ end -}}

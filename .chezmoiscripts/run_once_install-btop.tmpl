@@ -1,11 +1,25 @@
 {{- if hasKey .scripts "btop" -}}
 #!/usr/bin/env bash
 
-echo "🚀 Installing btop latest"
+pkgCreator=aristocratos
+pkg=btop
+tmp=$(mktemp -d)
 
-curl -sLo - https://github.com/aristocratos/btop/releases/latest/download/btop-x86_64-linux-musl.tbz |
-  bsdtar -xjC /tmp
+# openning tmp folder
+cd $tmp
 
-mv /tmp/btop/bin/btop {{ .installDirs.home }}
+# getting version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLO https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-x86_64-linux-musl.tbz
+tar -xf ${pkg}-x86_64-linux-musl.tbz -C . --transform='s|.*/||'
+
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
 
 {{ end -}}

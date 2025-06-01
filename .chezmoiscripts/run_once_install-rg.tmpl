@@ -1,16 +1,26 @@
 {{- if hasKey .scripts "rg" -}}
 #!/usr/bin/env bash
 
+pkgCreator=BurntSushi
+pkg=ripgrep
+binName=rg
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version of rg
-version=$(curl -s https://api.github.com/repos/BurntSushi/ripgrep/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing rg $version"
+echo "🚀 Installing $pkg $version"
 
-curl -sLo - https://github.com/BurntSushi/ripgrep/releases/download/$version/ripgrep-$version-x86_64-unknown-linux-musl.tar.gz |
-  tar -xzC /tmp
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/download/$version/${pkg}-$version-x86_64-unknown-linux-musl.tar.gz |
+  tar -xzC . --transform='s|.*/||'
 
-sudo mv /tmp/ripgrep-$version-x86_64-unknown-linux-musl/rg {{ .installDirs.main }}
+# installing it
+sudo install -m 755 $binName {{ .installDirs.main }}
 
-rm -rfd /tmp/ripgrep-$version-x86_64-unknown-linux-musl
+# sudo rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}

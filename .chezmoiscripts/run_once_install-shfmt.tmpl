@@ -1,13 +1,25 @@
 {{- if hasKey .scripts "shfmt" -}}
 #!/usr/bin/env bash
 
+pkgCreator=mvdan
+pkg=sh
+binName=shfmt
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
 # getting latest version
-version=$(curl -s https://api.github.com/repos/mvdan/sh/releases/latest | jq -r .tag_name)
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
-echo "🚀 Installing shfmt $version"
+echo "🚀 Installing $pkg $version"
 
-sudo curl -sLo {{ joinPath .installDirs.home "shfmt" }} https://github.com/mvdan/sh/releases/latest/download/shfmt_${version}_linux_amd64
+# downloading package
+curl -sL https://github.com/$pkgCreator/$pkg/releases/latest/download/${binName}_${version}_linux_amd64 -o shfmt
 
-sudo chmod +x {{ joinPath .installDirs.home "shfmt" }}
+# installing it
+sudo install -m 755 $binName {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}
