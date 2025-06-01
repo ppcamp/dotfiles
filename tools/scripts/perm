@@ -113,6 +113,45 @@ def convert_perms(permission: str, *, octal: bool = False, pretty: bool = False)
     )
 
 
+def colored_text(text: str, *, color: str | None = None) -> str:
+    """
+    Returns a string wrapped in ANSI escape codes for colored output.
+    """
+    colors = {
+        "red": "\033[31m",
+        "green": "\033[32m",
+        "yellow": "\033[33m",
+        "blue": "\033[34m",
+        "magenta": "\033[35m",
+        "cyan": "\033[36m",
+        "white": "\033[37m",
+        "reset": "\033[0m",
+    }
+    if color and color in colors:
+        return f"{colors[color]}{text}{colors['reset']}"
+
+    def is_writeable(c: str) -> bool:
+        return c in ["2", "3", "6", "7", "w"]
+
+    def is_readable(c: str) -> bool:
+        return c in ["4", "5", "6", "7", "r"]
+
+    def is_executable(c: str) -> bool:
+        return c in ["1", "3", "5", "7", "x"]
+
+    colored = ""
+    for c in text:
+        if is_writeable(c):
+            colored += f"{colors['red']}{c}{colors['reset']}"
+        elif is_executable(c):
+            colored += f"{colors['cyan']}{c}{colors['reset']}"
+        elif is_readable(c):
+            colored += f"{colors['yellow']}{c}{colors['reset']}"
+        else:
+            colored += c
+    return colored
+
+
 def print_permissions(
     permissions: List[str], *, octal: bool = False, pretty: bool = False
 ):
@@ -125,13 +164,25 @@ def print_permissions(
 
     # Only print header if output is a terminal (not being captured by subshell or piped)
     if sys.stdout.isatty():
-        max_len = max(max_len, len("Input"))
-        spacing = max_len - len("Input") + min_spacing
-        print("Input{}Converted".format(" " * spacing))
+        input_header = "Input"
+        converted_header = "Converted"
+
+        max_len = max(max_len, len(input_header))
+        spacing = (max_len - len(input_header)) + min_spacing
+
+        input_header = colored_text("Input", color="blue")
+        converted_header = colored_text("Converted", color="blue")
+        print("{0}{2}{1}".format(input_header, converted_header, " " * spacing))
 
     for i, perm in enumerate(permissions):
         spacing = max_len - len(perm) + min_spacing
-        print("{}{}{}".format(perm, " " * spacing, results[i]))
+        result = results[i]
+
+        if sys.stdout.isatty():
+            perm = colored_text(perm)
+            result = colored_text(results[i])
+
+        print("{0}{2}{1}".format(perm, result, " " * spacing))
 
 
 def main():
