@@ -1,6 +1,7 @@
 tools/
 data/
 README.md
+BREAKING_CHANGES.md
 docs/
 .lefthook.yaml
 zshrc.example
