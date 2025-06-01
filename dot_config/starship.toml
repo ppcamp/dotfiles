@@ -28,6 +28,7 @@ $java\
 $jobs\
 $cmake\
 $c\
+$status\
 $character"""
 
 [nodejs]
@@ -45,7 +46,7 @@ truncate_to_repo = false
 [character]
 success_symbol = "[❯](purple)"
 error_symbol = "[❯](red)"
-vicmd_symbol = "[❮](green)"
+vicmd_symbol = "[](green)"
 
 [git_branch]
 symbol = " "
@@ -86,3 +87,11 @@ symbol = " "
 
 [line_break]
 disabled = true
+
+
+[status]
+style = 'fg:red'
+symbol = '🚨 '
+format = '[\[$symbol$int$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
