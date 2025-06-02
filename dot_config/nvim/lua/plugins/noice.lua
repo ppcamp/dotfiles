@@ -1,6 +1,7 @@
 -- -- vim: ts=2 sts=2 sw=2 et
 -- -- Description: A nice and feature-rich notification system for Neovim
 
+return {}
 -- return {
 -- 	"folke/noice.nvim",
 
