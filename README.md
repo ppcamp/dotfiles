@@ -29,8 +29,8 @@
 
 ## TODO
 
-- [ ] Use `install -m 755` for scripts in `.installDirs.main` and `.installDirs.home`
-- [ ] Clean up any wrong script installed previously in `/usr/bin/` and `/usr/local/bin/` and `/bin/`
+- [ ] Add commit signing to git config
+
 > [!WARNING]
 > Some scripts installed the whole tarball in those folders.
 - [ ] Fix [lazygit nvim plugins]
