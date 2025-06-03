@@ -113,3 +113,6 @@ alias cz='chezmoi'
 
 ### Lefthook
 alias lh='lefthook'
+
+### ZSH print (with support to %F{red} and %B)
+alias print='print -P'
