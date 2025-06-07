@@ -9,7 +9,7 @@ require("config.options")
 
 -- core library, used to load the whole environment (plugins)
 -- load all plugins and also register some of keymaps internally
-require("config.lazy")
+require("config.bootstrap") -- lazy
 
 -- register extra keymaps/shortcuts
 require("config.keymaps")
