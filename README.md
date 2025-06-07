@@ -20,7 +20,7 @@
 > ```sh
 > # Install chezmoi
 > sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
->
+> 
 > # initialize chezmoi (without install)
 > chezmoi init --apply https://github.com/ppcamp/dotfiles
 > ```

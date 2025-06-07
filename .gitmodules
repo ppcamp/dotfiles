@@ -1,3 +1,6 @@
 [submodule "dot_config/shell/zinit"]
 	path = dot_config/shell/zinit
 	url = https://github.com/zdharma-continuum/zinit
+[submodule "docs/recommended_programs"]
+	path = docs/recommended_programs
+	url = https://gist.github.com/ppcamp/91dd1fc9ae5f3c78026617720e26795e
