@@ -5,7 +5,6 @@
 
 ### nvim
 alias n='nvim'
-alias vim='nvim'
 
 ### bat/batcat
 # alias bat='batcat'
@@ -99,11 +98,11 @@ alias sc='source'
 alias btar='bsdtar'
 
 ### (I)nspect reads command output in a nvim buffer, e.g, `apt search bsdtar I`
-alias -g I='2>&1 | nvim -R'
+# alias -g I='2>&1 | nvim -R'
 
 ### Custom
-alias test_omzsh='time ZDOTDIR=$HOME/omzsh/ zsh -i -c exit'
-alias test_sh='time ZDOTDIR=$HOME zsh -i -c exit'
+# alias test_omzsh='time ZDOTDIR=$HOME/omzsh/ zsh -i -c exit'
+# alias test_sh='time ZDOTDIR=$HOME zsh -i -c exit'
 
 ### Lazygit
 alias lazy='LANG=en_US.UTF-8 lazygit'
