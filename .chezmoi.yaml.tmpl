@@ -35,16 +35,6 @@ See:
 {{-   $email = promptString " git email" $email -}}
 {{- end -}}
 
-
-{{- /* Check if should load zsh configs */ -}}
-{{- $loadZshConfigs := true -}}
-{{- if hasKey . "loadZshConfigs" -}}
-{{-   $loadZshConfigs = .loadZshConfigs -}}
-{{- else if $interactive -}}
-{{-   $loadZshConfigs = promptBool "⚙️ Load Zsh configs" $loadZshConfigs -}}
-{{- end -}}
-
-
 {{- /* Installation scripts selection */ -}}
 {{- $allChoices := list
   "asdf"
@@ -123,13 +113,17 @@ See:
 {{- /*    🐧 ubuntu-specific code */ -}}
 {{-  end -}}
 {{- end -}}
+
 sourceDir: {{ .chezmoi.sourceDir | quote }}
+
+# diff command to use, by default chezmoi uses `diff`. Vimdiff requires `vim` to be installed.
+diff:
+  command: "vimdiff"
 
 data:
   configs:
     disable:
-      zsh: {{ not $loadZshConfigs }}
-
+      zsh: false
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}

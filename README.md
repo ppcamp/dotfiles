@@ -25,17 +25,19 @@
 > chezmoi init --apply https://github.com/ppcamp/dotfiles
 > ```
 
+> [!TIP]
+>
+> Avoid to use `snaps`, since they are much slower than native and flatpak, and
+> often buggy.
 
 
 ## TODO
 
 - [ ] Add commit signing to git config
+- [-] Fix [lazygit nvim plugins]
 
 > [!WARNING]
 > Some scripts installed the whole tarball in those folders.
-- [ ] Fix [lazygit nvim plugins]
-- [ ] Delete repo ppcamp/nvim
-- [ ] Delete repo ppcamp/shell
 
 ## Docs
 
