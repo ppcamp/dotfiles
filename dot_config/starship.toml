@@ -92,6 +92,6 @@ disabled = true
 [status]
 style = 'fg:red'
 symbol = '🚨 '
-format = '[\[$symbol$int$signal_name$maybe_int\]]($style) '
+format = '[\[$symbol$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = false
