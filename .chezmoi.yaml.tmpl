@@ -35,6 +35,46 @@ See:
 {{-   $email = promptString " git email" $email -}}
 {{- end -}}
 
+{{- /* Check if shuold sign commits */ -}}
+{{- $shouldSign := true -}}
+{{- if $interactive -}}
+{{-   $shouldSign = promptBool " Sign git commits (shows a 'verified' badge)" $shouldSign -}}
+{{- end -}}
+
+{{- $gitsign := "" -}}
+{{- $useSignGPG := true -}}
+
+{{- if $shouldSign -}}
+{{-   $useSignGPG := promptBool " Use gpg" $useSignGPG -}}
+{{-   if $useSignGPG -}}
+{{      $gitsign = "346B64E789921A3F" -}}
+{{-     writeToStdout "\033[33m🛠️ Warn:\033[0m It requires gnupg to be installed and running\n" }}
+{{-     writeToStdout "🔏 Enabling signed commits\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can generate keys by typing:\n" }}
+{{-     writeToStdout "\tgpg --full-generate-key\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can check the generated keys by typing:\n" }}
+{{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG\n" }}
+{{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG | grep '^sec' | awk '{print $2}' | cut -d'/' -f2 \n\n" }}
+
+{{-     $gitsign = promptString "🔏 GPG key to enable" $gitsign }}
+
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m After this, you just need to copy and register into the platform (Bitbucket/Github):\n" }}
+{{-     writeToStdout "\tgpg --armor --export " $gitsign "\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m You can check it by typing\n" }}
+{{-     writeToStdout "\tgit log --show-signature\n\n" }}
+{{-   else -}}
+{{      $gitsign = joinPath .chezmoi.homeDir ".ssh" "git.pub" -}}
+{{-     writeToStdout "🔏 Enabling signed commits with SSH key\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m You can use SSH keys to sign commits, see: https://git-scm.com/docs/gpg-signing-key\n\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can generate keys by typing:\n" }}
+{{-     writeToStdout "\tssh-keygen -t ed25519 -C \"p.augustocampos@gmail.com\" -f ~/.ssh/git\n\n" }}
+{{-     $gitsign = promptString "🔏 SSH key to enable" $gitsign }}
+{{-   end -}}
+{{- else -}}
+{{-   writeToStdout "🔏 Disabling signed commits\n" }}
+{{- end }}
+
+
 {{- /* Installation scripts selection */ -}}
 {{- $allChoices := list
   "asdf"
@@ -98,10 +138,11 @@ See:
 {{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}
 
 {{- if $interactive -}}
-{{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
+{{-   writeToStdout "\033[32m💡 Tip:\033[0m You can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
 {{- end -}}
 
-{{- writeToStdout "🛠️  For asdf, you need to install your plugins first, to then, use `asdf install`.\n\tCheck your `~/.tool-versions` file.\n" -}}
+{{- writeToStdout "\033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use `asdf install`.\n" -}}
+{{- writeToStdout "\t\033[2;37mCheck your `~/.tool-versions` file.\033[0m\n" -}}
 
 {{- if eq .chezmoi.os "darwin" -}}
 {{- /*    🍎 macOS-specific code */ -}}
@@ -120,8 +161,8 @@ See:
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 # diff command to use, by default chezmoi uses `diff`. Vimdiff requires `vim` to be installed.
-diff:
-  command: "vimdiff"
+# diff:
+#  command: "vimdiff"
 
 data:
   configs:
@@ -130,6 +171,8 @@ data:
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
+    sign: {{ $gitsign | quote }}
+    ssh: {{ not $useSignGPG }}
 
   installDirs:
     main: /usr/local/bin
