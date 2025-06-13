@@ -1,0 +1,23 @@
+{{- if hasKey .scripts "bat" -}}
+#!/usr/bin/env bash
+
+tmp=$(mktemp -d)
+pkg=nerd-fonts
+pkgCreator=ryanoasis
+fontDir="$HOME/.local/share/fonts"
+
+cd $tmp
+mkdir -p $fontDir
+
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+for font in JetBrainsMono FiraMono; do
+  echo "✒️ Installing $pkg $font"
+
+  curl -sLO "https://github.com/$pkgCreator/$pkg/releases/latest/download/$font.zip"
+
+  bsdtar xf $font.zip -C $fontDir --exclude="README*" --exclude="LICENSE" --exclude="*.txt"
+
+done
+
+{{ end -}}
