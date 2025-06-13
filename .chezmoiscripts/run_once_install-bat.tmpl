@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "bat" -}}
 #!/usr/bin/env bash
 
+# This script installs bat, a cat clone with syntax highlighting and Git
+# integration.
+
 pkgCreator=sharkdp
 pkg=bat
 tmp=$(mktemp -d)

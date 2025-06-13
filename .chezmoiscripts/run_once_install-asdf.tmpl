@@ -1,6 +1,8 @@
 {{- if hasKey .scripts "asdf" -}}
 #!/usr/bin/env bash
 
+# This script installs asdf-vm, a version manager for multiple languages.
+
 pkgCreator=asdf-vm
 pkg=asdf
 tmp=$(mktemp -d)

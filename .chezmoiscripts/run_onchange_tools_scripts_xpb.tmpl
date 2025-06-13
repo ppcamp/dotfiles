@@ -1,0 +1,42 @@
+{{- if hasKey .scripts "xpb" -}}
+#!/usr/bin/env bash
+
+# This script installs xcp, a command-line tool for copying text to the
+# clipboard.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
+
+{{ if ( or ( contains "microsoft" ( lower .chezmoi.kernel.osrelease )) ( contains "wsl" ( lower .chezmoi.kernel.osrelease ))) }}
+  # Running in WSL, and therefore, should not install xclip
+{{ else }}
+  if dpkg -s xclip >/dev/null 2>&1; then
+    echo "✅ xclip is already installed"
+  else
+    echo "⚙️ xclip is not installed. Installing it now..."
+
+    version=$(apt-cache policy xclip | grep Candidate | awk '{print $2}')
+    if [ -z "$version" ]; then
+      echo "❌ xclip is not available in the apt repository."
+      exit 0 # exit early with success status to keep chezmoi idempotent
+    fi
+
+    sudo apt install -qq -y xclip >/dev/null 2>&1
+    exit 0 # exit early with success status to keep chezmoi idempotent
+
+  fi
+{{ end }}
+
+version=1.0.0
+echo "🚀 Installing xpb $version to shell"
+{{ $xpb := joinPath .chezmoi.sourceDir "tools" "scripts" "xpb" | quote -}}
+
+# copy with permission
+sudo cp -p {{ $xpb }} {{ .installDirs.main }}
+
+# installing it
+sudo install -m 755 {{ $xpb }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main $xpb }}
+
+{{- end -}}

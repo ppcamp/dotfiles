@@ -5,7 +5,7 @@
 # Install usefull debugging tools for debian
 
 pkg=(
-  #"lbzip2"   # required for bzip2 compression/decompression (required by tar)
+  #"lbzip2"  # required for bzip2 compression/decompression (required by tar)
   "make"     # usually required for many tool
   "cmake"    # required for asdf and other tool
   "g++"      # required by asdf and some building tools
@@ -17,8 +17,17 @@ pkg=(
   "file"     # inspeact the type of the file
 )
 
-echo "🚀 Installed debugging tools from apt: ${pkg[*]}"
+for i in "${!pkg[@]}"; do
+  version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
 
-sudo apt install -qq -y "${pkg[@]}" >/dev/null 2>&1
+  if [ -z "$version" ]; then
+    echo "❌ $pkg is not available in the apt repository."
+    continue # exit early with success status to keep chezmoi idempotent
+  fi
+
+  echo "🚀 Installing common tools from apt: ${pkg[i]} $version"
+  sudo apt install -qq -y "${pkg[i]}" >/dev/null 2>&1
+
+done
 
 {{ end -}}

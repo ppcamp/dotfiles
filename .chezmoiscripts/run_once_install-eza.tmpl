@@ -1,6 +1,8 @@
 {{- if hasKey .scripts "eza" -}}
 #!/usr/bin/env bash
 
+# Install eza, a modern replacement for ls with git integration and icons.
+
 pkgCreator=eza-community
 pkg=eza
 tmp=$(mktemp -d)

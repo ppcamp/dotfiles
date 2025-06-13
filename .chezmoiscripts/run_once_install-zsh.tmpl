@@ -1,7 +1,15 @@
 {{- if hasKey .scripts "zsh" -}}
 #!/usr/bin/env bash
 
-echo "🚀 Installing zsh latest version"
+pkg=zsh
+
+version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ $pkg is not available in the apt repository."
+  exit 0 # exit early with success status to keep chezmoi idempotent
+fi
+
+echo "🚀 Installing $pkg $version directly from apt"
 sudo apt install -qq -y zsh
 
 # TODO: add new choice to set as default

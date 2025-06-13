@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "fd" -}}
 #!/usr/bin/env bash
 
+# This script installs fd, a simple, fast and user-friendly alternative to
+# 'find'.
+
 pkgCreator=sharkdp
 pkg=fd
 tmp=$(mktemp -d)

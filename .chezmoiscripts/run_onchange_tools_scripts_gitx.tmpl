@@ -1,6 +1,11 @@
 {{- if hasKey .scripts "gitx" -}}
 #!/usr/bin/env bash
 
+# This script installs gitx, a command-line tool for managing Git repositories.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
+
 pkg=gitx
 version=1.0.0
 tmp=$(mktemp -d)

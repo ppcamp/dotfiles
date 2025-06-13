@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "choose" -}}
 #!/usr/bin/env bash
 
+# This script installs choose, a command-line tool for selecting items from a
+# list.
+
 pkgCreator=theryangeary
 pkg=choose
 tmp=$(mktemp -d)

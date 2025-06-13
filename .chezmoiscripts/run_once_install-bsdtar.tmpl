@@ -1,13 +1,21 @@
 {{- if hasKey .scripts "bsdtar" -}}
 #!/usr/bin/env bash
 
-pkg=bsdtar
+# This script installs bsdtar, a tar implementation that supports more formats
+# than GNU tar, including xz and lzma compression.
 
-version=$(apt search libarchive-tools --version)
+pkg=bsdtar
+binName=libarchive-tools
+
+version=$(apt-cache policy $binName | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ $pkg is not available in the apt repository."
+  exit 0 # exit early with success status to keep chezmoi idempotent
+fi
 
 echo "🚀 Installing $pkg version ${version} directly from apt"
 
-sudo apt install -qq -y libarchive-tools >/dev/null 2>&1
-# sudo apt autopurge -y libarchive-tools
+sudo apt install -qq -y $binName >/dev/null 2>&1
+# sudo apt autopurge -y $binName
 
 {{ end -}}

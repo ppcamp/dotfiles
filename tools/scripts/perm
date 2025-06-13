@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# A simple utility to show and convert file permissions.
+
 # Alternativaly, you can use the following command to run this script:
 # alias perm='stat --format="%a %n"'
 

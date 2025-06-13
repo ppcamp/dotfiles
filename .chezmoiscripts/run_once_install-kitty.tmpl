@@ -1,0 +1,72 @@
+{{- if hasKey .scripts "kitty" -}}
+#!/usr/bin/env bash
+
+# This script installs the latest version of kitty from the official GitHub
+# releases.
+
+pkgCreator=kovidgoyal
+pkg=kitty
+tmp=$(mktemp -d)
+
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# install kitty to /opt/kitty
+sudo rm -rf /opt/kitty
+sudo mkdir -p /opt/kitty
+
+# Download and install nvim directly to /opt/kitty
+echo https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version#v}-x86_64.txz
+curl -sLo $tmp/kitty.txz "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version#v}-x86_64.txz"
+
+# We need to do this way, because the `tar` command does not support gzip stdin
+# extract the downloaded file
+sudo tar xf $tmp/kitty.txz -C /opt/kitty
+
+################################################################################
+# Create a symlink to the nvim binary in /usr/local/bin
+#
+sudo ln -sf /opt/kitty/bin/kitty /usr/local/bin/kitty
+sudo ln -sf /opt/kitty/bin/kitten /usr/local/bin/kitten
+
+
+################################################################################
+# Create desktop entry
+#   ideally, we would use `chmod +x
+#     $HOME/.local/share/applications/kitty.desktop`, but
+#   for some reason, ubuntu does not understand this.
+sudo desktop-file-install "/opt/kitty/share/applications/kitty.desktop"
+sudo desktop-file-install "/opt/kitty/share/applications/kitty-open.desktop"
+
+# configure the entry, to match this new app path
+#   (to keep the application isolated as possible from `env`)
+sudo desktop-file-edit \
+  --set-key Icon \
+  --set-value "/opt/kitty/share/icons/hicolor/scalable/apps/kitty.svg" \
+  /usr/share/applications/kitty.desktop
+
+sudo desktop-file-edit \
+  --set-key Icon \
+  --set-value "/opt/kitty/share/icons/hicolor/scalable/apps/kitty.svg" \
+  /usr/share/applications/kitty-open.desktop
+
+
+# sudo desktop-file-edit \
+#  --set-key Exec \
+#  --set-value "/usr/bin/env kitty %F" \
+#  /usr/share/applications/kitty.desktop
+
+# sudo desktop-file-edit \
+#  --set-key TryExec \
+#  --set-value "/usr/bin/env kitty" \
+#  /usr/share/applications/kitty.desktop
+
+################################################################################
+# update entries
+sudo update-desktop-database
+
+# sudo update-desktop-database ~/.local/share/applications
+# sudo desktop-file-validate $HOME/.local/share/applications/kitty.desktop
+
+{{ end -}}

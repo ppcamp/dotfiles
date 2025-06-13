@@ -1,11 +1,63 @@
 {{- if hasKey .scripts "nvim" -}}
 #!/usr/bin/env bash
 
-echo "🚀 Installing nvim latest version"
+# This script installs the latest version of Neovim (nvim) from the official
+# GitHub releases.
 
-# Download and install nvim
+pkgCreator=neovim
+pkg=neovim
+tmp=$(mktemp -d)
+
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# Download and install nvim directly to /opt/nvim
 sudo rm -rf /opt/nvim
-curl -sL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz |
-  sudo tar -xz -C /opt
+curl -sL https://github.com/$pkgCreator/$pkg/releases/latest/download/nvim-linux-x86_64.tar.gz |
+  sudo tar -xz --transform='s/^nvim-linux-x86_64/nvim/' -C /opt
+
+
+################################################################################
+# Create a symlink to the nvim binary in /usr/local/bin
+#
+sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+
+
+################################################################################
+# Create desktop entry
+#   ideally, we would use `chmod +x $HOME/.local/share/applications/nvim.desktop`, but
+#   for some reason, ubuntu does not understand this.
+sudo desktop-file-install "/opt/nvim/share/applications/nvim.desktop"
+
+# configure the entry, to match this new app path
+#   (to keep the application isolated as possible from `env`)
+sudo desktop-file-edit \
+  --set-key Icon \
+  --set-value "/opt/nvim/share/icons/hicolor/128x128/apps/nvim.png" \
+  /usr/share/applications/nvim.desktop
+
+# sudo desktop-file-edit \
+#  --set-key Exec \
+#  --set-value "/usr/bin/env kitty nvim %F" \
+#  /usr/share/applications/nvim.desktop
+
+# sudo desktop-file-edit \
+#  --set-key TryExec \
+#  --set-value "/usr/bin/env kitty nvim" \
+#  /usr/share/applications/nvim.desktop
+
+################################################################################
+# update entries
+sudo update-desktop-database
+
+# sudo update-desktop-database ~/.local/share/applications
+# sudo desktop-file-validate $HOME/.local/share/applications/nvim.desktop
+
+
+################################################################################
+# Create a symlink to the nvim config directory in the user's home directory
+# sudo mkdir -p /root/.config/
+# sudo ln -sf $HOME/.config/nvim /root/.config/nvim
 
 {{ end -}}

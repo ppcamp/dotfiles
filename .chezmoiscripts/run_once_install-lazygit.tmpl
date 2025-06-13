@@ -1,6 +1,8 @@
 {{- if hasKey .scripts "lazygit" -}}
 #!/usr/bin/env bash
 
+# This script installs lazygit, a terminal UI for git commands.
+
 pkgCreator=jesseduffield
 pkg=lazygit
 tmp=$(mktemp -d)

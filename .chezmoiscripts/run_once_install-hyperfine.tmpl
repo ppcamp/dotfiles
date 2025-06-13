@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "hyperfine" -}}
 #!/usr/bin/env bash
 
+# This script installs hyperfine, a command-line tool for benchmarking command
+# execution times.
+
 pkgCreator=sharkdp
 pkg=hyperfine
 tmp=$(mktemp -d)

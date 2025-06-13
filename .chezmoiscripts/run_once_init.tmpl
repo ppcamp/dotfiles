@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+# This script is run once at the start of the container to initialize the environment.
+
+# Install required common tools
+
+pkg=(
+	jq                 # JSON processor (required by most of these scripts in chezmoi)
+	curl               # Command line tool for transferring data with URLs
+	git                # Version control system
+	make               # Build automation tool
+	vim                # Text editor with advanced features (also includes vimdiff)
+	desktop-file-utils # Utilities for handling desktop entry files
+)
+
+# TODO: execute apt/dpkg in debian related only
+# https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals
+
+for i in "${!pkg[@]}"; do
+	version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+
+	echo "🚀 Installing common tools from apt: ${pkg[i]} $version"
+	sudo apt install -qq -y "${pkg[i]}" >/dev/null 2>&1
+
+done

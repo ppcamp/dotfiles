@@ -49,9 +49,11 @@ See:
   "flatpak"
   "flatpak-fix-dark-theme"
   "fzf"
+  "gitx"
   "gum"
   "hyperfine"
   "just"
+  "kitty"
   "lazygit"
   "nvim"
   "perm"
@@ -68,7 +70,6 @@ See:
   "xpb"
   "zoxide"
   "zsh"
-  "gitx"
 -}}
 {{- $defaultChoices := list
   "asdf"
@@ -80,16 +81,18 @@ See:
   "eza"
   "fd"
   "fzf"
+  "gitx"
+  "kitty"
   "nvim"
   "perm"
   "pet"
   "rg"
   "sd"
+  "starship"
   "tlrc"
   "xcp"
   "xpb"
   "zoxide"
-  "gitx"
 -}}
 {{- $choices := promptMultichoice "󰯂 What should install (scripts to run)" $allChoices $defaultChoices -}}
 {{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}

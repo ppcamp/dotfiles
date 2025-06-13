@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "gum" -}}
 #!/usr/bin/env bash
 
+# This script installs gum, a command-line tool for creating interactive
+# command-line applications.
+
 pkgCreator=charmbracelet
 pkg=gum
 tmp=$(mktemp -d)

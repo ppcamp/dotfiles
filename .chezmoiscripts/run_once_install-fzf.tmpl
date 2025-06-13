@@ -1,6 +1,8 @@
 {{- if hasKey .scripts "fzf" -}}
 #!/usr/bin/env bash
 
+# This script installs fzf, a command-line fuzzy finder.
+
 pkgCreator=junegunn
 pkg=fzf
 tmp=$(mktemp -d)

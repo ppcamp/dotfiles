@@ -6,7 +6,11 @@ pkg=sqlfluff
 # SQL linter and formatter
 # https://github.com/sqlfluff/sqlfluff/tree/main
 
-version=$(apt search ${pkg} --version)
+version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ $pkg is not available in the apt repository."
+  exit 0 # exit early with success status to keep chezmoi idempotent
+fi
 
 echo "🚀 Installing ${pkg} version ${version} directly from apt"
 

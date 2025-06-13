@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "btop" -}}
 #!/usr/bin/env bash
 
+# This script installs btop, a resource monitor that shows system usage and
+# statistics in a graphical interface.
+
 pkgCreator=aristocratos
 pkg=btop
 tmp=$(mktemp -d)

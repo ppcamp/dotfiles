@@ -1,15 +1,24 @@
 {{- if or (hasKey .scripts "flatpak") (hasKey .scripts "flatpak-fix-dark-theme") -}}
 #!/usr/bin/env bash
 
+# This script installs Flatpak, a software utility for software deployment,
+# application virtualization, and package management.
+#
+# NOTE: it has a better performance than snap, and it is more flexible.
+
 {{- if hasKey .scripts "flatpak" }}
-version=$(apt search flatpak --version)
+version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ $pkg is not available in the apt repository."
+  exit 0 # exit early with success status to keep chezmoi idempotent
+fi
 
 ############################## Flatpak installation
 echo "🚀 Installing flatpak version ${version} directly from apt"
 sudo apt install -qq -y flatpak >/dev/null 2>&1
 
 ############################## Gnome Software plugin for Flatpak
-if apt list --installed gnome-software | grep -q gnome-software; then
+if dpkg -s gnome-software >/dev/null 2>&1; then
   echo "⚙️ GNOME Software is installed. Configuring it to support Flatpak applications."
   sudo apt install -qq -y gnome-software-plugin-flatpak >/dev/null 2>&1
 fi

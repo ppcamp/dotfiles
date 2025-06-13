@@ -1,9 +1,16 @@
 {{- if hasKey .scripts "perm" -}}
 #!/usr/bin/env bash
 
-pkg=perm
+# This script installs perm, a command-line tool for managing permissions.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
 
-echo "🚀 Installing $pkg script to shell"
+
+pkg=perm
+version=1.0.0
+
+echo "🚀 Installing $pkg $version script to shell"
 {{ $pkg := joinPath .chezmoi.sourceDir "tools" "scripts" "$pkg" | quote -}}
 
 # copy with permission

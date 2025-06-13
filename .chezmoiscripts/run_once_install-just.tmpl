@@ -1,6 +1,9 @@
 {{- if hasKey .scripts "just" -}}
 #!/usr/bin/env bash
 
+# This script installs just, a command-line tool for running commands defined
+# in a `justfile`, which is a simple way to define and run tasks.
+
 pkgCreator=casey
 pkg=just
 tmp=$(mktemp -d)

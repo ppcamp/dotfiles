@@ -4,9 +4,6 @@
 # set PATH so it includes user's private bin if it exists
 add_path_if_exist "$HOME/.local/bin"
 
-############################## neovim
-add_path_if_exist '/opt/nvim-linux-x86_64/bin'
-
 ############################# ASDF (Global package manager)
 add_path_if_exist "${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
 

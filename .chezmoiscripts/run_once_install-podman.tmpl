@@ -1,13 +1,19 @@
 {{- if hasKey .scripts "podman" -}}
 #!/usr/bin/env bash
 
-version=$(apt search podman --version)
+pkg="podman"
 
-echo "🚀 Installing bsdtar version ${version} directly from apt"
+version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ $pkg is not available in the apt repository."
+  exit 0 # exit early with success status to keep chezmoi idempotent
+fi
+
+echo "🚀 Installing $pkg version ${version} directly from apt"
 
 # getting version
-sudo apt install -qq -y podman >/dev/null 2>&1
-# sudo apt autopurge -y podman
+sudo apt install -qq -y $pkg >/dev/null 2>&1
+# sudo apt autopurge -y $pkg
 
 
 # TODO: add new choice to install flatpah UI
