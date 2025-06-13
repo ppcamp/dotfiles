@@ -7,7 +7,7 @@ source $HOME/.config/shell/init.zsh
 ############################# SSH Agent plugin config
 zstyle :zen:plugins:ssh-agent agent-forwarding yes
 zstyle :zen:plugins:ssh-agent lifetime 2h
-zstyle :zen:plugins:ssh-agent identities $HOME/.ssh/file
+zstyle :zen:plugins:ssh-agent identities $HOME/.ssh/git
 zstyle :zen:plugins:ssh-agent quiet yes
 zinit ice wait"0a" lucid
 zinit light $ZEN/pkg/ssh-agent

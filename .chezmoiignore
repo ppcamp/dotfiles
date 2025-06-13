@@ -10,3 +10,7 @@ zshrc.example
 {{ if .configs.disable.zsh }}
 .config/shell
 {{ end }}
+
+{{ if not .git.ssh }}
+.ssh/allowed_signers
+{{ end }}
