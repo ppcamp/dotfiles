@@ -11,6 +11,9 @@ require("config.options")
 -- load all plugins and also register some of keymaps internally
 require("config.bootstrap") -- lazy
 
+-- create a global state store for the config
+require("config.state")
+
 -- register extra keymaps/shortcuts
 require("config.keymaps")
 
