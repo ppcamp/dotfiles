@@ -7,6 +7,9 @@ local load_modules = require("utils.modules").load_folder
 -- there
 require("config.options")
 
+-- register a shared global state object (state must be loaded before any plugin)
+require("config.state")
+
 -- core library, used to load the whole environment (plugins)
 -- load all plugins and also register some of keymaps internally
 require("config.bootstrap") -- lazy

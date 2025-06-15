@@ -4,6 +4,9 @@ A simple nvim setup for my use.
 
 **When using `vim-go`, type `GoInstallBinaries` to install required tools**
 
+> [!TIP]
+> Check the [plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins) in LazyVim
+
 > [!NOTE]
 >
 > Based on [kickstart-modular-nvim], [lazyvim-pm], [Lazyvim] with some

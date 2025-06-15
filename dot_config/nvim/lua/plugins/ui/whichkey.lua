@@ -93,6 +93,7 @@ return {
             expand = function()
               return require("which-key.extras").expand.buf()
             end,
+
           },
           {
             "<leader>w",
@@ -104,8 +105,41 @@ return {
           },
           -- better descriptions
           { "gx", desc = "Open with system app" },
+
+          -- Custom
+          { "<leader>g", group = "Git", mode = { "n", "v" } },
+          { "<leader>t", icon = "", group = "Tools", mode = { "n", "v" } },
+          { "<leader>n", icon = "󱣱", group = "Navigation", mode = { "n", "v" } },
+          { "<leader>c", group = "Code", mode = { "n", "x" } },
+          { "<leader>d", group = "Document" },
+          { "<leader>s", group = "Search", mode = { "n", "v" } },
+          { "<leader>?", group = "Help", icon = { icon = "", color = "green" }, mode = { "n", "v" } },
+          {
+            "<leader>?w",
+            function()
+              require("which-key").show({ global = false })
+            end,
+            desc = "Keymaps (which-key)",
+          },
+          { "<leader>?c", ":Copilot help<CR>", desc = "Copilot: Help" },
+          {
+            "<leader>tb",
+            desc = "Functions: My",
+            function()
+              print("Type of current file is " .. vim.bo.filetype)
+            end,
+          },
         },
       },
     },
+    config = function(_, opts)
+      local wk = require("which-key")
+
+      -- vim.api.nvim_set_hl(0, "WhichKey", { underline = false })
+      -- vim.api.nvim_set_hl(0, "WhichKeyGroup", { underline = false })
+      -- vim.api.nvim_set_hl(0, "WhichKeyDesc", { underline = false })
+
+      wk.setup(opts)
+    end,
   },
 }
