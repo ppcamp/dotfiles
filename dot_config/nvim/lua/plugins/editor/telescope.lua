@@ -109,6 +109,19 @@ return {
       map("<leader>sn", function()
         builtin.find_files({ cwd = vim.fn.stdpath("config") })
       end, "Telescope search Neovim files")
+      map("<leader>sg", function()
+        builtin.live_grep({
+          prompt_title = "Search words in GOROOT/src",
+          cwd = vim.api.nvim_exec("GoRoot", true) .. "/src",
+        })
+      end, "Telescope search inside golang files")
+      map("<leader>sG", function()
+        builtin.live_grep({
+          prompt_title = "Search files in GOROOT/src",
+          cwd = vim.api.nvim_exec("GoRoot", true),
+        })
+      end, "Telescope search golang files")
+
 
       map("<leader>sf", builtin.find_files, "Find Files")
       map("<leader>s*", builtin.grep_string, "Workspace search word under cursor")

@@ -26,7 +26,13 @@ function cd() {
     1="-$1"
   fi
 
-  builtin cd "$1"
+  # if zoxide is installed, use it
+  if command -v zoxide >/dev/null 2>&1; then
+    __zoxide_cd "$@"
+    return
+  else
+    builtin cd "$1"
+  fi
 }
 
 function z() {

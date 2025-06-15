@@ -115,3 +115,6 @@ alias lh='lefthook'
 
 ### ZSH print (with support to %F{red} and %B)
 alias print='print -P'
+
+### Gofolder
+alias gofolder='cd $(go env GOROOT)'
