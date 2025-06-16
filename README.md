@@ -43,6 +43,12 @@
 6. [Zshrc Config](./docs/zshrc%20config.md)
 7. [recommended programs](./docs/recommended_programs/README.md)
 
+## Flatpak
+
+> [!TIP]
+>
+> Install `Flatseal` to control perm `flatpak install com.github.tchx84.Flatseal.flatpakref`
+
 ## Links
 - [chezmoi dotfiles config]
 - [chezmoi]
