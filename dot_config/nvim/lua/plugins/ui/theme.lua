@@ -1,17 +1,16 @@
 -- vim: ts=2 sts=2 sw=2 et
 
 return {
-  "rebelot/kanagawa.nvim",
-  -- "marko-cerovac/material.nvim",
+  -- "rebelot/kanagawa.nvim",
+  "marko-cerovac/material.nvim",
   -- "tiagovla/tokyodark.nvim",
-
   -- "catppuccin/nvim",
   -- "Mofiqul/dracula.nvim",
   -- "rose-pine/neovim",
-
+  -- "ViViDboarder/wombat.nvim",
   priority = 1000,
   config = function()
-    vim.cmd.colorscheme("kanagawa")
+    vim.cmd.colorscheme("material-darker")
     -- NOTE: default that doesn't need to install extra
     -- habamax
     -- sorbet
