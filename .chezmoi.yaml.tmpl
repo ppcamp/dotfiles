@@ -143,6 +143,7 @@ See:
 
 {{- writeToStdout "\033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use `asdf install`.\n" -}}
 {{- writeToStdout "\t\033[2;37mCheck your `~/.tool-versions` file.\033[0m\n" -}}
+{{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n\tUse ppa or build from src, if necessary.\n\n" }}
 
 {{- if eq .chezmoi.os "darwin" -}}
 {{- /*    🍎 macOS-specific code */ -}}

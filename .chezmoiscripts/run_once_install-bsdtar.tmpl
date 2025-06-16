@@ -9,7 +9,7 @@ binName=libarchive-tools
 
 version=$(apt-cache policy $binName | grep Candidate | awk '{print $2}')
 if [ -z "$version" ]; then
-  echo "❌ $pkg is not available in the apt repository."
+  echo "❌ $pkg ($binName) is not available in the apt repository."
   exit 0 # exit early with success status to keep chezmoi idempotent
 fi
 
