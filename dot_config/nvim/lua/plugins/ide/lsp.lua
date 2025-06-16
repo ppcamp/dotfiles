@@ -113,7 +113,6 @@ local servers = {
   },
   sqls = {},
   markdown_oxide = {},
-  marksman = {},
   -- 'systemd-language-server' = {},
 }
 
