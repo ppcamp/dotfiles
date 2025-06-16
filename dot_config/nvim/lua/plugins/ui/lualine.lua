@@ -48,29 +48,58 @@ return {
             "%=", -- center text section
             {
               "navic",
-              color_correction = nil,
+              color_correction = "static",
               navic_opts = {
                 highlight = true,
                 depth_limit = 3,
                 separator = "  ",
                 click = true,
               },
+              bg = "#ffffff"
             },
           },
           lualine_x = {
             "nvim-dap-ui",
-            "diagnostics",
-            "quickfix",
           },
           lualine_y = {
             -- "progress",
+            -- "diagnostics",
+            "quickfix",
+            {
+              'diagnostics',
+              -- use a custom source: all workspace buffers
+              sources = { function()
+                local diagnostics = vim.diagnostic.get(nil) -- nil means ALL buffers
+                local counts = { error = 0, warn = 0, info = 0, hint = 0 }
+                for _, d in ipairs(diagnostics) do
+                  if d.severity == vim.diagnostic.severity.ERROR then counts.error = counts.error + 1 end
+                  if d.severity == vim.diagnostic.severity.WARN then counts.warn = counts.warn + 1 end
+                  if d.severity == vim.diagnostic.severity.INFO then counts.info = counts.info + 1 end
+                  if d.severity == vim.diagnostic.severity.HINT then counts.hint = counts.hint + 1 end
+                end
+                return {
+                  error = counts.error,
+                  warn  = counts.warn,
+                  info  = counts.info,
+                  hint  = counts.hint,
+                }
+              end },
+              symbols = {
+                error = State.icons.lsp.Error .. ':',
+                warn = State.icons.lsp.Warning .. ':',
+                info = State.icons.lsp.Info .. ':',
+                hint = State.icons.lsp.Hint .. ':'
+              },
+              colored = true,
+              update_in_insert = false,
+            },
+          },
+          lualine_z = {
             "location",
             "filetype",
             "fileformat",
-            "encoding",
-          },
-          lualine_z = {
-            { clock, separator = { right = "" }, left_padding = 2 },
+            { "encoding", separator = { right = "" }, left_padding = 2 },
+            -- { clock, separator = { right = "" }, left_padding = 2 },
           },
         },
         inactive_sections = {
