@@ -2,10 +2,6 @@
 
 local M = {}
 
----@class Opts : vim.keymap.set.Opts
----@field icon string|nil Optional icon to display in the keybinding description
-
-
 ---Forward an keycombination event
 ---@param mode string Mode to forward the keycombination
 ---@param keycombination string Keycombination to forward
@@ -28,6 +24,12 @@ M.expr = function(mode, keycombination, expression)
     replace_keycodes = false,
   })
 end
+
+---@class Icons
+---@field icon string|nil Optional icon to display in the keybinding description
+---@field icon_color string|nil Optional icon color
+
+---@class Opts : vim.keymap.set.Opts,Icons
 
 --- Map a keybinding in Neovim.
 ---@param lhs string The keybinding to map
@@ -57,12 +59,38 @@ M.map = function(lhs, rhs, opts, mode)
 
   require("which-key").add({
     lhs,
-    icon = icon,
+    icon = { icon = icon, color = o.icon_color or "blue" },
     desc = o.desc or "No description provided",
     mode = mode
   })
 
   return vim.keymap.set(mode, lhs, rhs, o)
 end
+
+--- Map a keybinding in Neovim.
+--- FIXME: doesnt work
+---@param lhs string The keybinding to map
+---@param opts Icons table of options for the keybinding
+---@param mode string|string[]|nil The mode(s) in which the keybinding should be active. Defaults to "n" (normal mode).
+M.wk = function(lhs, opts, mode)
+  if mode == nil then
+    mode = "n" -- Default to normal mode
+  end
+
+  local icon = nil -- default icon
+  if opts.icon then
+    icon = opts.icon
+  end
+
+  require("which-key").add({
+    lhs,
+    icon = { icon = icon, color = opts.icon_color or "blue" },
+    desc = opts.desc or "No description provided",
+    mode = mode
+  })
+
+  return vim.keymap.set(mode, lhs, rhs, o)
+end
+
 
 return M

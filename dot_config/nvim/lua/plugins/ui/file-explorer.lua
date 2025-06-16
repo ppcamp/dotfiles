@@ -24,8 +24,18 @@ return {
     })
 
     require("which-key").add({
-      { "<leader>-", desc = "File explorer (cwd)", icon = State.icons.ui.Folder, mode = { "n" } },
-      { "-",         desc = "File mode",           icon = State.icons.ui.Folder, mode = { "n" } },
+      {
+        "<leader>-",
+        desc = "File explorer (cwd)",
+        icon = { icon = State.icons.ui.Folder, color = "green" },
+        mode = { "n" }
+      },
+      {
+        "-",
+        desc = "File mode",
+        icon = { icon = State.icons.ui.Folder, color = "green" },
+        mode = { "n" }
+      },
     })
 
     -- opens parent dir over current active window

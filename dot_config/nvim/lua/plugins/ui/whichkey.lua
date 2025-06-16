@@ -108,8 +108,8 @@ return {
 
           -- Custom
           { "<leader>g", group = "Git", mode = { "n", "v" } },
-          { "<leader>t", icon = "", group = "Tools", mode = { "n", "v" } },
-          { "<leader>n", icon = "󱣱", group = "Navigation", mode = { "n", "v" } },
+          { "<leader>t", icon = { icon = "", color = "blue" }, group = "Tools", mode = { "n", "v" } },
+          { "<leader>n", icon = { icon = "󱣱", color = "green" }, group = "Navigation", mode = { "n", "v" } },
           { "<leader>c", group = "Code", mode = { "n", "x" } },
           { "<leader>d", group = "Document" },
           { "<leader>s", group = "Search", mode = { "n", "v" } },
@@ -132,14 +132,13 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local wk = require("which-key")
+    -- config = function(_, opts)
+    --   local wk = require("which-key")
+    --   vim.api.nvim_set_hl(0, "WhichKey", { underline = false })
+    --   vim.api.nvim_set_hl(0, "WhichKeyGroup", { underline = false })
+    --   vim.api.nvim_set_hl(0, "WhichKeyDesc", { underline = false })
 
-      -- vim.api.nvim_set_hl(0, "WhichKey", { underline = false })
-      -- vim.api.nvim_set_hl(0, "WhichKeyGroup", { underline = false })
-      -- vim.api.nvim_set_hl(0, "WhichKeyDesc", { underline = false })
-
-      wk.setup(opts)
-    end,
+    --   wk.setup(opts)
+    -- end,
   },
 }

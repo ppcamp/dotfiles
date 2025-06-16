@@ -309,7 +309,7 @@ return {
 
             require("lsp-inlayhints").on_attach(client, event.buf)
 
-            map("<leader>lh", function()
+            map("<leader>ch", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, "Toggle Inlay Hints")
           end

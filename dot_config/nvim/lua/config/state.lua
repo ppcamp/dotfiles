@@ -4,6 +4,7 @@
 local M = {
   icons = require("utils.icons"),
   map = require("utils.map").map,
+  wk = require("utils.map").wk,
 }
 
 _G.State = M
