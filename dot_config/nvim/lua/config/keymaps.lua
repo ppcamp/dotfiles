@@ -4,7 +4,7 @@ State.map("<Esc>", "<cmd>nohlsearch<CR>", "Clear search highlights")
 State.map("<Esc><Esc>", "<C-\\><C-n>", "Exit terminal mode", "t")
 State.map("<leader>%", ":vsplit<CR>", { desc = "Split vertically", icon = State.icons.ui.VerticalSplit })
 State.map("<leader>e", ":enew<CR>", { desc = "New buffer", icon = State.icons.ui.File })
-State.map("jk", "<Esc>", "Exit from edit mode", { "i", "v" })
+State.map("jk", "<Esc>", "Exit from edit mode", { "i" })
 State.map(";", ":", "CMD enter command mode")
 State.map("<C-s>", "<cmd> w <cr>", { desc = "Save", silent = true }, { "n", "i", "v" })
 

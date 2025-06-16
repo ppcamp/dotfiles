@@ -14,6 +14,12 @@ local M = {
     VerticalSplit   = "",
     HorizontalSplit = ""
   },
+  lsp = {
+    Error   = "󰅚",
+    Warning = "󰀪",
+    Info    = "󰋽",
+    Hint    = "󰌶",
+  },
   kinds = {
     Array         = " ",
     Boolean       = "󰨙 ",
