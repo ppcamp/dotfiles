@@ -1,12 +1,13 @@
--- -- vim: ts=2 sts=2 sw=2 et
--- -- Description: A nice and feature-rich notification system for Neovim
+-- vim: ts=2 sts=2 sw=2 et
 
+-- Description: A nice and feature-rich notification system for Neovim
 return {
   "folke/noice.nvim",
   enabled = true,
   event = "VeryLazy",
   opts = {
     cmdline = {
+      enabled = true,
       view = "cmdline",                              -- use a classic cmdline view
       format = {
         cmdline = { icon = State.icons.ui.Command }, -- icon for the cmdline

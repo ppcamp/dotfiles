@@ -3,7 +3,7 @@
 -- Show a explorer view, with folders, and file icons
 return {
   "stevearc/oil.nvim",
-  -- enabled = false,
+  enabled = true,
   dependencies = { "nvim-tree/nvim-web-devicons", "folke/which-key.nvim" },
   config = function()
     require("oil").setup({

@@ -1,6 +1,7 @@
 -- vim: ts=2 sts=2 sw=2 et
 
 return {
+  enabled = true,
   'akinsho/bufferline.nvim',
   event = { "BufReadPost", "BufNewFile" }, -- load when editing files
   version = "*",

@@ -1,6 +1,7 @@
 return {
   {
     "nvzone/showkeys",
+    enabled = true,
     cmd = "ShowkeysToggle",
     opts = {
       -- position = "bottom-right",

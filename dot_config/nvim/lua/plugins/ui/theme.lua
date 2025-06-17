@@ -3,6 +3,7 @@
 return {
   -- "rebelot/kanagawa.nvim",
   "marko-cerovac/material.nvim",
+  enabled = true,
   -- "tiagovla/tokyodark.nvim",
   -- "catppuccin/nvim",
   -- "Mofiqul/dracula.nvim",

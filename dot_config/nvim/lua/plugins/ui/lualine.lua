@@ -4,6 +4,7 @@
 
 return {
   {
+    enabled = true,
     -- https://www.nerdfonts.com/cheat-sheet
     "nvim-lualine/lualine.nvim",
     dependencies = {
@@ -59,6 +60,11 @@ return {
           },
           lualine_x = {
             "nvim-dap-ui",
+            { -- https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#show-recording-messages
+              require("noice").api.statusline.mode.get,
+              cond = require("noice").api.statusline.mode.has,
+              color = { fg = "#ff9e64" },
+            }
           },
           lualine_y = {
             -- "progress",
