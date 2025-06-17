@@ -25,22 +25,21 @@ return {
     require("which-key").add({
       {
         "<leader>-",
-        desc = "File explorer (cwd)",
         icon = { icon = State.icons.ui.Folder, color = "green" },
         mode = { "n" }
       },
       {
-        "-",
-        desc = "File mode",
+        "<leader>+",
         icon = { icon = State.icons.ui.Folder, color = "green" },
         mode = { "n" }
       },
     })
 
-    -- opens parent dir over current active window
-    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    vim.keymap.set("n", "<leader>+", "<CMD>Oil .<CR>", { desc = "Explorer (workspace)" })
+    vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", { desc = "Explorer (cwd)" })
+
     -- open parent dir in float window
-    vim.keymap.set("n", "<leader>-", require("oil").toggle_float)
+    -- vim.keymap.set("n", "<leader>-", require("oil").toggle_float)
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "oil", -- Adjust if Oil uses a specific file type identifier
