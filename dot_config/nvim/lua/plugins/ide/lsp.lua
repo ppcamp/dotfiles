@@ -72,38 +72,133 @@ local servers = {
   docker_compose_language_service = {},
   dockerls = {},
   gopls = {
+    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl', 'gosum' },
+    root_markers = { 'go.mod', 'go.work', '.git' },
     settings = {
       gopls = {
-        -- directoryFilters = {
-        --     "-",
-        --     "+" .. cwd,
-        -- },
-        -- Exclude the 'pkg' directory from being indexed
-        analyses = {
-          unusedparams = true,
-          unusedvariable = true,
-          unreachable = true,
-          modernize = true,
+        gofumpt = true,
+        codelenses = {
+          gc_details = false,
+          generate = true,
+          regenerate_cgo = true,
+          run_govulncheck = true,
+          test = true,
+          tidy = true,
+          upgrade_dependency = true,
+          vendor = true,
         },
-        staticcheck = true,
         hints = {
-          rangeVariableTypes = true,
-          parameterNames = true,
-          constantValues = true,
           assignVariableTypes = true,
           compositeLiteralFields = true,
           compositeLiteralTypes = true,
+          constantValues = true,
           functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
         },
+        analyses = {
+          nilness = true,
+          unusedparams = true,
+          unusedwrite = true,
+          useany = true,
+          unreachable = true,
+          modernize = true,
+          stylecheck = true,
+          appends = true,
+          asmdecl = true,
+          assign = true,
+          atomic = true,
+          bools = true,
+          buildtag = true,
+          cgocall = true,
+          composite = true,
+          contextcheck = true,
+          deba = true,
+          atomicalign = true,
+          composites = true,
+          copylocks = true,
+          deepequalerrors = true,
+          defers = true,
+          deprecated = true,
+          directive = true,
+          embed = true,
+          errorsas = true,
+          fillreturns = true,
+          framepointer = true,
+          gofix = true,
+          hostport = true,
+          infertypeargs = true,
+          lostcancel = true,
+          httpresponse = true,
+          ifaceassert = true,
+          loopclosure = true,
+          nilfunc = true,
+          nonewvars = true,
+          noresultvalues = true,
+          printf = true,
+          shadow = true,
+          shift = true,
+          sigchanyzer = true,
+          simplifycompositelit = true,
+          simplifyrange = true,
+          simplifyslice = true,
+          slog = true,
+          sortslice = true,
+          stdmethods = true,
+          stdversion = true,
+          stringintconv = true,
+          structtag = true,
+          testinggoroutine = true,
+          tests = true,
+          timeformat = true,
+          unmarshal = true,
+          unsafeptr = true,
+          unusedfunc = true,
+          unusedresult = true,
+          waitgroup = true,
+          yield = true,
+          unusedvariable = true
+        },
+        usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+        semanticTokens = true,
       },
     },
   },
   intelephense = {},
   lua_ls = {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
+    root_markers = {
+      '.luarc.json',
+      '.luarc.jsonc',
+      '.luacheckrc',
+      '.stylua.toml',
+      'stylua.toml',
+      'selene.toml',
+      'selene.yml',
+      '.git',
+    },
     settings = {
       Lua = {
-        runtime = { version = 'LuaJIT' },
-        diagnostics = { globals = { 'vim' } },
+        --     runtime = { version = 'LuaJIT' },
+        diagnostics = {
+          disable = { "missing-fields" },
+          globals = {
+            "vim",
+            "Snacks",
+          },
+        },
+        hint = {
+          enable = true,
+          setType = false,
+          paramType = true,
+          paramName = "Disable",
+          semicolon = "Disable",
+          arrayIndex = "Disable",
+        },
         workspace = {
           library = vim.api.nvim_get_runtime_file("", true),
           checkThirdParty = false,
@@ -166,8 +261,18 @@ return {
       local cmd = vim.api.nvim_create_autocmd
       local augroup = vim.api.nvim_create_augroup
 
-      -- local capabilities = require("blink.cmp").get_lsp_capabilities()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        require("blink.cmp").get_lsp_capabilities(),
+        {
+          fileOperations = {
+            didRename = true,
+            willRename = true,
+          },
+        }
+      )
 
       local on_attach = function(client, bufnr) -- (client, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -186,11 +291,6 @@ return {
         end
 
         lspconfig[server_name].setup(server)
-        if not server.capabilities then
-          server.capabilities = {}
-        end
-
-        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities)
       end
 
       -- Diagnostic Config
