@@ -2,6 +2,7 @@
 
 return {
   'akinsho/bufferline.nvim',
+  event = { "BufReadPost", "BufNewFile" }, -- load when editing files
   version = "*",
   dependencies = 'nvim-tree/nvim-web-devicons',
   keys = {
@@ -17,8 +18,6 @@ return {
     { "]B",         "<cmd>BufferLineMoveNext<cr>",             desc = "Move buffer next" }
   },
   config = function(_, opts)
-    vim.opt.termguicolors = true
-
     require("bufferline").setup(opts)
   end
 }
