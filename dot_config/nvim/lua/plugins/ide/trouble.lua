@@ -30,7 +30,7 @@ return {
   opts = {
     modes = {
       lsp = {
-        win = { position = "right" },
+        win = { position = "float" },
       },
     },
   },

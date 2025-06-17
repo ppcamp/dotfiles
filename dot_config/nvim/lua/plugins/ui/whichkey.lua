@@ -1,18 +1,7 @@
 -- vim: ts=2 sts=2 sw=2 et
 
--- This is often very useful to both group configuration, as well as handle
--- lazy loading plugins that don't need to be loaded immediately at startup.
---
--- For example, in the following configuration, we use:
---  event = 'VimEnter'
---
 -- which loads which-key before all the UI elements are loaded. Events can be
 -- normal autocommands events (`:help autocmd-events`).
---
--- Then, because we use the `config` key, the configuration only runs
--- after the plugin has been loaded:
---  config = function() ... end
-
 return {
   { -- Useful plugin to show you pending keybinds.
     "folke/which-key.nvim",
@@ -113,15 +102,15 @@ return {
           { "<leader>c", group = "Code", mode = { "n", "x" } },
           { "<leader>d", group = "Document" },
           { "<leader>s", group = "Search", mode = { "n", "v" } },
-          { "<leader>?", group = "Help", icon = { icon = "", color = "green" }, mode = { "n", "v" } },
+          { "<leader>h", group = "Help", icon = { icon = "", color = "green" }, mode = { "n", "v" } },
           {
-            "<leader>?w",
+            "<leader>hw",
             function()
               require("which-key").show({ global = false })
             end,
             desc = "Keymaps (which-key)",
           },
-          { "<leader>?c", ":Copilot help<CR>", desc = "Copilot: Help" },
+          { "<leader>hc", ":Copilot help<CR>", desc = "Copilot: Help" },
           {
             "<leader>tb",
             desc = "Functions: My",
@@ -132,13 +121,5 @@ return {
         },
       },
     },
-    -- config = function(_, opts)
-    --   local wk = require("which-key")
-    --   vim.api.nvim_set_hl(0, "WhichKey", { underline = false })
-    --   vim.api.nvim_set_hl(0, "WhichKeyGroup", { underline = false })
-    --   vim.api.nvim_set_hl(0, "WhichKeyDesc", { underline = false })
-
-    --   wk.setup(opts)
-    -- end,
   },
 }

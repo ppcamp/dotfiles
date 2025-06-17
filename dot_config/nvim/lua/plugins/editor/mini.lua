@@ -2,6 +2,7 @@
 
 return { -- Collection of various small independent plugins/modules
   "echasnovski/mini.nvim",
+  event = "VeryLazy",
   opts = function()
     local ai = require("mini.ai")
     return {

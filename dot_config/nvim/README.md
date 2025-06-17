@@ -2,10 +2,9 @@
 
 A simple nvim setup for my use.
 
-**When using `vim-go`, type `GoInstallBinaries` to install required tools**
-
-> [!TIP]
-> Check the [plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins) in LazyVim
+> [!info]
+>
+> **When using `vim-go`, type `GoInstallBinaries` to install required tools**
 
 > [!NOTE]
 >
@@ -13,6 +12,8 @@ A simple nvim setup for my use.
 > modifications.
 
 > [!TIP]
+>
+> Check the [plugins](https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins) in LazyVim
 >
 > [Check my gist with tips for vim][gist], and 
 > [Vim shortcuts and tips]
@@ -40,6 +41,11 @@ A simple nvim setup for my use.
 
 ---
 
+## Events
+
+- https://lazy.folke.io/usage#-user-events
+- https://neovim.io/doc/user/autocmd.html
+
 ## Extras
 
 See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
@@ -47,8 +53,6 @@ See: [Nerdfonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 For nvim to work with sudo account, you'll need to create a copy or a link into the `root/home` directory
 `sudo ln -s /opt/nvim-config /root/.config/nvim`
 
-
-https://github.com/folke/noice.nvim
 
 ## To remove it 
 

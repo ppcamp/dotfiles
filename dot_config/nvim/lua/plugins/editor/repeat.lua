@@ -3,5 +3,6 @@
 -- Allow to repeat custom mappings by typing "."
 
 return {
-	"tpope/vim-repeat",
+  "tpope/vim-repeat",
+  event = "BufReadPost",
 }
