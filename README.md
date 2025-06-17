@@ -4,16 +4,10 @@
 >
 > A collection of my dotfiles, scripts, and configuration files managed by [chezmoi](https://www.chezmoi.io/).
 
-
 <figure>
   <img src="./docs/imgs/execution.png" alt="chezmoi execution" width="500px">
   <figcaption>ChezMoi execution</figcaption>
 </figure>
-
-> [!TODO]
->
-> - [ ] Collape `iferr` blocks in golang, and also collapse `#regions`.
-> - [ ] `chezmoi` failing to apply **scripts**
 
 ## Installation
 
