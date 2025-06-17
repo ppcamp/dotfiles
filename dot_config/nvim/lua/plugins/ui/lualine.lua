@@ -13,10 +13,9 @@ return {
       },
     },
     config = function()
-      local function clock()
-        return os.date(" %Y/%m/%d %H:%M")
-      end
+      local extra = require("utils.lualine")
 
+      ---@diagnostic disable: different-requires
       require("lualine").setup({
         options = {
           theme = "auto",
@@ -68,22 +67,7 @@ return {
             {
               'diagnostics',
               -- use a custom source: all workspace buffers
-              sources = { function()
-                local diagnostics = vim.diagnostic.get(nil) -- nil means ALL buffers
-                local counts = { error = 0, warn = 0, info = 0, hint = 0 }
-                for _, d in ipairs(diagnostics) do
-                  if d.severity == vim.diagnostic.severity.ERROR then counts.error = counts.error + 1 end
-                  if d.severity == vim.diagnostic.severity.WARN then counts.warn = counts.warn + 1 end
-                  if d.severity == vim.diagnostic.severity.INFO then counts.info = counts.info + 1 end
-                  if d.severity == vim.diagnostic.severity.HINT then counts.hint = counts.hint + 1 end
-                end
-                return {
-                  error = counts.error,
-                  warn  = counts.warn,
-                  info  = counts.info,
-                  hint  = counts.hint,
-                }
-              end },
+              sources = { extra.workspace_diagnostic },
               symbols = {
                 error = State.icons.lsp.Error .. ':',
                 warn = State.icons.lsp.Warning .. ':',
