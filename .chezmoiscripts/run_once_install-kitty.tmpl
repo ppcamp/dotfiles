@@ -17,7 +17,6 @@ sudo rm -rf /opt/kitty
 sudo mkdir -p /opt/kitty
 
 # Download and install nvim directly to /opt/kitty
-echo https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version#v}-x86_64.txz
 curl -sLo $tmp/kitty.txz "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version#v}-x86_64.txz"
 
 # We need to do this way, because the `tar` command does not support gzip stdin

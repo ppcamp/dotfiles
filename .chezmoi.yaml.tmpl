@@ -123,16 +123,21 @@ See:
   "fzf"
   "gitx"
   "kitty"
+  "lazygit"
   "nvim"
   "perm"
   "pet"
+  "procs"
   "rg"
   "sd"
+  "shfmt"
+  "sqlfluff"
   "starship"
   "tlrc"
   "xcp"
   "xpb"
   "zoxide"
+  "zsh"
 -}}
 {{- $choices := promptMultichoice "󰯂 What should install (scripts to run)" $allChoices $defaultChoices -}}
 {{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}
@@ -141,9 +146,8 @@ See:
 {{-   writeToStdout "\033[32m💡 Tip:\033[0m You can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
 {{- end -}}
 
-{{- writeToStdout "\033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use `asdf install`.\n" -}}
-{{- writeToStdout "\t\033[2;37mCheck your `~/.tool-versions` file.\033[0m\n" -}}
-{{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n\tUse ppa or build from src, if necessary.\n\n" }}
+{{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n" }}
+{{- writeToStdout "\tUse ppa or build from src, if necessary.\n" }}
 
 {{- if eq .chezmoi.os "darwin" -}}
 {{- /*    🍎 macOS-specific code */ -}}
