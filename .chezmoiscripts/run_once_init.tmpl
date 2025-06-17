@@ -5,6 +5,8 @@
 
 # Install required common tools
 
+sudo apt update -qq >/dev/null 2>&1
+
 pkg=(
 	jq                 # JSON processor (required by most of these scripts in chezmoi)
 	curl               # Command line tool for transferring data with URLs
