@@ -21,24 +21,35 @@ return {
       },
     },
     appearance = { nerd_font_variant = "mono" },
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      menu = {
+        border = nil,
+        scrolloff = 1,
+        scrollbar = false,
+        draw = {
+          columns = {
+            { "kind_icon" },
+            { "label", "label_description", gap = 1 },
+            { "kind" },
+            { "source_name" },
+          },
+        },
+      },
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 500,
+      },
+    },
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
     },
-
     cmdline = {
       -- Default list of enabled providers for cmdline
       -- You can override this in your cmdline config
       -- default = { "path", "buffer" },
       enabled = false, -- doc unclear, but when enabled, freezes when using terminal commands
-      completion = {
-        menu = {
-          -- guarantee to not bug it with huge amount of system completions
-          auto_show = false,
-        },
-      },
     },
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
     -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,

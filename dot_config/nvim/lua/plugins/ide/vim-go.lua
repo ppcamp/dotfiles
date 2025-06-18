@@ -2,8 +2,10 @@
 
 -- Way more features, such as interface generation, debugging, etc,
 return {
-	"fatih/vim-go",
-	config = function()
-		-- vim.cmd("GoInstallBinaries")
-	end,
+  "fatih/vim-go",
+  config = function()
+    vim.g.go_gopls_enabled = 0 -- disable vim-go's gopls integration
+
+    -- vim.cmd("GoInstallBinaries")
+  end,
 }

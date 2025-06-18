@@ -2,6 +2,7 @@ tools/
 data/
 README.md
 BREAKING_CHANGES.md
+TODO.md
 LICENSE
 docs/
 .lefthook.yaml

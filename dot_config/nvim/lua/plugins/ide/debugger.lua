@@ -21,8 +21,7 @@ return {
     -- Required dependency for nvim-dap-ui
     "nvim-neotest/nvim-nio",
     -- Installs the debug adapters for you
-    "williamboman/mason.nvim",
-    "jay-babu/mason-nvim-dap.nvim",
+    "mason-org/mason.nvim",
     -- Add your own debuggers here
     "leoluz/nvim-dap-go",
     -- Shows variable values inline as virtual text
@@ -54,12 +53,6 @@ return {
   config = function()
     local dap = require("dap")
     local dapui = require("dapui")
-
-    require("mason-nvim-dap").setup({
-      automatic_installation = true,
-      handlers = {},
-      ensure_installed = debuggers,
-    })
 
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup({

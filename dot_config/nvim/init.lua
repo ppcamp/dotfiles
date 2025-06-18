@@ -2,30 +2,9 @@
 
 local load_modules = require("utils.modules").load_folder
 
--- specific nvim configs, for compability purposes, you should use .vimrc files
--- and if, and only if, you want to configure locally, you can configure it
--- there
 require("config.options")
-
--- register a shared global state object (state must be loaded before any plugin)
-require("config.state")
-
--- core library, used to load the whole environment (plugins)
--- load all plugins and also register some of keymaps internally
-require("config.bootstrap") -- lazy
-
--- register extra keymaps/shortcuts
+require("core.state")
+require("core.lazy") -- bootstrap
 require("config.keymaps")
-
--- load all autocmds, this is optional and should be used if you want to have
--- require("config.autocmd")
-
--- load local settings, this is optional and should be used if you want to have
--- a local configuration for your vim setup
 require("config.vim")
-
--- register vim command functions
--- can be used by
--- :CommandName
--- require("config.commands")
 load_modules("commands")
