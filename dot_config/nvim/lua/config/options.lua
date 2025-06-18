@@ -20,11 +20,11 @@ vim.g.have_nerd_font = true
 
 opt.cursorline = true -- highlight current line
 
-opt.number = true -- Set line numbering
+opt.number = true     -- Set line numbering
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 opt.ignorecase = true -- Set to ignore case
-opt.smartcase = true -- Ignore case only when there's no Uppercase char
+opt.smartcase = true  -- Ignore case only when there's no Uppercase char
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
@@ -34,9 +34,9 @@ vim.opt.showmode = false
 
 -- Set indentation options
 opt.expandtab = true -- Use spaces instead of tabs
-opt.tabstop = 4 -- Number of spaces that a tab counts for
-opt.shiftwidth = 4 -- Number of spaces to use for indentation
-opt.softtabstop = 4 -- Number of spaces for a tab key press
+opt.tabstop = 4      -- Number of spaces that a tab counts for
+opt.shiftwidth = 4   -- Number of spaces to use for indentation
+opt.softtabstop = 4  -- Number of spaces for a tab key press
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -62,6 +62,9 @@ extras.foldexpr = "nvim_treesitter#foldexpr()"
 extras.foldlevel = 0
 -- Enable folding by default (folding is turned on when the file is opened)
 extras.foldenable = false
+
+-- Do not wrap lines
+opt.wrap = false
 
 -- Show diagnostics in the command line when cursor moves
 extras.updatetime = 500 -- delay time to 500ms
@@ -98,25 +101,25 @@ opt.scrolloff = 10
 opt.confirm = true
 
 if is_wsl() then
-	-- print("WSL")
+  -- print("WSL")
 
-	-- if set, it'll overwrite the internal clipboard to always use the system,
-	-- which in windows, will add the carriage return char at the end of simple
-	-- commands such as dd or p
-	-- opt.clipboard = "unnamed" -- or unnamed plus
-	opt.clipboard = ""
-	vim.g.clipboard = {
-		name = "win32yank-wsl",
-		copy = {
-			["+"] = "clip.exe",
-			["*"] = "clip.exe",
-		},
-		paste = {
-			["+"] = "powershell.exe -noprofile -command Get-Clipboard",
-			["*"] = "powershell.exe -noprofile -command Get-Clipboard",
-		},
-		cache_enabled = 0,
-	}
-	-- else
-	-- 	print("Not WSL")
+  -- if set, it'll overwrite the internal clipboard to always use the system,
+  -- which in windows, will add the carriage return char at the end of simple
+  -- commands such as dd or p
+  -- opt.clipboard = "unnamed" -- or unnamed plus
+  opt.clipboard = ""
+  vim.g.clipboard = {
+    name = "win32yank-wsl",
+    copy = {
+      ["+"] = "clip.exe",
+      ["*"] = "clip.exe",
+    },
+    paste = {
+      ["+"] = "powershell.exe -noprofile -command Get-Clipboard",
+      ["*"] = "powershell.exe -noprofile -command Get-Clipboard",
+    },
+    cache_enabled = 0,
+  }
+  -- else
+  -- 	print("Not WSL")
 end
