@@ -13,6 +13,11 @@ return {
     vim.g.gruvbox_material_statusline_style = "material"
     vim.g.gruvbox_material_cursor = "auto"
     vim.cmd.colorscheme("gruvbox-material")
+
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333333" })
+    vim.api.nvim_set_hl(0, "Search", { bg = "orange" })
+    vim.api.nvim_set_hl(0, "Visual", { bg = "orange" })
+    vim.api.nvim_set_hl(0, "YankHighlight", { bg = "orange" })
   end,
 }
 

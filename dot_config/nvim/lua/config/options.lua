@@ -20,11 +20,11 @@ vim.g.have_nerd_font = true
 
 opt.cursorline = true -- highlight current line
 
-opt.number = true     -- Set line numbering
+opt.number = true -- Set line numbering
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 opt.ignorecase = true -- Set to ignore case
-opt.smartcase = true  -- Ignore case only when there's no Uppercase char
+opt.smartcase = true -- Ignore case only when there's no Uppercase char
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
@@ -34,9 +34,9 @@ vim.opt.showmode = false
 
 -- Set indentation options
 opt.expandtab = true -- Use spaces instead of tabs
-opt.tabstop = 4      -- Number of spaces that a tab counts for
-opt.shiftwidth = 4   -- Number of spaces to use for indentation
-opt.softtabstop = 4  -- Number of spaces for a tab key press
+opt.tabstop = 4 -- Number of spaces that a tab counts for
+opt.shiftwidth = 4 -- Number of spaces to use for indentation
+opt.softtabstop = 4 -- Number of spaces for a tab key press
 
 -- Enable break indent
 vim.opt.breakindent = true
