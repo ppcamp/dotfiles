@@ -7,6 +7,10 @@ return {
   },
   opt = {
     auto_restore_enabled = true,
-    auto_session_suppress_dirs = { "~/Downloads", "~/Documents", "~/Desktop/" },
+    auto_session_suppress_dirs = { "~/Downloads" },
+    auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
   },
+  config = function(_, opts)
+    require("auto-session").setup(opts)
+  end,
 }
