@@ -8,6 +8,7 @@ return {
     local draw = require("utils.drawings")
 
     theme.section.header.val = draw.duck
+    theme.section.header.opts.position = "center"
 
     require("alpha").setup(theme.config)
   end,
