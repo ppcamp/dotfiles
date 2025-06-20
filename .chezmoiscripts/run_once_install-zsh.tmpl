@@ -1,19 +1,18 @@
 {{- if hasKey .scripts "zsh" -}}
 #!/usr/bin/env bash
 
-pkg=zsh
-
-version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+version=$(apt-cache policy zsh | grep Candidate | awk '{print $2}')
 if [ -z "$version" ]; then
-  echo "❌ $pkg is not available in the apt repository."
+  echo "❌ zsh is not available in the apt repository."
   exit 0 # exit early with success status to keep chezmoi idempotent
 fi
 
-echo "🚀 Installing $pkg $version directly from apt"
-sudo apt install -qq -y zsh
+echo "🚀 Installing zsh $version directly from apt"
+sudo apt install -qq -y zsh >/dev/null 2>&1
 
 # TODO: add new choice to set as default
 echo "⚙️ Setting zsh as default shell"
+printf "    "
 chsh -s $(which zsh)
 
 {{ end -}}

@@ -1,20 +1,20 @@
 {{- if hasKey .scripts "sqlfluff" -}}
 #!/usr/bin/env bash
 
-pkg=sqlfluff
-
 # SQL linter and formatter
 # https://github.com/sqlfluff/sqlfluff/tree/main
 
-version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+version=$(apt-cache policy sqlfluff | grep Candidate | awk '{print $2}')
 if [ -z "$version" ]; then
-  echo "❌ $pkg is not available in the apt repository."
+  echo "     ❌ sqlfluff is not available in the apt repository."
+  printf "   \033[32m💡 Tip:\033[0m Install it using 'pipx install sqlfluff'\n"
+
   exit 0 # exit early with success status to keep chezmoi idempotent
 fi
 
-echo "🚀 Installing ${pkg} version ${version} directly from apt"
+echo "🚀 Installing sqlfluff version ${version} directly from apt"
 
-sudo apt install -qq -y ${pkg} >/dev/null 2>&1
-# sudo apt autopurge -y ${pkg}
+sudo apt install -qq -y sqlfluff >/dev/null 2>&1
+# sudo apt autopurge -y sqlfluff
 
 {{ end -}}

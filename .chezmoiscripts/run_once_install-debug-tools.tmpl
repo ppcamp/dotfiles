@@ -4,7 +4,7 @@
 
 # Install usefull debugging tools for debian
 
-pkg=(
+pkgs=(
   #"lbzip2"  # required for bzip2 compression/decompression (required by tar)
   "make"     # usually required for many tool
   "cmake"    # required for asdf and other tool
@@ -17,7 +17,7 @@ pkg=(
   "file"     # inspeact the type of the file
 )
 
-for i in "${!pkg[@]}"; do
+for pkg in "${pkg[@]}"; do
   version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
 
   if [ -z "$version" ]; then
@@ -25,8 +25,8 @@ for i in "${!pkg[@]}"; do
     continue # exit early with success status to keep chezmoi idempotent
   fi
 
-  echo "🚀 Installing common tools from apt: ${pkg[i]} $version"
-  sudo apt install -qq -y "${pkg[i]}" >/dev/null 2>&1
+  echo "🚀 Installing common tools from apt: ${pkg} $version"
+  sudo apt install -qq -y "${pkg}" >/dev/null 2>&1
 
 done
 

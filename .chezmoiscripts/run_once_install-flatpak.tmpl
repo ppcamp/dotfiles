@@ -7,9 +7,9 @@
 # NOTE: it has a better performance than snap, and it is more flexible.
 
 {{- if hasKey .scripts "flatpak" }}
-version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+version=$(apt-cache policy flatpak | grep Candidate | awk '{print $2}')
 if [ -z "$version" ]; then
-  echo "❌ $pkg is not available in the apt repository."
+  echo "❌ flatpak is not available in the apt repository."
   exit 0 # exit early with success status to keep chezmoi idempotent
 fi
 

@@ -1,22 +1,21 @@
 {{- if hasKey .scripts "podman" -}}
 #!/usr/bin/env bash
 
-pkg="podman"
-
-version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+version=$(apt-cache policy podman | grep Candidate | awk '{print $2}')
 if [ -z "$version" ]; then
-  echo "❌ $pkg is not available in the apt repository."
+  echo "❌ podman is not available in the apt repository."
   exit 0 # exit early with success status to keep chezmoi idempotent
 fi
 
-echo "🚀 Installing $pkg version ${version} directly from apt"
+echo "🚀 Installing podman version ${version} directly from apt"
 
 # getting version
-sudo apt install -qq -y $pkg >/dev/null 2>&1
-# sudo apt autopurge -y $pkg
+sudo apt install -qq -y podman >/dev/null 2>&1
+# sudo apt autopurge -y podman
 
 
 # TODO: add new choice to install flatpah UI
+printf "   \033[32m💡 Tip:\033[0m Install io.podman_desktop.PodmanDesktop to enable podman daemon and interface\n"
 # https://flathub.org/pt-BR/apps/io.podman_desktop.PodmanDesktop
 # https://podman-desktop.io/
 

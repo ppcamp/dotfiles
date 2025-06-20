@@ -1,0 +1,44 @@
+{{- if hasKey .scripts "python-tools" -}}
+#!/usr/bin/env bash
+
+################################################################################
+# Install Python tools
+#
+# Since, the original debian and debian based distros block the installation
+# of python tools via pip, to avoid broken packages, we need to install them
+# via apt, which usually provides a virtual environment for them.
+#
+# Some tools may even use build tools to improve performance.
+#
+# Although, such tools may not be available for your specific distro, and
+# therefore, you may need to install them manually. (Using venv, or in this
+# case, pipx).
+#
+# See https://pipx.pypa.io/stable/comparisons/
+
+if ! which pip >/dev/null 2>&1 || ! which pip3 >/dev/null 2>&1; then
+  version=$(apt-cache policy pip3 | grep Candidate | awk '{print $2}')
+  echo "🚀 Installing pip version ${version} directly from apt"
+  sudo apt install -qq -y python3-pip >/dev/null 2>&1
+fi
+
+version=$(apt-cache policy pipx | grep Candidate | awk '{print $2}')
+if [ -z "$version" ]; then
+  echo "❌ pipx is not available in the apt repository."
+
+  version=$(curl -sSL https://pypi.org/pypi/pipx/json | jq .info.version)
+
+  echo "🚀 Installing pipx version ${version} from pip"
+  python3 -m pip install --user pipx
+
+else
+
+  echo "🚀 Installing pipx version ${version} directly from apt"
+  sudo apt install -qq -y pipx >/dev/null 2>&1
+fi
+
+echo "⚙️ Configuring pipx"
+python3 -m pipx ensurepath 2>&1 | sed 's/^/    /'
+# sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
+
+{{ end -}}
