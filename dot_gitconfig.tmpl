@@ -115,6 +115,7 @@ gcf = gc --agressive # optimize the repository, (also use git f) example: <git o
 gg = grep --break --heading --line-number --color
 graph = ls --graph # example: <git graph develop feature/some-14> or just <git graph>
 graphx = graph --abbrev-commit --all
+hard = reset --hard
 hist = !gitx --run hashes                                                                                                                              # (it requires to have installed the gitx plugin)
 health = fsck                                                                                                                                          # (check the health of the repository) example: <git health>
 lazy = !LANG=en_US.UTF-8 lazygit                                                                                                                       # (execute lazygit cmd)
@@ -124,8 +125,8 @@ ll = ls --name-only                                                             
 local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'                                                                                # (show local only branches) example: <git local-branches>
 log-deleted = log --diff-filter=D --                                                                                                                   # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
 ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s%C(bold blue)%d%C(reset) %C(dim white)%an [%G?] (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
-lsp = ls --first-parent                                                                                                                                # only show parent related commits
-new = checkout -B                                                                                                                                      # (create new branches) example: <git new branchName>
+lsp = ls --first-parent
+new = switch --create                                                                                                                                      # (create new branches) example: <git new branchName>
 p = pull
 pr = pull --rebase
 patch = !git add -N . && git diff HEAD
@@ -136,6 +137,7 @@ rename-remote = "!fn() { git branch -m \"$1\" \"$2\" && git push origin \"$2\" &
 reset-all = !git reset-untracked && git reset-hard # (clean all- (un)tracked files) example: <git reset-all>
 reset-hard = reset --hard HEAD                     # (clean tracked files) example: <git reset-hard>
 s = status
+soft = reset --soft
 stashes = !gitx --run stashes # (it requires to have installed the gitx plugin)
 sw = switch                   # (it requires to have installed the gitx plugin)
 swx = !gitx --run branches    # (it requires to have installed the gitx plugin)
