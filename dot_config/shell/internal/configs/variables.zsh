@@ -38,4 +38,5 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ASDF_DIR="$HOME/.config/asdf"
 
 ################################################################################
+# enable GPG agent (commit signing) using terminal tty.
 export GPG_TTY=$(tty)

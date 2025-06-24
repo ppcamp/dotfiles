@@ -30,3 +30,8 @@ bindkey '^[[1;5D' backward-word # Ctrl + Left
 
 # bindkey # Shows the key bindings
 # Ctrl+x ctrl+v # opens the vi mode
+
+# Edit command line in a new $EDITOR when hitting ctrl+x ctrl+e
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line

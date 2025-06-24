@@ -32,9 +32,10 @@ setopt PUSHD_MINUS         # popd with - goes to last dir
 setopt PUSHD_SILENT        # don't show pushd output
 setopt PUSHD_TO_HOME       # pushd with no args goes to $HOME
 
+# OTHERS settings
 setopt EXTENDED_GLOB       # used to allow ^ negative glob
 setopt interactivecomments # allow comments in shell
-setopt NO_BANG_HIST        # allow to use ! to see declarative arrays keys
+setopt BANG_HIST           # allow to use "!!" to get the last command.
 #setopt CORRECT_ALL        # correct all commands
 #setopt CORRECT            # correct commands only
 
