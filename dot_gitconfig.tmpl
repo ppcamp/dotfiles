@@ -137,6 +137,7 @@ rename-remote = "!fn() { git branch -m \"$1\" \"$2\" && git push origin \"$2\" &
 reset-all = !git reset-untracked && git reset-hard # (clean all- (un)tracked files) example: <git reset-all>
 reset-hard = reset --hard HEAD                     # (clean tracked files) example: <git reset-hard>
 s = status
+ss = status --show-stash --untracked-files
 soft = reset --soft
 stashes = !gitx --run stashes # (it requires to have installed the gitx plugin)
 sw = switch                   # (it requires to have installed the gitx plugin)
