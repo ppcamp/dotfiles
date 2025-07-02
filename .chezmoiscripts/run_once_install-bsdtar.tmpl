@@ -1,21 +1,18 @@
 {{- if hasKey .scripts "bsdtar" -}}
 #!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "bash_helpers.tmpl" . }}
 
 # This script installs bsdtar, a tar implementation that supports more formats
-# than GNU tar, including xz and lzma compression.
+# than "GNU tar" (default tar), including xz and lzma compression.
 
 pkg=bsdtar
-binName=libarchive-tools
 
-version=$(apt-cache policy $binName | grep Candidate | awk '{print $2}')
-if [ -z "$version" ]; then
-  echo "❌ $pkg ($binName) is not available in the apt repository."
-  exit 0 # exit early with success status to keep chezmoi idempotent
-fi
+{{- if eq .chezmoi.osRelease.id "debian" }}
+	binName=libarchive-tools
+{{ end -}}
 
-echo "🚀 Installing $pkg version ${version} directly from apt"
-
-sudo apt install -qq -y $binName >/dev/null 2>&1
-# sudo apt autopurge -y $binName
+{{ template "bash_install_pkg.tmpl" . }}
 
 {{ end -}}

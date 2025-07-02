@@ -1,29 +1,23 @@
 {{- if or (hasKey .scripts "flatpak") (hasKey .scripts "flatpak-fix-dark-theme") -}}
 #!/usr/bin/env bash
 
+{{ template "bash_helpers.tmpl" . }}
+
+{{- if hasKey .scripts "flatpak" }}
 # This script installs Flatpak, a software utility for software deployment,
 # application virtualization, and package management.
 #
 # NOTE: it has a better performance than snap, and it is more flexible.
 
-{{- if hasKey .scripts "flatpak" }}
-version=$(apt-cache policy flatpak | grep Candidate | awk '{print $2}')
-if [ -z "$version" ]; then
-  echo "❌ flatpak is not available in the apt repository."
-  exit 0 # exit early with success status to keep chezmoi idempotent
-fi
+pkg=flatpak
 
-############################## Flatpak installation
-echo "🚀 Installing flatpak version ${version} directly from apt"
-sudo apt install -qq -y flatpak >/dev/null 2>&1
+{{ template "bash_install_pkg.tmpl" . }}
 
-############################## Gnome Software plugin for Flatpak
-if dpkg -s gnome-software >/dev/null 2>&1; then
+if is_installed gnome-software; then
   echo "⚙️ GNOME Software is installed. Configuring it to support Flatpak applications."
-  sudo apt install -qq -y gnome-software-plugin-flatpak >/dev/null 2>&1
+  install_pkg gnome-software-plugin-flatpak
 fi
 
-############################## Flathub repository
 echo "⚙️ Configuring flathub"
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -46,6 +40,5 @@ flatpak override --user --env=GTK_THEME=Adwaita:dark
 {{ end -}}
 
 printf "   \033[32m💡 Tip:\033[0m Install 'Flatseal' to control perm 'flatpak install com.github.tchx84.Flatseal.flatpakref'\n"
-
 
 {{ end -}}

@@ -50,8 +50,10 @@
 ## Links
 - [chezmoi dotfiles config]
 - [chezmoi]
+- [sprig] (Golang extra functions library that can be used in these templates)
 
 <!-- Links -->
+[sprig]: https://masterminds.github.io/sprig/
 [lazygit nvim plugins]: https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins
 [chezmoi]: https://www.chezmoi.io/
 [chezmoi dotfiles config]: https://fedoramagazine.org/take-back-your-dotfiles-with-chezmoi/

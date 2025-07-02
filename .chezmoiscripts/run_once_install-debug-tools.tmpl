@@ -1,14 +1,15 @@
 {{- if hasKey .scripts "debug-tools" -}}
 #!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
 
+{{ template "bash_helpers.tmpl" . }}
 
 # Install usefull debugging tools for debian
 
 pkgs=(
   #"lbzip2"  # required for bzip2 compression/decompression (required by tar)
-  "make"     # usually required for many tool
+  #"make"    # usually required for many tool (already required by run_once_init.tmpl)
   "cmake"    # required for asdf and other tool
-  "g++"      # required by asdf and some building tools
   "gcc"      # c++ compiler required for asdf
   "binutils" # includes objdump, readelf, nm, etc.
   "gdb"      # for debugging.
@@ -17,17 +18,13 @@ pkgs=(
   "file"     # inspeact the type of the file
 )
 
-for pkg in "${pkg[@]}"; do
-  version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
+{{- if eq .chezmoi.osRelease.id "debian" }}
+	pkgs+=("g++") # required by asdf and some building tools)
+{{- else if eq .chezmoi.osRelease.id "fedora" }}
+	pkgs+=("gcc-c++") # required by asdf and some building tools)
+{{- end }}
 
-  if [ -z "$version" ]; then
-    echo "❌ $pkg is not available in the apt repository."
-    continue # exit early with success status to keep chezmoi idempotent
-  fi
 
-  echo "🚀 Installing common tools from apt: ${pkg} $version"
-  sudo apt install -qq -y "${pkg}" >/dev/null 2>&1
+{{ template "bash_install_pkgs_loop.tmpl" . }}
 
-done
-
-{{ end -}}
+{{- end }}

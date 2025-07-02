@@ -1,0 +1,45 @@
+get_version() {
+  local pkg=$1
+
+  {{- if eq .chezmoi.osRelease.id "debian" }}
+    apt-cache policy $pkg | grep Candidate | awk '{print $2}'
+
+  {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    arch=$(uname -m) # required for dnf
+
+    if dnf -q list "$pkg.$arch" >/dev/null 2>&1; then
+      # tries to check if it is using an unspecified arch
+      dnf -q list "$pkg.$arch" | grep $pkg | awk '{print $2}'
+    else
+      dnf -q list "$pkg.noarch" | grep $pkg | awk '{print $2}'
+    fi
+  {{- end }}
+}
+
+install_pkg() {
+  local pkg=$1
+
+  {{- if eq .chezmoi.osRelease.id "debian" }}
+    sudo apt install -qq -y $pkg >/dev/null 2>&1
+  {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    sudo dnf install -qy $pkg >/dev/null 2>&1
+  {{- end }}
+}
+
+is_installed() {
+  local pkg=$1
+
+  {{- if eq .chezmoi.osRelease.id "debian" }}
+    return dpkg -s $pkg >/dev/null 2>&1
+  {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    return dnf -q list installed $pkg >/dev/null 2>&1
+  {{- end }}
+}
+
+update_package_list() {
+  {{- if eq .chezmoi.osRelease.id "debian" }}
+    sudo apt update -qq >/dev/null 2>&1
+  {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    sudo dnf update --minimal -y >/dev/null 2>&1
+  {{- end }}
+}

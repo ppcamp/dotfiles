@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 # vim: ts=2 sts=2 sw=2 et
 
+{{ template "bash_helpers.tmpl" . }}
+
 # This script is run once at the start of the container to initialize the environment.
-
-# Install required common tools
-
-sudo apt update -qq >/dev/null 2>&1
+# https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals
 
 pkgs=(
 	jq                 # JSON processor (required by most of these scripts in chezmoi)
 	curl               # Command line tool for transferring data with URLs
 	git                # Version control system
 	make               # Build automation tool
-	vim                # Text editor with advanced features (also includes vimdiff)
 	desktop-file-utils # Utilities for handling desktop entry files
 )
 
-# TODO: execute apt/dpkg in debian related only
-# https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals
+# Install required common tools
+{{- if eq .chezmoi.osRelease.id "debian" }}
+	pkgs+=(vim) # Text editor with advanced features (also includes vimdiff)
 
-for pkg in "${pkgs[@]}"; do
-	version=$(apt-cache policy $pkg | grep Candidate | awk '{print $2}')
-  if [[ -z "$version" ]]; then
-    echo "❌ Package $pkg not found in apt repositories."
-    continue
-  fi
+{{- else if eq .chezmoi.osRelease.id "fedora" }}
+	printf "\e[33m⚠️ Warn:\e[0m Fedora packages may take more time to run."
+	echo -e "\n"
 
-	echo "🚀 Installing common tools from apt: ${pkg} $version"
-	sudo apt install -qq -y "$pkg" >/dev/null 2>&1
-done
+	pkgs+=(vim-enhanced) # Text editor with advanced features (also includes vimdiff)
+{{- end }}
+
+
+update_package_list
+
+{{ template "bash_install_pkgs_loop.tmpl" . }}
