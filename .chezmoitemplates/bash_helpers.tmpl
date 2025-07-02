@@ -19,6 +19,12 @@ get_version() {
 install_pkg() {
   local pkg=$1
 
+  if is_installed $pkg; then
+    echo -e "\e[32m✅ Installed:\e[0m $pkg"
+    return 0
+  fi
+
+  echo "🚀 Installing: ${pkg} $version"
   {{- if eq .chezmoi.osRelease.id "debian" }}
     sudo apt install -qq -y $pkg >/dev/null 2>&1
   {{- else if eq .chezmoi.osRelease.id "fedora" }}
@@ -30,9 +36,9 @@ is_installed() {
   local pkg=$1
 
   {{- if eq .chezmoi.osRelease.id "debian" }}
-    return dpkg -s $pkg >/dev/null 2>&1
+    dpkg -s $pkg >/dev/null 2>&1
   {{- else if eq .chezmoi.osRelease.id "fedora" }}
-    return dnf -q list installed $pkg >/dev/null 2>&1
+    dnf list -q --installed | grep "^$pkg" >/dev/null 2>&1
   {{- end }}
 }
 

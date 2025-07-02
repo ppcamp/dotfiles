@@ -10,14 +10,14 @@ pkg=zsh
 # TODO: add new choice to set as default
 echo "⚙️ Setting zsh as default shell"
 printf "    "
-chsh -s $(which zsh)
+chsh -s $(which zsh) | sed 's/^/  /'
 
 
 # create file $HISTFILE, otherwise, we'll loose track of history everytime startsup
 #  see $HISTFILE variable inside $ZEN folder
 #   ($HOME/.config/shell/internal/configs/variables.zsh)
 
-echo "⚙️ Creating history file (see $HISTFILE)."
+echo "   ⚙️ Creating history file (see \$HISTFILE)."
 mkdir -p $HOME/.cache/zsh/
 touch $HOME/.cache/zsh/zsh_history
 

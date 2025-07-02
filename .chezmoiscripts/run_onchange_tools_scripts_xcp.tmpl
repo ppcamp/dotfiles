@@ -10,23 +10,25 @@
 
 {{ if ( or ( contains "microsoft" ( lower .chezmoi.kernel.osrelease )) ( contains "wsl" ( lower .chezmoi.kernel.osrelease ))) }}
   # Running in WSL, and therefore, should not install xclip
+
 {{ else }}
-  if dpkg -s xclip >/dev/null 2>&1; then
-    echo "✅ xclip is already installed"
+  {{ template "bash_helpers.tmpl" . }}
+
+  {{- if eq (env "XDG_SESSION_TYPE") "wayland" }}
+    pkg=wl-clipboard
+  {{- else if eq .Env.XDG_SESSION_TYPE "x11" }}
+    pkg=xclip
+  {{- end }}
+
+  if is_installed $pkg; then
+    echo -e "\e[32m✅ Installed:\e[0m $pkg"
   else
-    echo "⚙️ xclip is not installed. Installing it now..."
-
-    version=$(apt-cache policy xclip | grep Candidate | awk '{print $2}')
-    if [ -z "$version" ]; then
-      echo "❌ xclip is not available in the apt repository."
-      exit 0 # exit early with success status to keep chezmoi idempotent
-    fi
-
-    sudo apt install -qq -y xclip >/dev/null 2>&1
-    exit 0 # exit early with success status to keep chezmoi idempotent
-
+    echo "⚙️ $pkg is not installed. Installing it now..."
+    {{ template "bash_install_pkg.tmpl" . }}
   fi
 {{ end }}
+
+
 
 version=1.0.0
 

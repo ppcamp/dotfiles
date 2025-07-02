@@ -5,9 +5,11 @@ if [ -z $WSL_DISTRO_NAME ]; then
     # alias xpb='clippaste'
     clippaste $@
   else
-    # alias xcp='xclip -selection clipboard' # for linux (install by apt)
-    # this is the default for ubuntu
-    xclip -selection clipboard $@ -o
+    case "$XDG_SESSION_TYPE" in
+      wayland) wl-paste $@ ;;
+      x11) xclip -selection clipboard $@ - ;;
+      *) ;;
+    esac
   fi
 else
   powershell.exe -Command "Get-Clipboard" $@

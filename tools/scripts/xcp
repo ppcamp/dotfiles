@@ -5,10 +5,13 @@ if [ -z $WSL_DISTRO_NAME ]; then
     # alias xcp='clipcopy' # for linux (install by apt)
     clipcopy $@
   else
-    # alias xcp='xclip -selection clipboard' # for linux (install by apt)
-    # this is the default for ubuntu
-    xclip -selection clipboard $@
+    case "$XDG_SESSION_TYPE" in
+      wayland) wl-copy $@ ;;
+      x11) xclip -selection clipboard $@ ;;
+      *) ;;
+    esac
   fi
 else
+  # using Windows WSL
   clip.exe $@
 fi
