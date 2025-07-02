@@ -34,6 +34,7 @@ return {
       "ts-ls",
       "rust-analyzer",
       "intelephense",
+      "pyright",
     })
 
     -- Diagnostic Config
