@@ -76,7 +76,7 @@ alias now='date +"%Y-%m-%dT%H:%M:%SZ"'
 
 ### open files
 # see https://pt.linux-console.net/?p=19677
-alias -s {py,go,mod,html,js,ts,zsh,md}=nvim
+alias -s {py,go,mod,html,js,ts,zsh,md,sql,md,txt,json}=nvim
 
 ### Alias for kitty terminal (see images on terminal)
 alias icat='kitten icat'
