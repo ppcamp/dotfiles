@@ -118,3 +118,6 @@ alias print='print -P'
 
 ### Gofolder
 alias gofolder='cd $(go env GOROOT)'
+
+### Qalculator (with newer QT UI)
+alias qalc='flatpak run --command=qalc io.github.Qalculate.qalculate-qt'
