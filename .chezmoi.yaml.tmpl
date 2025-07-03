@@ -171,19 +171,26 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 # diff:
 #  command: "vimdiff"
 
+{{- $debianBased := list "debian" "ubuntu" "pop-os" "kubuntu" }}
+{{- /* rpmBased = list "fedora" "opensuse" */ -}}
+{{- $osName := .chezmoi.osRelease.id | lower }}
+
+# Note that it doesn't support ARCH linux
 data:
   configs:
+    os: {{ if has $osName $debianBased }} deb {{ else }} dnf {{ end }}
     disable:
       zsh: false
+
+  installDirs:
+    main: /usr/local/bin
+    home: {{ joinPath .chezmoi.homeDir ".local" "bin" }}
+
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
     sign: {{ $gitsign | quote }}
     ssh: {{ not $useSignGPG }}
-
-  installDirs:
-    main: /usr/local/bin
-    home: {{ joinPath .chezmoi.homeDir ".local" "bin" }}
 
   scripts:
     {{ range $choices -}}

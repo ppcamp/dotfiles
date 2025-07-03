@@ -15,11 +15,11 @@ pkgs=(
 )
 
 # Install required common tools
-{{- if eq .chezmoi.osRelease.id "debian" }}
+{{- if eq .configs.os "deb" }}
 	pkgs+=(vim) # Text editor with advanced features (also includes vimdiff)
 
-{{- else if eq .chezmoi.osRelease.id "fedora" }}
-	printf "\e[33m⚠️ Warn:\e[0m Fedora packages may take more time to run."
+{{- else if eq .configs.os "dnf" }}
+	printf "\e[33m⚠️ Warn:\e[0m Dnf package may take more time to run."
 	echo -e "\n"
 
 	pkgs+=(vim-enhanced) # Text editor with advanced features (also includes vimdiff)

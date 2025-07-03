@@ -1,6 +1,11 @@
-# this file is loaded after everything, but before rendering the templates
+################################################################################
+# THIS FILE IS LOADED AFTER EVERYTHING, but before rendering the templates
 # it is used to set variables that are used in the templates
-# IT IS LOADED AFTER .chezmoi.yaml.tmpl file.
+################################################################################
+
+# - IT IS LOADED AFTER .chezmoi.yaml.tmpl file.
+# - And should be used for static vars only.
+#-------------------------------------------
 
 # Then, in the `dot_gitconfig.tmpl` file, you can use the variables defined
 # here.
@@ -8,8 +13,8 @@
 # In this case, `.git.name` will be loaded from `~/.config/chezmoi.yaml`,
 # and if it doesn't exist, it will be set to the default value (this file).
 #
-# name = {{ .git.name | default .default.git.name }}
-
+# Example:
+#
 # default:
 #   git:
 #     email: "p.augustocampos@gmail.com"

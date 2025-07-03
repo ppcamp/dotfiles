@@ -18,9 +18,9 @@ pkgs=(
   "file"     # inspeact the type of the file
 )
 
-{{- if eq .chezmoi.osRelease.id "debian" }}
+{{- if eq .configs.os "deb" }}
 	pkgs+=("g++") # required by asdf and some building tools)
-{{- else if eq .chezmoi.osRelease.id "fedora" }}
+{{- else if eq .configs.os "dnf" }}
 	pkgs+=("gcc-c++") # required by asdf and some building tools)
 {{- end }}
 

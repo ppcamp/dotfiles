@@ -9,7 +9,7 @@
 
 pkg=bsdtar
 
-{{- if eq .chezmoi.osRelease.id "debian" }}
+{{- if eq .configs.os "deb" }}
 	binName=libarchive-tools
 {{ end -}}
 
