@@ -22,9 +22,14 @@ curl -sLo - https://github.com/$pkgCreator/$pkg/releases/download/${version}/$pk
 # installing it
 sudo install -m 755 $pkg {{ .installDirs.main }}
 
-printf "   \033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use \$(asdf install).\n"
-printf "   \t\033[2;37mCheck your '~/.tool-versions' file.\033[0m\n"
+printf "   \033[2;37mCheck your '~/.tool-versions' file.\033[0m\n"
 
+echo -e "   \e[32m🧲 Installing:\e[0m"
+echo -e "   -" "\e[32m asdf\e[0m" "golang"
+echo -e "   -" "\e[32m asdf\e[0m" "lua"
+echo -e "   -" "\e[32m asdf\e[0m" "rust"
+
+# printf "   \033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use \$(asdf install).\n"
 # sudo rm {{ joinPath .installDirs.main "$pkg" }}
 
 {{ end -}}
