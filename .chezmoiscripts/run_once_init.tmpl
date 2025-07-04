@@ -10,19 +10,27 @@ pkgs=(
 	jq                 # JSON processor (required by most of these scripts in chezmoi)
 	curl               # Command line tool for transferring data with URLs
 	git                # Version control system
-	make               # Build automation tool
+	make               # Build automation tool (required by many tools, such as asdf)
 	desktop-file-utils # Utilities for handling desktop entry files
+  cmake              # required for asdf and other tool
+  gcc                # c++ compiler required for asdf
 )
 
 # Install required common tools
 {{- if eq .configs.os "deb" }}
-	pkgs+=(vim) # Text editor with advanced features (also includes vimdiff)
+	pkgs+=(
+    vim # Text editor with advanced features (also includes vimdiff)
+    g++ # required by asdf and some building tools)
+  ) 
 
 {{- else if eq .configs.os "dnf" }}
-	printf "\e[33m⚠️ Warn:\e[0m Dnf package may take more time to run."
+	printf "\n\e[33m⚠️ Warn:\e[0m Dnf package may take more time to run."
 	echo -e "\n"
 
-	pkgs+=(vim-enhanced) # Text editor with advanced features (also includes vimdiff)
+	pkgs+=(
+    vim-enhanced # Text editor with advanced features (also includes vimdiff)
+    gcc-c++      # required by asdf and some building tools)
+  ) 
 {{- end }}
 
 

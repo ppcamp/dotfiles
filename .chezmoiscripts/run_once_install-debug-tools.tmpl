@@ -8,22 +8,12 @@
 
 pkgs=(
   #"lbzip2"  # required for bzip2 compression/decompression (required by tar)
-  #"make"    # usually required for many tool (already required by run_once_init.tmpl)
-  "cmake"    # required for asdf and other tool
-  "gcc"      # c++ compiler required for asdf
   "binutils" # includes objdump, readelf, nm, etc.
   "gdb"      # for debugging.
   "strace"   # for system calls.
   "lsof"     # for open file descriptors.
   "file"     # inspeact the type of the file
 )
-
-{{- if eq .configs.os "deb" }}
-	pkgs+=("g++") # required by asdf and some building tools)
-{{- else if eq .configs.os "dnf" }}
-	pkgs+=("gcc-c++") # required by asdf and some building tools)
-{{- end }}
-
 
 {{ template "bash_install_pkgs_loop.tmpl" . }}
 
