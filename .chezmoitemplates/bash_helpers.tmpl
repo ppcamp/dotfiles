@@ -1,8 +1,8 @@
 get_version() {
   local pkg=$1
 
-  {{- if eq .configs.os "deb" }}
-    apt-cache policy $pkg | grep Candidate | awk '{print $2}'
+  {{- if eq .configs.os "apt" }}
+    LANG=en-us.UTF8 apt-cache policy $pkg | grep Candidate | awk '{print $2}'
 
   {{- else if eq .configs.os "dnf" }}
     arch=$(uname -m) # required for dnf
@@ -25,7 +25,7 @@ install_pkg() {
   fi
 
   echo "🚀 Installing: ${pkg} $version"
-  {{- if eq .configs.os "deb" }}
+  {{- if eq .configs.os "apt" }}
     sudo apt install -qq -y $pkg >/dev/null 2>&1
   {{- else if eq .configs.os "dnf" }}
     sudo dnf install -qy $pkg >/dev/null 2>&1
@@ -35,7 +35,7 @@ install_pkg() {
 is_installed() {
   local pkg=$1
 
-  {{- if eq .configs.os "deb" }}
+  {{- if eq .configs.os "apt" }}
     dpkg -s $pkg >/dev/null 2>&1
   {{- else if eq .configs.os "dnf" }}
     dnf list -q --installed | grep "^$pkg" >/dev/null 2>&1
@@ -43,7 +43,7 @@ is_installed() {
 }
 
 update_package_list() {
-  {{- if eq .configs.os "deb" }}
+  {{- if eq .configs.os "apt" }}
     sudo apt update -qq >/dev/null 2>&1
   {{- else if eq .configs.os "dnf" }}
     sudo dnf update --minimal -y >/dev/null 2>&1
