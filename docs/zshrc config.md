@@ -25,5 +25,4 @@ export PATH="$PATH:$HOME/.asdf/installs/golang/1.24.3/bin"
 # rustc --print sysroot | xargs -I{} realpath "{}/../../bin" | xcp
 CARGO_FOLDER="$HOME/.asdf/installs/rust/1.87.0/bin"
 export PATH="$PATH:$CARGO_FOLDER"
-
 ```

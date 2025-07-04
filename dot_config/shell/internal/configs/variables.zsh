@@ -35,7 +35,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 ################################################################################
 #                                   ASDF
-export ASDF_DIR="$HOME/.config/asdf"
+export ASDF_DATA_DIR="$HOME/.config/asdf"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 ################################################################################
 # enable GPG agent (commit signing) using terminal tty.
