@@ -1,0 +1,30 @@
+{{- if has "toolbx" .scripts -}}
+#!/usr/bin/env bash
+
+{{ $image := "tbx" -}}
+{{ $container := "tbx" -}}
+{{ $toolsFolder := joinPath .chezmoi.sourceDir "tools" | quote -}}
+
+# stop previous containers
+podman stop {{ $image }} &>/dev/null
+podman rm {{ $container }} &>/dev/null
+
+echo "⚙️ Creating base image (tag: {{ $image }})."
+
+# Podman is a dependecy for toolbx
+podman build -t {{ $image }} {{ $toolsFolder }} &>/dev/null
+
+echo "⚙️ Configuring toolbx"
+
+toolbox create --image {{ $image }} --container {{ $container }} >/dev/null
+
+echo -e " \e[2m   Enter in container by typing: \e[32mtoolbox enter --container {{ $container }}\e[0m"
+
+#podman run -it --rm {{ $image }} /usr/bin/bash
+
+# Need to pass SHELL, otherwise, it'll try to use several tools that zsh have,
+# such as my personal plugins, and programs, which may cause several rendering
+# issues.
+#alias tbx='SHELL=/usr/bin/bash toolbox enter tbx'
+
+{{ end -}}
