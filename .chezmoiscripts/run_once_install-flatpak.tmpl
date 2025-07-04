@@ -1,9 +1,9 @@
-{{- if or (hasKey .scripts "flatpak") (hasKey .scripts "flatpak-fix-dark-theme") -}}
+{{- if or (has "flatpak" .scripts) (has "flatpak-fix-dark-theme" .scripts) -}}
 #!/usr/bin/env bash
 
 {{ template "bash_helpers.tmpl" . }}
 
-{{- if hasKey .scripts "flatpak" }}
+{{- if has "flatpak" .scripts }}
 # This script installs Flatpak, a software utility for software deployment,
 # application virtualization, and package management.
 #
@@ -23,7 +23,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 
 {{- end -}}
 
-{{- if hasKey .scripts "flatpak-fix-dark-theme" }}
+{{- if has "flatpak-fix-dark-theme" .scripts }}
 ############################## Flatpak fix themes for GNOME
 echo "🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
 # with this, all applications will use the Adwaita dark theme.

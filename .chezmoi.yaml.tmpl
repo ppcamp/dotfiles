@@ -158,19 +158,26 @@ See:
 {{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n" }}
 {{- writeToStdout "\tUse ppa or build from src, if necessary.\n" }}
 
-{{- if eq .chezmoi.os "darwin" -}}
-{{- /*    🍎 macOS-specific code */ -}}
-{{ else if eq .chezmoi.os "linux" }}
-{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-{{- /*    🪟 WSL-specific code */ -}}
-{{   else if eq .chezmoi.osRelease.id "debian" }}
-{{- /*    🌱 Debian-specific code */ -}}
-{{   else if eq .chezmoi.osRelease.id "fedora" }}
-{{- /*    🎩 Fedora-specific code */ -}}
-{{   else if eq .chezmoi.osRelease.id "fedora" }}
-{{- /*    🐧 ubuntu-specific code */ -}}
-{{-  end -}}
-{{- end -}}
+{{ $pkgTool := "" }}
+{{ if eq .chezmoi.os "linux" -}}
+  {{- $osID := (.chezmoi.osRelease.id | lower) }}
+  {{- if (contains (.chezmoi.kernel.osrelease | lower) "microsoft") }}
+    {{- /*    🪟 WSL-specific code. Mainly support debian based solutions (at Win store, at least) */ -}}
+    {{ $pkgTool = "apt" }}
+  {{- else if has $osID (list "debian" "ubuntu" "pop-os" "kubuntu") }}
+    {{- /*    🐧 Debian-specific code */ -}}
+    {{ $pkgTool = "apt" }}
+  {{- else if eq $osID "fedora" }}
+    {{- /*    🎩 Fedora-specific code */ -}}
+    {{ $pkgTool = "dnf" }}
+  {{- else }}
+    {{ fail (print "❌ Error: Unsupported OS: " $osID) }}
+  {{- end }}
+{{ else }}
+  {{ fail (print "❌ Error: Unsupported platform: " .chezmoi.os) }}
+{{- end }}
+
+################################################################################
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
@@ -178,14 +185,11 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 # diff:
 #  command: "vimdiff"
 
-{{- $debianBased := list "debian" "ubuntu" "pop-os" "kubuntu" }}
-{{- /* rpmBased = list "fedora" "opensuse" */ -}}
-{{- $osName := .chezmoi.osRelease.id | lower }}
+# cz data | jq '.chezmoi.osRelease.id'
 
-# Note that it doesn't support ARCH linux
 data:
   configs:
-    os: {{ if has $osName $debianBased }} deb {{ else }} dnf {{ end }}
+    os: {{ $pkgTool }}
     disable:
       zsh: false
 
@@ -201,6 +205,6 @@ data:
 
   scripts:
     {{ range $choices -}}
-    {{.}}: true
+    - {{.}}
     {{ end }}
 

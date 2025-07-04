@@ -1,4 +1,4 @@
-{{- if hasKey .scripts "shfmt" -}}
+{{- if has "shfmt" .scripts -}}
 #!/usr/bin/env bash
 
 pkgCreator=mvdan

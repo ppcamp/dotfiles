@@ -1,4 +1,4 @@
-{{- if hasKey .scripts "podman" -}}
+{{- if has "podman" .scripts -}}
 #!/usr/bin/env bash
 
 {{ template "bash_helpers.tmpl" . }}

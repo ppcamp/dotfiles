@@ -1,4 +1,4 @@
-{{- if hasKey .scripts "hyperfine" -}}
+{{- if has "hyperfine" .scripts -}}
 #!/usr/bin/env bash
 
 # This script installs hyperfine, a command-line tool for benchmarking command
