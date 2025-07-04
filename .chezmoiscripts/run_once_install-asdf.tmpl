@@ -26,10 +26,12 @@ printf "   \033[2;37mCheck your '~/.tool-versions' file.\033[0m\n"
 
 echo -e "   \e[32m🧲 Installing:\e[0m"
 
-for plugin in golang lua rust; do
+for plugin in golang lua rust nodejs; do
   echo -e "   -" "\e[32m asdf\e[0m" "$plugin"
   asdf plugin add $plugin &>/dev/null
 done
+
+asdf install
 
 # printf "   \033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use \$(asdf install).\n"
 # sudo rm {{ joinPath .installDirs.main "$pkg" }}
