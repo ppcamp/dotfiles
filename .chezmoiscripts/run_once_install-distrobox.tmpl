@@ -1,0 +1,27 @@
+{{- if has "distrobox" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "bash_helpers.tmpl" . }}
+
+# Equivalent of toolbox command, but allows to run in any distro with any
+# container engine (podman, docker, etc.)
+
+binName=distrobox
+version=$(get_version $binName)
+if [[ -z "$version" ]]; then
+	echo "❌ Package $pkg not found in repositories."
+	echo "Using cUrl to install it."
+
+	curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+else
+	install_pkg $binName
+fi
+
+echo -e "   \e[32m💡 Tip:\e[0m You can use"
+printf "     "
+# '--env TERM=xterm-256color'
+echo -e "distrobox create --name ubuntu --init --image ubuntu:22.04 -ap 'systemd libpam-systemd pipewire-audio-client-libraries' --home ~/.config/distrobox-home/"
+
+echo -e "   \033[33m🛠️ Warn:\033[0m It may have problems with $TERM=xterm-kitty, so you may need to set it internally to $TERM=xterm-256color."
+
+{{ end -}}
