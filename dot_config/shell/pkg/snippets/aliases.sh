@@ -124,3 +124,6 @@ alias qalc='flatpak run --command=qalc io.github.Qalculate.qalculate-qt'
 
 ### Toolbox with bash (avoid issues with zsh plugins)
 # alias tbx='SHELL=/usr/bin/bash toolbox enter tbx'
+
+### diff
+alias diff='diff -w --color'
