@@ -6,7 +6,3 @@ add_path_if_exist "$HOME/.local/bin"
 
 ############################# ASDF (Global package manager)
 add_path_if_exist "${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
-
-############################## Go
-add_path_if_exist '/usr/local/go/bin'
-add_path_if_exist "$HOME/go/bin"

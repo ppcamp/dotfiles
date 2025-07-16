@@ -2,7 +2,7 @@
 
 # Load completions
 # INFO: already done by carapace (if used - see bottom of this file)
-fpath+=("$ZEN/internal/completions")
+fpath+=("$ZEN/completions")
 
 # Use modern completion system
 # autoload -Uz compinit # already done by zinit

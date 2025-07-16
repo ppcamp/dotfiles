@@ -1,7 +1,7 @@
 # vim: ts=2 sts=2 sw=2 et:
 
 # Snippets
-local url="$ZEN/pkg/snippets"
+local url="$ZEN/snippets"
 local toclone=(
   'aliases.sh'
   'functions.sh'

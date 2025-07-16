@@ -1,6 +1,6 @@
 # vim: ts=2 sts=2 sw=2 et:
 
-local folder=$ZEN/internal/plugins
+local folder=$ZEN/plugins
 local PLUGINS=(
   # "zsh-users/zsh-syntax-highlighting.git"    # syntax highlighting
   # "Aloxaf/fzf-tab"                           # fzf tab completion

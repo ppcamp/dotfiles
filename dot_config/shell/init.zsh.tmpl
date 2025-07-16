@@ -4,7 +4,7 @@
 
 export ZEN="${0:a:h}"
 export ZINIT_HOME=$ZEN/zinit
-local internal="$ZEN/internal/"
+local internal="$ZEN/"
 
 # load utils
 source "${ZINIT_HOME}/zinit.zsh"
@@ -21,4 +21,6 @@ source "$internal/configs/completions.zsh" # default snippets loading
 
 # zprof #debugging
 
+{{- if has "starship" .scripts  }}
 eval "$(starship init zsh)"
+{{- end }}
