@@ -14,7 +14,7 @@ State.map("<Tab>", ":bnext<CR>", "While hit tab, will change to next buffer")
 State.map("<S-Tab>", ":bprevious<CR>", "While hit Shift+tab, will change to next buffer")
 State.map("<leader>bb", "<cmd>e #<cr>", "Switch to Other Buffer")
 State.map("<leader>bd", "<cmd>:bd<cr>", "Delete Buffer")
-State.map("<leader>bo", "<cmd>:%bd | e# | bd#", "Delete Other Buffers")
+State.map("<leader>bo", "<cmd>:%bd | e# | bd#<cr>", "Delete Other Buffers")
 State.map("<leader>bD", "<cmd>:bd|close<cr>", "Delete Buffer and Window")
 
 -- Keybinds to make split navigation easier.
