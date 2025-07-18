@@ -15,7 +15,7 @@
 
   {{- if eq (env "XDG_SESSION_TYPE") "wayland" }}
     pkg=wl-clipboard
-  {{- else if eq .Env.XDG_SESSION_TYPE "x11" }}
+  {{- else if eq (env "XDG_SESSION_TYPE") "x11" }}
     pkg=xclip
   {{- end }}
 
