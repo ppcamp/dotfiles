@@ -18,6 +18,7 @@ return {
           virt_text_priority = 100,
           use_focus = true,
         },
+        word_diff = true,
         current_line_blame_formatter = "[<author>, <author_time:%R>] <summary>",
       })
 
@@ -67,10 +68,8 @@ return {
         gitsigns.blame_line({ full = true })
       end, "Blame line")
 
-      map("n", "<leader>ghQ", function()
-        gitsigns.setqflist("all")
-      end, "Set quickfix list")
-      map("n", "<leader>ghq", gitsigns.setqflist, "Set quickfix list (current file)")
+      map("n", "<leader>gq", function() gitsigns.setqflist("all") end, "Set quickfix list")
+      -- map("n", "<leader>gQ", gitsigns.setqflist, "Set quickfix list (current file)")
 
       -- Toggles
       map("n", "<leader>gho", gitsigns.toggle_current_line_blame, "Toggle current line blame")
@@ -135,6 +134,5 @@ return {
         -- { "<leader>gp", desc = "DiffView: File History" },
       })
     end,
-  }
-
+  },
 }
