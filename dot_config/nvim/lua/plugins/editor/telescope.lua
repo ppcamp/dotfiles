@@ -28,7 +28,7 @@ return {
       { "nvim-telescope/telescope-ui-select.nvim" },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+      { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 
       {
         "nvim-telescope/telescope-live-grep-args.nvim",
@@ -94,12 +94,12 @@ return {
       map("<leader>sR", builtin.registers, "Show registers values")
       map("<leader>tt", builtin.colorscheme, "Theme switch")
       map("<leader>gS", builtin.git_stash, "Search Stash")
-      map("<leader>gC", builtin.git_commits, "Search ALL Commits")
       map("<leader>gb", builtin.git_branches, "Search Branches")
       map("<leader>gf", builtin.git_files, "Search Files")
       map("<leader>gs", builtin.git_status, "Search Status")
-      map("<leader>gc", builtin.git_bcommits, "Search Commits in current buffer")
-      map("<leader>gc", extra.find_commits, "Search Commits in current visual selection", "v")
+      map("<leader>gC", builtin.git_commits, "Search ALL Commits")
+      map("<leader>gc", extra.find_commits, "Search Commits in current buffer")
+      map("<leader>gc", extra.find_commits_range, "Search Commits in current visual selection", "v")
       map("<leader>sb", builtin.buffers, "Search openned buffers")
     end,
   },
