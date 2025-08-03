@@ -98,8 +98,9 @@ c = commit
 ca = commit --amend
 caf = commit --amend --no-edit
 ci = commit --interactive
-cm = commit -m
 cleanf = clean -df                           # (clean untracked files) example: <git reset-clean>
+cm = commit -m
+co = checkout
 conflicts = diff --name-only --diff-filter=U # (show conflicts) example: <git conflicts>
 cp = cherry-pick                             # cherry pick a commit, example: <git cp ..branchName> or <git cp commitHash>
 cpn = cherry-pick -n                         # cherry pick , but no commit
@@ -126,7 +127,7 @@ ll = ls --name-only                                                             
 local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'                                                                                # (show local only branches) example: <git local-branches>
 log-deleted = log --diff-filter=D --                                                                                                                   # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
 ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s%C(bold blue)%d%C(reset) %C(dim white)%an [%G?] (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
-lsp = ls --first-parent
+lsp = ls --follow --first-parent # show merges commits only
 new = switch --create                                                                                                                                      # (create new branches) example: <git new branchName>
 p = pull
 pr = pull --rebase
@@ -145,7 +146,7 @@ sw = switch                   # (it requires to have installed the gitx plugin)
 swx = !gitx --run branches    # (it requires to have installed the gitx plugin)
 sync = !git f && git p        # (fetch and pull) example: <git sync>
 tags = !gitx --run tags       # (it requires to have installed the gitx plugin)
-track = ls --full-history --  # shows the history of a path/file (e.g, git track file.go)
+track = ls --follow --full-history --  # shows the history of a path/file (e.g, git track file.go)
 unmodule = submodule deinit -f
 unstage = restore --staged
 unstage-all = unstage -S .
