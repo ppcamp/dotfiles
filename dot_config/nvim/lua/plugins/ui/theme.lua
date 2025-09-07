@@ -14,10 +14,17 @@ return {
     vim.g.gruvbox_material_cursor = "auto"
     vim.cmd.colorscheme("gruvbox-material")
 
-    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333333" })
-    vim.api.nvim_set_hl(0, "Search", { bg = "orange" })
-    vim.api.nvim_set_hl(0, "Visual", { bg = "orange" })
-    vim.api.nvim_set_hl(0, "YankHighlight", { bg = "orange" })
+    -- Yank highlight
+    vim.api.nvim_set_hl(0, "Search", { bg = "#ffcc00", fg = "#000000" })
+
+    -- Search highlight
+    vim.api.nvim_set_hl(0, "Search", { bg = "#ffcc00", fg = "#000000" })
+
+    -- Visual selection highlight
+    vim.api.nvim_set_hl(0, "Visual", { bg = "#005f87", fg = "#ffffff" })
+
+    -- Cursor line highlight
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = "#1c1c1c" })
   end,
 }
 
