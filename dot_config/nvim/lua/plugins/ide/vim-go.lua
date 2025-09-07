@@ -4,7 +4,9 @@
 return {
   "fatih/vim-go",
   config = function()
-    vim.g.go_gopls_enabled = 0 -- disable vim-go's gopls integration
+    vim.g.go_gopls_enabled = 1 -- en/disable vim-go's gopls integration
+
+    vim.g.go_gopls_options = { "-remote=auto" } -- use vim.lsp for gopls
 
     -- vim.cmd("GoInstallBinaries")
   end,
