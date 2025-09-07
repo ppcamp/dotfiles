@@ -56,8 +56,9 @@ opt.relativenumber = true
 extras.colorcolumn = "81"
 
 -- Enable folding based on syntax
-extras.foldmethod = "expr"
-extras.foldexpr = "nvim_treesitter#foldexpr()"
+extras.foldmethod = "indent"
+-- extras.foldmethod = "expr"
+-- extras.foldexpr = "nvim_treesitter#foldexpr()"
 -- Set the default fold level (higher levels are unfolded)
 extras.foldlevel = 0
 -- Enable folding by default (folding is turned on when the file is opened)
