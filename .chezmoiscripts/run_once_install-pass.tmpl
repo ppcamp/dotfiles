@@ -1,0 +1,15 @@
+{{- if has "pass" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "bash_helpers.tmpl" . }}
+
+# Install usefull debugging tools for debian
+
+pkgs=(
+  "pass" # password store at $HOME/.password-store
+)
+
+{{ template "bash_install_pkgs_loop.tmpl" . }}
+
+{{- end }}
