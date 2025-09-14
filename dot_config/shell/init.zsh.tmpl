@@ -4,11 +4,11 @@
 
 export ZEN="${0:a:h}"
 export ZINIT_HOME=$ZEN/zinit
-local internal="$ZEN/"
+local internal="$ZEN"
 
 # load utils
 source "${ZINIT_HOME}/zinit.zsh"
-source $ZEN/internal/utils/loaders.zsh # load path loaders functions
+source $ZEN/utils/loaders.zsh # load path loaders functions
 
 # needs to be loaded in this order
 source "$internal/configs/paths.zsh"       # include paths
