@@ -6,7 +6,6 @@ TODO.md
 LICENSE
 docs/
 .lefthook.yaml
-zshrc.example
 
 {{ if .configs.disable.zsh }}
 .config/shell
