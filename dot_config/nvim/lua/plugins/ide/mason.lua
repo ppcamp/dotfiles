@@ -11,8 +11,8 @@ return {
       "docker_compose_language_service",
       "dockerls",
       "dotls",
-      "golangci_lint_ls",
-      "gopls",
+      -- -- "golangci_lint_ls",
+      -- "gopls",
       "html",
       "htmx",
       "intelephense",
@@ -33,12 +33,12 @@ return {
       -- "black", "isort",
 
       -- Linters and diagnostics
-      "golangci-lint",
+      -- "golangci-lint", -- deprecated version
       -- "eslint_d",
       "luacheck", -- Lua linting
 
       -- Additional useful tools
-      "delve", -- Go debugger
+      -- "delve", -- Go debugger
       "shfmt", -- Shell formatter
       "shellcheck", -- Shell linter
 
