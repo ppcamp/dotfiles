@@ -1,0 +1,25 @@
+{{- if has "duckdb" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+# This script installs duckdb CLI tool. DuckDB is an in-process SQL OLAP
+# database management system.
+
+pkgCreator=duckdb
+pkg=duckdb
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
+# getting latest version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl https://install.duckdb.org | sh
+
+echo "🍽️ Add duckdb_cli to your PATH by adding"
+echo "    export PATH='/home/ppcamp/.duckdb/cli/latest':$PATH"
+
