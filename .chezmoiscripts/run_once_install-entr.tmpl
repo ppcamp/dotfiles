@@ -1,0 +1,15 @@
+{{- if has "entr" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "bash_helpers.tmpl" . }}
+
+# This package installs entr, a utility that runs arbitrary commands when files
+# change.
+
+pkg=entr
+
+{{ template "bash_install_pkg.tmpl" . }}
+
+{{ end -}}
+
