@@ -18,8 +18,12 @@ version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest 
 echo "🚀 Installing $pkg $version"
 
 # downloading package
-curl https://install.duckdb.org | sh
+curl -sLo - "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_cli-linux-amd64.zip" |
+  bsdtar -xjC .
 
-echo "🍽️ Add duckdb_cli to your PATH by adding"
-echo "    export PATH='/home/ppcamp/.duckdb/cli/latest':$PATH"
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
 
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{ end -}}
