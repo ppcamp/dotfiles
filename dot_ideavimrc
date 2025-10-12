@@ -1,10 +1,9 @@
 " .ideavimrc - IdeaVim configuration based on Neovim setup
 
-" Leader hlet mapleader = " "
+""" Map leader to space ---------------------
+let mapleader=" "
 
-" Enable IdeaVim plugins
-let mapleader = " "
-
+" Based on nvim configuration keymaps
 " Enable IdeaVim plugins
 set surround
 set commentary
@@ -12,210 +11,64 @@ set argtextobj
 set easymotion
 set textobj-entire
 set ReplaceWithRegister
-set exchange
-set vim-paragraph-motion
-set textobj-indent
-set highlightedyank
+set multiple-cursors
 
-" Basic Vim settings
-set clipboard+=unnamed
-set clipboard+=ideaput
+" Basic settings
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-set number
-set relativenumber
 set scrolloff=8
 set sidescrolloff=8
+set number
+set relativenumber
+"
 
-" ========================================
-" GENERAL KEYMAPS (from keymaps.lua)
-" ========================================
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Clear search highlights
-nnoremap <leader>nh :nohlsearch<CR>
+nnoremap <Esc> :nohlsearch<CR>
 
-" Delete single character without copying into register
-nnoremap x "_x
+" Exit insert mode
+inoremap jk <Esc>
 
-" Increment/decrement numbers
-nnoremap <leader>+ <C-a>
-nnoremap <leader>- <C-x>
+" Command mode shortcut
+nnoremap ; :
+""" Mappings --------------------------------
+map <leader>f <Plug>(easymotion-s)
+map <leader>e <Plug>(easymotion-f)
 
-" Window management
-nnoremap <leader>sv <Action>(SplitVertically)
-nnoremap <leader>sh <Action>(SplitHorizontally)
-nnoremap <leader>se <C-w>=
-nnoremap <leader>sx <Action>(Unsplit)
+map <leader>d <Action>(Debug)
+map <leader>r <Action>(RenameElement)
+map <leader>c <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
 
-" Tab management
-nnoremap <leader>to <Action>(NewTab)
-nnoremap <leader>tx <Action>(CloseContent)
-nnoremap <leader>tn <Action>(NextTab)
-nnoremap <leader>tp <Action>(PreviousTab)
-nnoremap <leader>tf <Action>(MoveTabRight)
+map <leader>s <Action>(SelectInProjectView)
+map <leader>a <Action>(Annotate)
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+map <S-Space> <Action>(GotoNextError)
 
-" ========================================
-" TELESCOPE EQUIVALENT MAPPINGS
-" ========================================
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>o <Action>(FileStructurePopup)
 
-" File operations
-nnoremap <leader>ff <Action>(GotoFile)
-nnoremap <leader>fr <Action>(RecentFiles)
-nnoremap <leader>fs <Action>(FindInPath)
-nnoremap <leader>fc <Action>(GotoClass)
 
-" Text search
-nnoremap <leader>ft <Action>(FindInPath)
-nnoremap <leader>fw <Action>(FindWordAtCaret)
+"map ]c :action VcsShowNextChangeMarker<CR>
+"map [c :action VcsShowPrevChangeMarker<CR>
+map ]c <Action>(VcsShowNextChangeMarker)
+map [c <Action>(VcsShowPrevChangeMarker)
 
-" Git operations
-nnoremap <leader>gc <Action>(Git.Branches)
-nnoremap <leader>gs <Action>(ChangesView.Diff)
-
-" Help/Documentation
-nnoremap <leader>fh <Action>(HelpTopics)
-nnoremap <leader>fk <Action>(GotoAction)
-
-" ========================================
-" LSP EQUIVALENT MAPPINGS
-" ========================================
-
-" Go to definition/references
-nnoremap gR <Action>(FindUsages)
-nnoremap gD <Action>(GotoDeclaration)
-nnoremap gd <Action>(GotoDeclaration)
-nnoremap gi <Action>(GotoImplementation)
-nnoremap gt <Action>(GotoTypeDeclaration)
-
-" Diagnostics
-nnoremap <leader>D <Action>(GotoNextError)
-nnoremap [d <Action>(GotoPreviousError)
-nnoremap ]d <Action>(GotoNextError)
-nnoremap <leader>d <Action>(ShowErrorDescription)
-
-" Code actions
-nnoremap <leader>ca <Action>(ShowIntentionActions)
-nnoremap <leader>rn <Action>(RenameElement)
-nnoremap <leader>rs <Action>(Refactorings.QuickListPopupAction)
-
-" Documentation
-nnoremap K <Action>(QuickJavaDoc)
-
-" ========================================
-" NVIM-TREE EQUIVALENT (Project View)
-" ========================================
-
-nnoremap <leader>ee <Action>(ActivateProjectToolWindow)
-nnoremap <leader>ef <Action>(SelectInProjectView)
-nnoremap <leader>ec <Action>(HideActiveWindow)
-nnoremap <leader>er <Action>(Synchronize)
-
-" ========================================
-" TROUBLE EQUIVALENT (Problems View)
-" ========================================
-
-nnoremap <leader>xw <Action>(ActivateProblemsViewToolWindow)
-nnoremap <leader>xd <Action>(ActivateProblemsViewToolWindow)
-nnoremap <leader>xq <Action>(ShowErrorDescription)
-nnoremap <leader>xl <Action>(ShowErrorDescription)
-
-" ========================================
-" BUFFERLINE EQUIVALENT (Tabs)
-" ========================================
-
-nnoremap <S-l> <Action>(NextTab)
-nnoremap <S-h> <Action>(PreviousTab)
-nnoremap <leader>bp <Action>(PinActiveTabToggle)
-nnoremap <leader>bP <Action>(CloseAllUnpinnedEditors)
-nnoremap <leader>bo <Action>(CloseAllEditorsButActive)
-nnoremap <leader>br <Action>(CloseAllToTheRight)
-nnoremap <leader>bl <Action>(CloseAllToTheLeft)
-
-" ========================================
-" HARPOON EQUIVALENT (Bookmarks)
-" ========================================
-
-nnoremap <leader>a <Action>(ToggleBookmark)
-nnoremap <C-e> <Action>(ShowBookmarks)
-nnoremap <C-h> <Action>(GotoBookmark1)
-nnoremap <C-t> <Action>(GotoBookmark2)
-nnoremap <C-n> <Action>(GotoBookmark3)
-nnoremap <C-s> <Action>(GotoBookmark4)
-
-" Alternative harpoon-like navigation
-nnoremap <leader>1 <Action>(GotoBookmark1)
-nnoremap <leader>2 <Action>(GotoBookmark2)
-nnoremap <leader>3 <Action>(GotoBookmark3)
-nnoremap <leader>4 <Action>(GotoBookmark4)
-
-" ========================================
-" ADDITIONAL USEFUL MAPPINGS
-" ========================================
-
-" Terminal
-nnoremap <leader>th <Action>(ActivateTerminalToolWindow)
-nnoremap <leader>tf <Action>(Terminal.OpenInTerminal)
-
-" Git operations
-nnoremap <leader>gg <Action>(ActivateVersionControlToolWindow)
-nnoremap <leader>gb <Action>(Git.Branches)
-nnoremap <leader>gp <Action>(Vcs.Push)
-nnoremap <leader>gl <Action>(Vcs.Log)
-nnoremap <leader>gd <Action>(Compare.SameVersion)
-
-" Code formatting
-nnoremap <leader>mp <Action>(ReformatCode)
-nnoremap <leader>mi <Action>(OptimizeImports)
-
-" Run/Debug
-nnoremap <leader>rr <Action>(Run)
-nnoremap <leader>rd <Action>(Debug)
-nnoremap <leader>rc <Action>(RunClass)
-nnoremap <leader>rf <Action>(ChooseRunConfiguration)
-
-" Refactoring shortcuts
-nnoremap <leader>re <Action>(RenameElement)
-nnoremap <leader>rm <Action>(Move)
-nnoremap <leader>ri <Action>(Inline)
-nnoremap <leader>rv <Action>(IntroduceVariable)
-nnoremap <leader>rf <Action>(IntroduceField)
-nnoremap <leader>rc <Action>(IntroduceConstant)
-nnoremap <leader>rp <Action>(IntroduceParameter)
-
-" Navigation
-nnoremap <C-o> <Action>(Back)
-nnoremap <C-i> <Action>(Forward)
-nnoremap g; <Action>(JumpToLastChange)
-nnoremap g, <Action>(JumpToNextChange)
-
-" Search everywhere
-nnoremap <leader><leader> <Action>(SearchEverywhere)
-
-" Recent locations
-nnoremap <leader>rl <Action>(RecentLocations)
-
-" Focus editor
-nnoremap <Esc> <Action>(HideAllWindows)
-
-" Zen mode
-nnoremap <leader>zz <Action>(ToggleDistractionFreeMode)
-
-" ========================================
-" VISUAL MODE MAPPINGS
-" ========================================
-
-" Move text up and down in visual mode
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-
-" Keep visual selection when indenting
-vnoremap < <gv
-vnoremap > >gv
-
-" Better paste in visual mode
-vnoremap p "_dP
-
-" ========================================
-" INSERT MODE MAPPINGS
