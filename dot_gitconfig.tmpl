@@ -29,6 +29,9 @@ insteadOf = https://bitbucket.org/
 [push]
 autoSetupRemote = true
 
+[pull]
+rebase = true
+
 [credential]
 helper = store
 
@@ -59,6 +62,9 @@ cmd = difft --tab-width 2 --context 0 --display side-by-side "$LOCAL" "$REMOTE"
 [difftool "vscode"]
 cmd = code --wait --diff $LOCAL $REMOTE
 
+[difftool "nvim"]
+cmd = nvim -d "$LOCAL" "$REMOTE"
+
 [pager]
 # Use a pager if the difftool output is larger than one screenful,
 # consistent with the behaviour of `git diff`.
@@ -67,9 +73,22 @@ difftool = true
 [merge]
 ff = false
 tool = vscode
+prompt = true
+
+[mergetool]
+keepBackup = false # clean up backup files after merge
 
 [mergetool "vscode"]
 cmd = code --wait $MERGED
+
+[difftool "meld"]
+cmd = meld "$LOCAL" "$REMOTE"
+
+[mergetool "nvim"]
+cmd = nvim -d "$LOCAL" "$BASE" "$REMOTE" -c 'wincmd J | wincmd =' "$MERGED"
+trustExitCode = true
+keepBackup = false
+prompt = true
 
 [filter "lfs"]
 clean = git-lfs clean -- %f
