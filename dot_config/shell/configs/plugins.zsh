@@ -11,7 +11,8 @@ local PLUGINS=(
   "zdharma-continuum/fast-syntax-highlighting" # fast syntax highlighting
   "ppcamp/zsh-fzf-rg"                          # rg+fzf search widget with live preview
   "$folder/zoxide"                             # zoxide (cd improved) integration and init
-  "$folder/pet"                                # completion and ctrl+r saving option
+  # "$folder/pet"                              # completion and ctrl+r saving option
+  "$folder/aliases" # completion and ctrl+r saving option
 )
 
 # load each plugin
