@@ -59,8 +59,12 @@ prompt = false
 [difftool "difft"]
 cmd = difft --tab-width 2 --context 0 --skip-unchanged --display side-by-side "$LOCAL" "$REMOTE"
 
+[difftool "meld"]
+cmd = meld "$LOCAL" "$REMOTE"
+trustExitCode = true
+
 [difftool "goland"]
-cmd = goland diff "$LOCAL" "$REMOTE" > /dev/null 2>&1
+cmd = goland diff $LOCAL $REMOTE
 trustExitCode = true
 
 [difftool "vscode"]
