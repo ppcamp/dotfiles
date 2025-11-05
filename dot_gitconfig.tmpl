@@ -50,20 +50,26 @@ abbrev=7
 # it'll be a visual repr of the diff, therefore, an invalid patch.
 #
 # To avoid such problems, prefer to use git aliases, or difftool.
-tool = difft # code
+tool = difft
 #external = difft # DO NOT CHANGE THIS, otherwise, you won't be able to generate valid patch files
 
 [difftool]
 prompt = false
 
 [difftool "difft"]
-cmd = difft --tab-width 2 --context 0 --display side-by-side "$LOCAL" "$REMOTE"
+cmd = difft --tab-width 2 --context 0 --skip-unchanged --display side-by-side "$LOCAL" "$REMOTE"
+
+[difftool "goland"]
+cmd = goland diff "$LOCAL" "$REMOTE" > /dev/null 2>&1
+trustExitCode = true
 
 [difftool "vscode"]
 cmd = code --wait --diff $LOCAL $REMOTE
+trustExitCode = true
 
 [difftool "nvim"]
 cmd = nvim -d "$LOCAL" "$REMOTE"
+trustExitCode = true
 
 [pager]
 # Use a pager if the difftool output is larger than one screenful,
@@ -72,17 +78,23 @@ difftool = true
 
 [merge]
 ff = false
-tool = vscode
+tool = goland
 prompt = true
 
 [mergetool]
 keepBackup = false # clean up backup files after merge
 
-[mergetool "vscode"]
-cmd = code --wait $MERGED
-
 [difftool "meld"]
 cmd = meld "$LOCAL" "$REMOTE"
+trustExitCode = true
+
+[mergetool "goland"]
+cmd = goland merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED" > /dev/null 2>&1
+trustExitCode = true
+
+[mergetool "vscode"]
+cmd = code --wait $MERGED
+trustExitCode = true
 
 [mergetool "nvim"]
 cmd = nvim -d "$LOCAL" "$BASE" "$REMOTE" -c 'wincmd J | wincmd =' "$MERGED"
@@ -128,7 +140,7 @@ del = !gitx --run delete                     # example: <git delete>
 del-remote = !gitx --run delete -r           # (delete a given branch in remote) example: <git delete-remote branchName>
 d = diff --word-diff --find-copies --find-renames --color
 ds = d --staged
-dt = difftool --word-diff
+dt = difftool --tool=difft --word-diff
 dts = dt --staged
 exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
 f = fetch --prune
