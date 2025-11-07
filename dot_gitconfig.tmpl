@@ -82,7 +82,7 @@ difftool = true
 
 [merge]
 ff = false
-tool = goland
+tool = meld
 prompt = true
 
 [mergetool]
@@ -144,7 +144,7 @@ del = !gitx --run delete                     # example: <git delete>
 del-remote = !gitx --run delete -r           # (delete a given branch in remote) example: <git delete-remote branchName>
 d = diff --word-diff --find-copies --find-renames --color
 ds = d --staged
-dt = difftool --tool=difft --word-diff
+dt = difftool
 dts = dt --staged
 exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
 f = fetch --prune
