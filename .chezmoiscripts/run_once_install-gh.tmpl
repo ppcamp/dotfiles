@@ -1,4 +1,4 @@
-{{- if has "hyperfine" .scripts -}}
+{{- if has "gh" .scripts -}}
 #!/usr/bin/env bash
 
 # This script installs hyperfine, a command-line tool for benchmarking command
@@ -13,16 +13,23 @@ cd $tmp
 
 # getting latest version
 version=$(curl -s https://api.github.com/repos/$pkgCreator/${pkg}/releases/latest | jq -r .tag_name)
+version="${version#v}"
 
 echo "🚀 Installing ${pkg} $version"
 
 # downloading package
-curl -sLo - "https://github.com/$pkgCreator/${pkg}/releases/latest/download/gh_${version}_linux_amd64.deb"
+curl -sLO  "https://github.com/$pkgCreator/${pkg}/releases/latest/download/gh_${version}_linux_amd64.deb"
 
 # installing it
 dpkg --extract gh_${version}_linux_amd64.deb .
-cp -r usr/* {{ .installDirs.home }}/.local
+cp -r usr/* {{ .installDirs.local }}
 
 # rm {{ joinPath .installDirs.home "$pkg" }}
+
+
+gh extension install github/gh-copilot
+
+echo -e "   \e[32m💡 Tip:\e[0m gh auth login"
+echo -e "   \e[32m💡 Tip:\e[0m gh copilot auth login"
 
 {{ end -}}

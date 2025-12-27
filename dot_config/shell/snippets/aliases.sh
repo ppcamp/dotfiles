@@ -29,14 +29,16 @@ alias -- -='cd -'
 #alias 1='cd -1'
 
 ### listing
-alias ls='eza'
+alias ls='ls --color=always --human-readable --group-directories-first'
+alias l='eza -l --git-ignore'
 alias l1='eza -1'
 alias lsf='eza -f'
 alias lsd='eza -D'
 alias la='eza -A'
-alias lll='eza -lo'
 alias ll='eza -l --icons'
-alias l='eza -l --git-ignore'
+alias llo='ll -o'
+alias lls='ll --sort=size'
+alias llr='ll --sort=size --reverse'
 alias tree='eza --tree'
 
 ### python3 (w/ python2 installed)
@@ -127,3 +129,29 @@ alias qalc='flatpak run --command=qalc io.github.Qalculate.qalculate-qt'
 
 ### diff
 alias diff='diff -w --color'
+
+### strings
+alias join='tr -d "\n"'
+alias unident='tr -d "\t"'
+alias wrapchars='head -c'
+alias enumerate='nl'
+
+### jq (json procesor)
+alias jq='yq -Poj'
+
+#### ai
+alias ai='gemini'
+
+### functions
+alias allfunctions='functions | rg -oN -r "$1" "^([a-zA-Z0-9]+)\s*\("'
+
+### gum (better tui)
+alias gumf='gum filter --no-limit'
+
+### docker-related
+alias docker-ps="docker ps --format '{{.ID}}\t{{.Names}}'"
+alias docker-stop="docker ps -f 'status=running' --format '{{.ID}}\t{{.Names}}' | gumf --header='Docker Stop' | cut -f1 | xargs docker stop"
+alias docker-start="docker ps -f 'status=exited' --format '{{.ID}}\t{{.Names}}' | gumf --header='Docker Start' | cut -f1 | xargs docker start"
+#alias compose-ps="docker compose ls --all"
+#alias compose-stop="compose-ps | gumf --header='Docker Compose Stop' | cut -f1 | xargs docker stop"
+#alias compose-start="compose-ps | gumf --header='Docker Compose Start' | cut -f1 | xargs docker start"

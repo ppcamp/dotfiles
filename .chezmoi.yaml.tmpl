@@ -94,11 +94,13 @@ See:
   "fzf"
   "gitx"
   "gum"
+  "gh"
   "hyperfine"
   "just"
   "kitty"
   "lazygit"
   "meld"
+  "magick"
   "nvim"
   "pass"
   "perm"
@@ -109,10 +111,12 @@ See:
   "rg"
   "rsync"
   "sd"
+  "screenreader"
   "shfmt"
   "sqlfluff"
   "starship"
   "toolbx"
+  "tesseract"
   "tlrc"
   "xcp"
   "xpb"
@@ -202,6 +206,7 @@ data:
   installDirs:
     main: /usr/local/bin
     home: {{ joinPath .chezmoi.homeDir ".local" "bin" }}
+    local: {{ joinPath .chezmoi.homeDir ".local" }}
 
   git:
     name: {{ $name | quote }}

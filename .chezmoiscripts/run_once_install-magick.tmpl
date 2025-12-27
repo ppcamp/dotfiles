@@ -1,0 +1,27 @@
+{{- if has "magick" .scripts -}}
+#!/usr/bin/env bash
+
+pkgCreator=ImageMagick
+pkg=ImageMagick
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
+# getting latest version
+#version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+version=7.1.2-11
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLO https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-578d60d-clang-x86_64.AppImage
+
+mv ${pkg}-578d60d-clang-x86_64.AppImage magick
+
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 magick {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{ end -}}

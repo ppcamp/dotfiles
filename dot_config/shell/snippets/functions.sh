@@ -9,6 +9,19 @@ function zreload() {
   # zinit update --snippets # snippets only
 }
 
+function cz-upgrade-tools() {
+  (
+    cd $HOME/.local/share/chezmoi/.chezmoiscripts
+    for script in *;do
+      chezmoi execute-template < $script | zsh
+    done
+  )
+}
+
+function funcdescr() {
+  function $1 | tr -d '\t\n'
+}
+
 # list aliases and grep from args
 function agr() {
   alias | rg $@
@@ -26,13 +39,7 @@ function cd() {
     1="-$1"
   fi
 
-  # if zoxide is installed, use it
-  if command -v zoxide >/dev/null 2>&1; then
-    __zoxide_cd "$@"
-    return
-  else
-    builtin cd "$1"
-  fi
+  builtin cd "$1"
 }
 
 function z() {

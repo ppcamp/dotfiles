@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# This script installs screenreader,
+
+pkg=now
+version=1.0.0
+
+echo "🚀 Installing $pkg $version script to shell"
+{{ $pkg := joinPath .chezmoi.sourceDir "tools" "scripts" "$pkg" | quote -}}
+
+# copy with permission
+# cp -fp {{ $pkg }} {{ .installDirs.home }}
+
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 {{ $pkg }} {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}

@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# ---------------------------
+# Parse de argumentos
+# ---------------------------
+# for arg in "$@"; do
+#   case "$arg" in
+#     -v|--verbose)
+#       VERBOSE=1
+#       ;;
+#     *)
+#       echo "Uso: $0 [-v|--verbose]" >&2
+#       exit 1
+#       ;;
+#   esac
+# done
+
+# Aborta se, e(command fail) u(nset) o(pipefail) falhar
+set -euo pipefail
+
+# Captura interativa de tela com Flameshot
+# --raw  → envia a imagem diretamente para stdout (sem salvar arquivo)
+# gui    → permite selecionar a área com o mouse
+# stderr é descartado para evitar poluir o pipeline
+#
+flatpak run org.flameshot.Flameshot gui --raw 2>/dev/null |
+# ImageMagick: pré-processamento LEVE (ideal para screenshots de UI)
+# 
+# Install
+# =======
+# https://github.com/ImageMagick/ImageMagick/releases/download/7.1.2-11/ImageMagick-578d60d-clang-x86_64.AppImage
+# AppImage, deve ser renomeado e baixado para /usr/local/bin/magick
+# 
+# Params
+# ======
+# Aumenta a resolução efetiva da imagem
+# OCR funciona melhor acima de ~200 DPI
+# 200% preserva anti-aliasing (300% tende a criar artefatos)
+#   -resize 200% \
+# Converte para escala de cinza
+# Remove ruído de cor sem destruir detalhes de fonte
+#   -colorspace Gray \
+# Ajuste automático de níveis (menos agressivo que -normalize)
+# Melhora contraste mantendo gradientes e subpixel rendering
+#   -auto-level \
+# Leve nitidez para reforçar bordas dos caracteres
+# 0x0.8 → seguro para UI moderna (valores altos degradam fontes)
+#   -sharpen 0x0.8 \
+# Corrige pequenas inclinações imperceptíveis
+# Útil para capturas “tortas” feitas à mão
+#   -deskew 40% \
+# Envia a imagem processada como PNG para stdout
+#   png:- |
+magick - \
+  -resize 200% \
+  -colorspace Gray \
+  -auto-level \
+  -sharpen 0x0.8 \
+  -deskew 40% \
+  png:- |
+#
+# Tesseract OCR
+#
+# Install
+# =======
+# sudo apt install tesseract-ocr tesseract-ocr-por
+#
+# Params
+# ======
+# Idioma: português
+# IMPORTANTE: melhora muito precisão de acentos e palavras comuns
+#   -l por \
+# OCR Engine Mode
+# 1 = LSTM only (engine moderno, mais preciso para UI)
+#   --oem 1 \
+# Page Segmentation Mode
+# 11 = Sparse text
+# Ideal para UI, labels, botões, código, menus
+# é o segredo (UI moderna), psm 6 funciona para PDFs / scans
+#   --psm 11 \
+# Preserva múltiplos espaços entre palavras
+# Evita colar textos alinhados ou colunas
+#   -c preserve_interword_spaces=1 \
+# Desativa dicionário do sistema
+# Evita "corrigir" identificadores, siglas e código
+#   -c load_system_dawg=0 \
+# Desativa dicionário de frequência
+# Melhora OCR de termos técnicos e textos fora do vocabulário
+#   -c load_freq_dawg=0 |
+tesseract stdin stdout \
+  -l por \
+  --oem 1 \
+  --psm 11 \
+  -c preserve_interword_spaces=1 \
+  -c load_system_dawg=0 \
+  -c load_freq_dawg=0 |
+# Copia o resultado final diretamente para o clipboard
+# Pronto para Ctrl+V
+xclip -selection clipboard

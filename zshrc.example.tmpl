@@ -1,6 +1,8 @@
 # Load Zinit for plugin management and configuration
 source $HOME/.config/shell/init.zsh
 
+PATH=$PATH:${ASDF_DATA_DIR:-$HOME/.asdf}/shims
+
 ############################# SSH Agent plugin config
 zstyle :zen:plugins:ssh-agent agent-forwarding yes
 zstyle :zen:plugins:ssh-agent lifetime 2h
@@ -9,17 +11,18 @@ zstyle :zen:plugins:ssh-agent quiet yes
 zinit ice wait"0a" lucid
 zinit light $ZEN/pkg/ssh-agent
 
+######## !!!! no needed anymore see line 4
 ############################# Go programs
 # asdf where golang | xargs -I{} realpath {}/bin
 # asdf where golang | xargs -I{} realpath {}/packages/bin
 # go env GOPATH | xargs -I{} realpath {}/bin
 # go env GOBIN
-
-PATH="$PATH:$(go env GOBIN)"
-PATH="$PATH:$(go env GOPATH | xargs -I{} realpath {}/bin)"
+#
+# PATH="$PATH:$(go env GOBIN)"
+# PATH="$PATH:$(go env GOPATH | xargs -I{} realpath {}/bin)"
 
 ############################# Rust crates
 # asdf where rust | xargs -I{} realpath {}/bin
 # rustc --print sysroot | xargs -I{} realpath "{}/../../bin" | xcp
-CARGO_FOLDER="$(rustc --print sysroot | xargs -I{} realpath "{}/../../bin")"
-export PATH="$PATH:$CARGO_FOLDER"
+#CARGO_FOLDER="$(rustc --print sysroot | xargs -I{} realpath "{}/../../bin")"
+# export PATH="$PATH:$CARGO_FOLDER"
