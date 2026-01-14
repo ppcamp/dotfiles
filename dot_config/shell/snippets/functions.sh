@@ -18,6 +18,8 @@ function cz-upgrade-tools() {
   )
 }
 
+function echoerr() { echo "$@" 1>&2 && return 1 }
+
 function funcdescr() {
   function $1 | tr -d '\t\n'
 }
