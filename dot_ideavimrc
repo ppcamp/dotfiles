@@ -42,13 +42,94 @@ set idearefactormode=keep
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Clear search highlights
-nnoremap <Esc> :nohlsearch<CR>
+" nnoremap <Esc> :nohlsearch<CR>
+"
+" " Exit insert mode
+" inoremap jk <Esc>
+"
+" " Command mode shortcut
+" nnoremap ; :
+" """ Mappings --------------------------------
+" map <leader>f <Plug>(easymotion-s)
+" map <leader>e <Plug>(easymotion-f)
+"
+" map <leader>d <Action>(Debug)
+" map <leader>r <Action>(RenameElement)
+" map <leader>c <Action>(Stop)
+" map <leader>z <Action>(ToggleDistractionFreeMode)
+"
+" map <leader>s <Action>(SelectInProjectView)
+" map <leader>a <Action>(Annotate)
+" map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+" map <S-Space> <Action>(GotoNextError)
+"
+" map <leader>b <Action>(ToggleLineBreakpoint)
+" map <leader>o <Action>(FileStructurePopup)
+"
+"
+" "map ]c :action VcsShowNextChangeMarker<CR>
+" "map [c :action VcsShowPrevChangeMarker<CR>
+" map ]c <Action>(VcsShowNextChangeMarker)
+" map [c <Action>(VcsShowPrevChangeMarker)
+"
+
+
+" .ideavimrc - IdeaVim configuration based on Neovim setup
+
+""" Map leader to space ---------------------
+let mapleader=" "
+
+" Based on nvim configuration keymaps
+" Enable IdeaVim plugins
+set surround
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set multiple-cursors
+set highlightedyank
+set ideajoin
+set autoindent
+set smarttab
+
+
+" Basic settings
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set scrolloff=8
+set sidescrolloff=8
+set number
+set relativenumber
+"
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Clear search highlights
+map <Esc> :nohlsearch<CR>
 
 " Exit insert mode
-inoremap jk <Esc>
+imap jk <Esc>
 
 " Command mode shortcut
-nnoremap ; :
+map ; :
 """ Mappings --------------------------------
 map <leader>f <Plug>(easymotion-s)
 map <leader>e <Plug>(easymotion-f)
@@ -72,3 +153,126 @@ map <leader>o <Action>(FileStructurePopup)
 map ]c <Action>(VcsShowNextChangeMarker)
 map [c <Action>(VcsShowPrevChangeMarker)
 
+"" --- Basic Mappings ---
+
+" Save and Buffer Management
+map <C-S> :w<CR>
+map <C-Q> <Action>(CloseContent)
+map <Tab> <Action>(NextTab)
+map <S-Tab> <Action>(PreviousTab)
+map <leader>bd <Action>(CloseContent)
+map <leader>bo <Action>(CloseAllEditorsButActive)
+map <leader>bb <Action>(RecentFiles)
+map <leader>en <Action>(NewElement)
+map <leader>% <Action>(SplitVertically)
+
+" Navigation & Focus
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+
+"" --- Search & Telescope Equivalents ---
+map <leader>sf <Action>(GotoFile)
+map <leader>sg <Action>(FindInPath)
+map <leader>sb <Action>(switcher)
+map <leader>sc <Action>(GotoAction)
+map <leader>sk <Action>(KeymapReferenceAction)
+map <leader>sR <Action>(ShowIntentionActions)
+map <leader>st <Action>(TodoView)
+
+"" --- LSP / Code Intelligence (Gr/Cx) ---
+map grn <Action>(RenameElement)
+map gra <Action>(ShowIntentionActions)
+map grr <Action>(FindUsages)
+map gri <Action>(GotoImplementation)
+map grt <Action>(GotoTypeDeclaration)
+map <leader>cf <Action>(ReformatCode)
+map <C-W>d <Action>(ShowErrorDescription)
+
+"" --- Git (Gitsigns/Diffview equivalents) ---
+map <leader>gdd <Action>(CompareClipboardWithSelection)
+map <leader>ghb <Action>(Annotate)
+map <leader>ghp <Action>(Vcs.ShowTabbedDiff)
+"map ]c <Action>(Vcs.MoveToNextChange)
+"map [c <Action>(Vcs.MoveToPrevChange)
+
+"" --- UI & File Explorer (Oil/Trouble) ---
+map <leader>- <Action>(ActivateProjectToolWindow)
+map <leader>cx <Action>(ActivateProblemsViewToolWindow)
+
+"" --- Debugger (DAP) ---
+map <F5> <Action>(Debug)
+map <F8> <Action>(ToggleLineBreakpoint)
+map <F7> <Action>(StepInto)
+map <S-F7> <Action>(StepOut)
+map <F6> <Action>(StepOver)
+map <S-F5> <Action>(Stop)
+
+"" --- Line Movement (MiniMove) ---
+map <M-j> <Action>(MoveLineDown)
+map <M-k> <Action>(MoveLineUp)
+
+
+"" --- Insert Mode Shortcuts ---
+
+" jk to Escape (Very popular)
+imap jk <Esc>
+
+" Save from Insert Mode
+imap <C-S> <Esc>:w<CR>a
+
+" Commentary in Insert Mode (Ctrl + /)
+" Note: <C-_> is often how terminals/Vim see Ctrl + /
+imap <C-_> <Esc><Action>(CommentByLineComment)
+
+" Tab / Shift-Tab for Snippet Jumps
+" In IntelliJ, this is handled by the IDE's Template/Live Template system
+imap <Tab> <Action>(NextTemplateVariable)
+imap <S-Tab> <Action>(PreviousTemplateVariable)
+
+" Undo blocks (keeping your default C-G u behavior for line/word deletion)
+imap <C-W> <C-G>u<C-W>
+imap <C-U> <C-G>u<C-U>
+
+
+"" --- Visual Mode Basics ---
+vmap <C-S> <Esc>:w<CR>gv
+
+" Commentary (Ctrl + /)
+vmap <C-_> <Action>(CommentByLineComment)
+
+" Move Selections (MiniMove equivalents)
+vmap <M-j> <Action>(MoveStatementDown)
+vmap <M-k> <Action>(MoveStatementUp)
+" Note: Left/Right movement isn't native for blocks, but usually unnecessary in Java/Go/IDE logic
+
+"" --- LSP & Refactoring ---
+" Format Selection
+vmap <leader>cf <Action>(ReformatCode)
+" Code Actions (Refactor This)
+vmap gra <Action>(ShowIntentionActions)
+" Search and Replace selection
+vmap <leader>r <Action>(ReplaceInPath)
+
+"" --- Git & Copilot ---
+" Stage/Reset Hunk (IntelliJ uses 'Revert' for reset)
+vmap <leader>ghs <Action>(Vcs.RollbackSelectedRanges)
+vmap <leader>ghr <Action>(Vcs.RollbackSelectedRanges)
+
+" AI Actions (Requires Copilot/AI plugin)
+vmap <leader>aq <Action>(Copilot.OpenChat)
+vmap <leader>ap <Action>(Copilot.PromptActions)
+
+"" --- Emmet ---
+" Wrap with Emmet
+vmap <leader>ce <Action>(EmmetWrapAction)
+
+"" --- Surround & Search ---
+" Visual Surround (Requires 'set surround')
+" Use 'S' followed by the character (e.g., S") to wrap selection
+vmap S <Plug>VSurround
+
+" Visual Star (Search for current selection)
+vmap * <Action>(FindNext)
+vmap # <Action>(FindPrevious)
