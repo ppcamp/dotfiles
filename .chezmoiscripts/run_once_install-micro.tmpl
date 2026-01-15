@@ -1,0 +1,27 @@
+{{- if has "micro" .scripts -}}
+#!/usr/bin/env bash
+
+# Install eza, a modern replacement for ls with git integration and icons.
+
+pkgCreator=zyedidia
+pkg=micro
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
+# getting version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-${version}-linux64.tar.gz |
+  tar -xzC . # --transform='s|$pkg|ls|'
+
+# installing it
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{ end -}}
