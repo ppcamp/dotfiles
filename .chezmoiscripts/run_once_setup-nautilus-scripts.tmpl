@@ -1,0 +1,5 @@
+{{- if has "nautilus-script" .scripts -}}
+#!/usr/bin/env bash
+
+bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+{{ end -}}
