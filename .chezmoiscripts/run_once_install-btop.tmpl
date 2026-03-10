@@ -17,8 +17,8 @@ version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest 
 echo "🚀 Installing $pkg $version"
 
 # downloading package
-curl -sLO https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-x86_64-linux-musl.tbz
-tar -xf ${pkg}-x86_64-linux-musl.tbz -C . --transform='s|.*/||'
+curl -sLO https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-x86_64-unknown-linux-musl.tbz
+tar -xf ${pkg}-x86_64-unknown-linux-musl.tbz -C . --transform='s|.*/||'
 
 # installing it
 install -m 755 $pkg {{ .installDirs.home }}
