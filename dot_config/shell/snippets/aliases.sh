@@ -137,7 +137,7 @@ alias wrapchars='head -c'
 alias enumerate='nl'
 
 ### jq (json procesor)
-alias jq='yq -Poj'
+alias yjq='yq -Poj'
 
 #### ai
 alias ai='gemini'
