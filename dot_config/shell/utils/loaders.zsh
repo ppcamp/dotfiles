@@ -23,7 +23,8 @@ load_snippet_if_exist() {
 add_path_if_exist() {
   local dir="$1"
   if [[ -d $dir ]]; then
-    export PATH="$PATH:$dir"
+    # export PATH="$PATH:$dir"
+    export PATH="$dir:$PATH"
     # echo "Added to PATH: $dir"
     return 0
   fi
