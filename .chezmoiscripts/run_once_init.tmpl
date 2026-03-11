@@ -6,8 +6,10 @@
 # This script is run once at the start of the container to initialize the environment.
 # https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals
 
+echo "🚀 Installing system packages"
+
 pkgs=(
-	jq                 # JSON processor (required by most of these scripts in chezmoi)
+# jq                 # JSON processor (required by most of these scripts in chezmoi)
 	curl               # Command line tool for transferring data with URLs
 	git                # Version control system
 	make               # Build automation tool (required by many tools, such as asdf)
@@ -33,7 +35,21 @@ pkgs=(
   ) 
 {{- end }}
 
+pad="{{ repeat 3 " "}}"
 
 update_package_list
 
 {{ template "bash_install_pkgs_loop.tmpl" . }}
+
+
+################################################################################
+# Install additional local packages
+tmp=$(mktemp -d)
+version=1.8.1
+pkg={{ joinPath .installDirs.home "jq" }}
+cd $tmp
+echo "🚀 Installing jq $version"
+curl -sLo -\
+  https://github.com/jqlang/jq/releases/download/jq-$version/jq-linux-amd64 > $pkg
+chmod 755 $pkg
+

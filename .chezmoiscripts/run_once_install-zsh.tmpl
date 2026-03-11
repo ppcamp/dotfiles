@@ -7,8 +7,10 @@ pkg=zsh
 
 {{ template "bash_install_pkg.tmpl" . }}
 
+pad="{{ repeat 3 " " }}"
+
 # TODO: add new choice to set as default
-echo "⚙️ Setting zsh as default shell"
+echo "${pad}⚙️ Setting zsh as default shell"
 printf "    "
 chsh -s $(which zsh) | sed 's/^/  /'
 
@@ -17,10 +19,10 @@ chsh -s $(which zsh) | sed 's/^/  /'
 #  see $HISTFILE variable inside $ZEN folder
 #   ($HOME/.config/shell/internal/configs/variables.zsh)
 
-echo "   ⚙️ Creating history file (see \$HISTFILE)."
+echo "${pad}⚙️ Creating history file (see \$HISTFILE)."
 mkdir -p $HOME/.cache/zsh/
 touch $HOME/.cache/zsh/zsh_history
 
-echo "   ⚙️ You need to lougout to start using zsh by default."
+echo "${pad}⚙️ You need to lougout to start using zsh by default."
 
 {{ end -}}

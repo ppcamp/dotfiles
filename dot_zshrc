@@ -1,8 +1,6 @@
 # Load Zinit for plugin management and configuration
 source $HOME/.config/shell/init.zsh
 
-PATH=$PATH:${ASDF_DATA_DIR:-$HOME/.asdf}/shims
-
 ############################# SSH Agent plugin config
 #zstyle :zen:plugins:ssh-agent agent-forwarding yes
 #zstyle :zen:plugins:ssh-agent lifetime 2h

@@ -21,6 +21,9 @@
 > 
 > # initialize chezmoi (without install)
 > chezmoi init --apply https://github.com/ppcamp/dotfiles
+>
+> # re-execute all scripts
+> chezmoi state delete-bucket --bucket=scriptState
 > ```
 
 > [!TIP]

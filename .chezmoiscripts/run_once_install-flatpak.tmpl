@@ -13,20 +13,27 @@ pkg=flatpak
 
 {{ template "bash_install_pkg.tmpl" . }}
 
+pad="{{ repeat 3 " " }}"
+
 if is_installed gnome-software; then
-  echo "⚙️ GNOME Software is installed. Configuring it to support Flatpak applications."
+  echo "${pad}⚙️ GNOME Software is installed. Configuring it to support Flatpak applications."
+  pad="{{ repeat 6 " " }}"
   install_pkg gnome-software-plugin-flatpak
 fi
 
-echo "⚙️ Configuring flathub"
+pad="{{ repeat 3 " " }}"
+
+echo "${pad}⚙️ Configuring flathub"
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 {{- end -}}
 
 {{- if has "flatpak-fix-dark-theme" .scripts }}
-############################## Flatpak fix themes for GNOME
-echo "🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
+  ############################## Flatpak fix themes for GNOME
+
+  echo "${pad}🐛 Fixing mixed theming issue for Flatpak themes in GNOME"
+
 # with this, all applications will use the Adwaita dark theme.
 #
 # See https://gist.github.com/ppcamp/8646e69eddb9293cff732aa0c820f64a

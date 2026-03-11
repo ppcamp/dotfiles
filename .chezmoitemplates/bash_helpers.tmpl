@@ -17,10 +17,12 @@ get_version() {
 }
 
 install_pkg() {
+  name=${pkg:-$1}
   local pkg=$1
 
   if is_installed $pkg; then
-    echo -e "\e[32m✅ Installed:\e[0m $pkg"
+    # echo -e "${pad}\e[32m✅ Installed:\e[0m $pkg"
+    echo -e "${pad}🚀 Installing: $name"
     return 0
   fi
 

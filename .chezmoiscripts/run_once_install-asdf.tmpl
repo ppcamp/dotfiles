@@ -24,14 +24,13 @@ sudo install -m 755 $pkg {{ .installDirs.main }}
 
 printf "   \033[2;37mCheck your '~/.tool-versions' file.\033[0m\n"
 
-echo -e "   \e[32m🧲 Installing:\e[0m"
+echo -e "   \e[32m🧲 Installing packages\e[0m"
 
 # Installing plugins
 cd $HOME
 #cut -d' ' -f1 .tool-versions | xargs -I {} asdf plugin add {}
-asdf plugin add --all
 
-asdf install
+asdf install &> /dev/null
 
 # printf "   \033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use \$(asdf install).\n"
 # sudo rm {{ joinPath .installDirs.main "$pkg" }}

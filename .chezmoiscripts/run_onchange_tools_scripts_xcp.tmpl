@@ -20,10 +20,9 @@
     pkg=xclip
   {{- end }}
 
-  if is_installed $pkg; then
-    echo -e "\e[32m✅ Installed:\e[0m $pkg"
-  else
+  if ! is_installed $pkg; then
     echo "⚙️ $pkg is not installed. Installing it now..."
+    pad="{{ repeat 3 " "}}"
     {{ template "bash_install_pkg.tmpl" . }}
   fi
 {{ end }}

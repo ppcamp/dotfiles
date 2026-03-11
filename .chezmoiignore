@@ -5,6 +5,7 @@ BREAKING_CHANGES.md
 TODO.md
 LICENSE
 docs/
+.gitignore
 .lefthook.yaml
 
 {{ if .configs.disable.zsh }}

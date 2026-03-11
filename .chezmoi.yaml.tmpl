@@ -190,6 +190,9 @@ See:
   {{ fail (print "❌ Error: Unsupported platform: " .chezmoi.os) }}
 {{- end }}
 
+{{- writeToStdout "\n" }}
+{{- writeToStdout (repeat 80 "─") }}
+{{- writeToStdout "\n" }}
 ################################################################################
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
