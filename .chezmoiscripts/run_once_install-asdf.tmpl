@@ -30,6 +30,8 @@ echo -e "   \e[32m🧲 Installing packages\e[0m"
 cd $HOME
 #cut -d' ' -f1 .tool-versions | xargs -I {} asdf plugin add {}
 
+# FIX for LUA_ROCKS (without this, neither the previous version works)
+export ASDF_LUA_LUAROCKS_VERSION=3.12.2
 asdf install &> /dev/null
 
 # printf "   \033[33m🛠️ Warn:\033[0m For asdf, you need to install your plugins first, to then, use \$(asdf install).\n"
