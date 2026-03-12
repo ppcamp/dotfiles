@@ -1,11 +1,8 @@
-{{- if has "choose" .scripts -}}
+{{- if has "fastfetch" .scripts -}}
 #!/usr/bin/env bash
 
-# This script installs choose, a command-line tool for selecting items from a
-# list.
-
-pkgCreator=theryangeary
-pkg=choose
+pkgCreator=fastfetch-cli
+pkg=fastfetch
 tmp=$(mktemp -d)
 
 # openning tmp folder
@@ -20,11 +17,10 @@ version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest 
 echo "🚀 Installing $pkg $version"
 
 # downloading package
-curl -sLo {{ joinPath "$tmp" "choose" }}  "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-x86_64-unknown-linux-musl"
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-linux-amd64.tar.gz |
+  tar -xzC .
 
 # installing it
-install -m 755 $pkg {{ .installDirs.home }}
-
-chmod +x {{ joinPath .installDirs.home "choose" }}
+cp -rT ./fastfetch-linux-amd64/usr {{ joinPath .chezmoi.homeDir ".local" }}
 
 {{ end -}}
