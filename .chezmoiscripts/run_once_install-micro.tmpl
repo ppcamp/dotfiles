@@ -3,7 +3,7 @@
 
 # Install micro, a modern text editor with on-demand file reading
 
-pkgCreator=zyedidia
+pkgCreator=micro-editor
 pkg=micro
 tmp=$(mktemp -d)
 
@@ -11,13 +11,13 @@ tmp=$(mktemp -d)
 cd $tmp
 
 # getting version
-version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+version=$(curl -sL https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
 
 echo "🚀 Installing $pkg $version"
 
 # downloading package
-curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-${version}-linux64.tar.gz |
-  tar -xzC . # --transform='s|$pkg|ls|'
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-${version#v}-linux64.tar.gz |
+	tar -xzC . --transform='s|.*/||'
 
 # installing it
 install -m 755 $pkg {{ .installDirs.home }}
