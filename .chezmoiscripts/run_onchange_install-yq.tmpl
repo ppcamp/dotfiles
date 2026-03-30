@@ -1,0 +1,28 @@
+{{- if has "yq" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs yq which is a tool that can be used to sort, and create
+# XML files and also allows to search over XML/JSON/YAML
+
+pkgCreator=mikefarah
+pkg=yq
+
+{{ template "github_setup.tmpl" . }}
+
+f=yq_linux_amd64
+
+# downloading package (single binary)
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${f}.tar.gz" | tar xzf -
+
+mv $f $pkg
+
+folder="{{ .installDirs.local }}/share/applications/man/man1"
+mkdir -p $folder
+
+cp yq.1 "$folder"
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

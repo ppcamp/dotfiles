@@ -1,0 +1,24 @@
+# vim: ts=2 sts=2 sw=2 et
+
+# zmodload zsh/zprof #debugging (use along with zprof)
+
+export ZEN="${0:a:h}"
+export ZINIT_HOME=$ZEN/internal/zinit
+local internal="$ZEN"
+
+# load utils
+source "${ZINIT_HOME}/zinit.zsh"
+source $ZEN/internal/utils/loaders.zsh # load path loaders functions
+
+# needs to be loaded in this order
+source "$internal/internal/configs/paths.zsh"       # include paths
+source "$internal/internal/configs/variables.zsh"   # exports
+source "$internal/internal/configs/configs.zsh"     # shell configs
+source "$internal/internal/configs/plugins.zsh"     # zsh plugins loading
+source "$internal/internal/configs/shortcuts.zsh"   # shortcuts
+source "$internal/internal/configs/snippets.zsh"    # default snippets loading
+source "$internal/internal/configs/completions.zsh" # default snippets loading
+
+# zprof #debugging
+
+eval "$(starship init zsh)"

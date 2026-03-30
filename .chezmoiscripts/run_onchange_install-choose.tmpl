@@ -1,0 +1,18 @@
+{{- if has "choose" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs choose, a command-line tool for selecting fields.
+
+pkgCreator=theryangeary
+pkg=choose
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package (single binary)
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-x86_64-unknown-linux-musl" > $pkg
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

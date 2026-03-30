@@ -1,0 +1,19 @@
+{{- if has "eza" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# Install eza, a modern replacement for ls with git integration and icons.
+
+pkgCreator=eza-community
+pkg=eza
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_x86_64-unknown-linux-musl.tar.gz" \
+  | tar -xzC .
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

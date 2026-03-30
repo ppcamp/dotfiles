@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(journalctl:*)",
+      "mcp__MCP_DOCKER__obsidian_list_files_in_vault",
+      "mcp__MCP_DOCKER__obsidian_append_content",
+      "Bash(docker mcp *)",
+      "mcp__obsidian__obsidian_append_content",
+      "mcp__mcp-obsidian__obsidian_append_content",
+      "mcp__mcp-obsidian__obsidian_simple_search",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in d.get\\('mcpServers',{}\\).keys\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('mcpServers',{}\\).get\\('mcp-obsidian',{}\\), indent=2\\)\\)\")",
+      "mcp__mcp-obsidian__obsidian_list_files_in_dir",
+      "Bash(sudo ls *)",
+      "Bash(lspci)",
+      "Read(//dev/dri/**)",
+      "Bash(lsmod)",
+      "Bash(dmesg)",
+      "Read(//etc/gdm3/**)",
+      "Bash(dpkg -l 'nvidia*')",
+      "Bash(dkms status *)",
+      "Skill(update-config)"
+    ]
+  }
+}

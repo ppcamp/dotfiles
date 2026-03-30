@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ -z $WSL_DISTRO_NAME ]; then
+  if type clippaste &>/dev/null; then
+    # alias xpb='clippaste'
+    clippaste $@
+  else
+    case "$XDG_SESSION_TYPE" in
+      wayland) wl-paste $@ ;;
+      x11) xclip -selection clipboard -o $@ ;;
+      *) ;;
+    esac
+  fi
+else
+  powershell.exe -Command "Get-Clipboard" $@
+fi

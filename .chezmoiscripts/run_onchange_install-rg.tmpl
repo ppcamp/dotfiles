@@ -1,0 +1,20 @@
+{{- if has "rg" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs ripgrep (rg), a faster replacement for grep.
+
+pkgCreator=BurntSushi
+pkg=ripgrep
+binName=rg
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/download/$version/${pkg}-$version-x86_64-unknown-linux-musl.tar.gz" \
+  | tar -xzC . --transform='s|.*/||'
+
+{{ template "install_main.tmpl" . }}
+
+{{ end -}}

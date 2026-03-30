@@ -1,0 +1,28 @@
+{{- if has "zsh" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+pkg=zsh
+
+{{ template "install_pkg.tmpl" . }}
+
+pad="{{ repeat 3 " " }}"
+
+# TODO: add new choice to set as default
+echo "${pad}⚙️ Setting zsh as default shell"
+printf "    "
+chsh -s $(which zsh) | sed 's/^/  /'
+
+
+# create file $HISTFILE, otherwise, we'll loose track of history everytime startsup
+#  see $HISTFILE variable inside $ZEN folder
+#   ($HOME/.config/shell/internal/configs/variables.zsh)
+
+echo "${pad}⚙️ Creating history file (see \$HISTFILE)."
+mkdir -p $HOME/.cache/zsh/
+touch $HOME/.cache/zsh/zsh_history
+
+echo "${pad}⚙️ You need to lougout to start using zsh by default."
+
+{{ end -}}

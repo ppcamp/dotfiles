@@ -1,0 +1,32 @@
+{{- if has "gitx" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs gitx, a command-line tool for managing Git repositories.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
+
+pkg=gitx
+version=1.0.0
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
+# Can use templates
+
+echo "🚀 Installing $pkg $version"
+
+{{ $gitx := joinPath .chezmoi.sourceDir "tools" "scripts" "gitx" | quote }}
+
+# copy with permission
+# sudo cp -p {{ $gitx }} {{ .installDirs.main }}
+
+# installing it
+sudo install -m 755 {{ $gitx }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main "$pkg" }}
+
+{{ end -}}

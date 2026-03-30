@@ -1,0 +1,20 @@
+{{- if has "pg-query-analyzer" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs an utility for pg
+
+binName="pg_explain_visualizer"
+
+pg_url_analyzer='https://gist.githubusercontent.com/ppcamp/b3be77f9dc1eef9d8826a66952bd2e52/raw/pg_explain_visualizer.sh'
+curl -sL "$pg_url_analyzer" > $binName
+
+# zinit ice wait"0" lucid as"program" pick"pg_explain_visualizer.sh"
+# zinit snippet "$pg_url_analyzer"
+
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
+

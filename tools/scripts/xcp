@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ -z $WSL_DISTRO_NAME ]; then
+  if type clipcopy &>/dev/null; then
+    # alias xcp='clipcopy' # for linux (install by apt)
+    clipcopy $@
+  else
+    case "$XDG_SESSION_TYPE" in
+      wayland) wl-copy $@ ;;
+      x11) xclip -selection clipboard $@ ;;
+      *) ;;
+    esac
+  fi
+else
+  # using Windows WSL
+  clip.exe $@
+fi

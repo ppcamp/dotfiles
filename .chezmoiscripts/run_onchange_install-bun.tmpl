@@ -1,0 +1,21 @@
+{{- if has "bun" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+binName=bun
+
+# download
+curl -sLO https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip
+
+
+# unzip
+unzip -qq bun-linux-x64.zip
+
+cd bun-linux-x64
+
+{{ template "install_home.tmpl" . }}
+
+bun completions > $HOME/.config/shell/completions/_bun
+
+{{ end -}}

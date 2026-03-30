@@ -1,0 +1,16 @@
+{{- if has "dualboot-clock" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+timedatectl set-local-rtc 1 --adjust-system-clock
+
+warn "Warning: The system is now being configured to read the RTC time in the local time zone
+         This mode cannot be fully supported. It will create various problems
+         with time zone changes and daylight saving time adjustments. The RTC
+         time is never updated, it relies on external facilities to maintain it.
+         If at all possible, use RTC in UTC"
+
+# No windows, no powershell como admin, rode
+# reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d 1 /f
+{{ end -}}

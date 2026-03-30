@@ -1,0 +1,27 @@
+{{- if has "pet" .scripts -}}
+#!/usr/bin/env bash
+
+# TODO: upgrade this file
+
+pkgCreator=knqyf263
+pkg=pet
+tmp=$(mktemp -d)
+
+# openning tmp folder
+cd $tmp
+
+# getting latest version
+version=$(curl -s https://api.github.com/repos/$pkgCreator/$pkg/releases/latest | jq -r .tag_name)
+
+echo "🚀 Installing $pkg $version"
+
+# downloading package
+curl -sLo - https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_${version#v}_linux_amd64.tar.gz |
+  tar -xzC .
+
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{ end -}}

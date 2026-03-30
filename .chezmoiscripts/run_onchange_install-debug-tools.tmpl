@@ -1,0 +1,20 @@
+{{- if has "debug-tools" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# Install usefull debugging tools for debian
+
+pkgs=(
+  #"lbzip2"  # required for bzip2 compression/decompression (required by tar)
+  "binutils" # includes objdump, readelf, nm, etc.
+  "gdb"      # for debugging.
+  "strace"   # for system calls.
+  "lsof"     # for open file descriptors.
+  "file"     # inspeact the type of the file
+)
+
+{{ template "install_pkgs_loop.tmpl" . }}
+
+{{- end }}

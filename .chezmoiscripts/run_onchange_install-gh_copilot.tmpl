@@ -1,0 +1,10 @@
+{{- if has "copilot" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+curl -fsSL https://gh.io/copilot-install | bash &> /dev/null
+
+tip "copilot login"
+
+{{ end -}}

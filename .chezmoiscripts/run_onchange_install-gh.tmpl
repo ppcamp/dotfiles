@@ -1,0 +1,25 @@
+{{- if has "gh" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs the GitHub CLI (gh).
+
+pkgCreator=cli
+pkg=cli
+binName=gh
+
+{{ template "github_setup.tmpl" . }}
+
+version="${version#v}"
+
+# downloading package
+getfile "https://github.com/$pkgCreator/${pkg}/releases/latest/download/gh_${version}_linux_amd64.deb"
+
+# installing
+dpkg --extract "gh_${version}_linux_amd64.deb" .
+cp -r usr/* {{ .installDirs.local }}
+
+tip "gh auth login"
+
+{{ end -}}

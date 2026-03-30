@@ -1,0 +1,24 @@
+{{- if has "bat-extras" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs bat-extras, a collection of improved scripts using bat.
+
+pkgCreator=eth-p
+pkg=bat-extras
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+name="${pkg}-${version#v}.zip"
+getfile "https://github.com/$pkgCreator/$pkg/releases/latest/download/$name"
+
+# extracting
+unzip -qq "$name"
+
+# installing
+cp -r bin -t ~/.local
+cp -r man/* -t ~/.local/share/man/man1
+
+{{ end -}}

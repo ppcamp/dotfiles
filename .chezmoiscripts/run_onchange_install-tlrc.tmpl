@@ -1,0 +1,20 @@
+{{- if has "tlrc" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs tlrc (tldr), a fast tldr-pages client.
+
+pkgCreator=tldr-pages
+pkg=tlrc
+binName=tldr
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-$version-x86_64-unknown-linux-musl.tar.gz" \
+  | tar -xzC .
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

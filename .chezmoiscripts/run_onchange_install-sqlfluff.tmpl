@@ -1,0 +1,18 @@
+{{- if has "sqlfluff" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# SQL linter and formatter
+# https://github.com/sqlfluff/sqlfluff/tree/main
+
+pkg=sqlfluff
+
+version=$(get_version $pkg)
+if [[ -z $version ]]; then
+    uv tool install --force $pkg &> /dev/null
+else
+    {{ template "install_pkg.tmpl" . }}
+fi
+
+{{ end -}}

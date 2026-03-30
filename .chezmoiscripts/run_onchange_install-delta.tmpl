@@ -1,0 +1,21 @@
+{{- if has "delta" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs delta, a syntax-highlighting pager for git and diff
+# output.
+
+
+pkgCreator=dandavison
+pkg=delta
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package (single binary)
+getFileToStdin "https://github.com/$pkgCreator/${pkg}/releases/latest/download/${pkg}-${version}-x86_64-unknown-linux-musl.tar.gz"|
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

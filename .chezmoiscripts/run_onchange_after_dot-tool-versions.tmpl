@@ -1,0 +1,96 @@
+{{- if has "asdf" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs asdf-vm, a version manager for multiple languages.
+
+pkgCreator=asdf-vm
+pkg=asdf
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin https://github.com/$pkgCreator/$pkg/releases/download/${version}/$pkg-${version}-linux-amd64.tar.gz |
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+info "Installing all plugins required by .tool-versions file"
+
+prettyprint 'GRAY' "   Check your '~/.tool-versions' file."
+
+cd {{ .chezmoi.homeDir }}
+
+grep -oE '^[a-z]*' .tool-versions | xargs -I% asdf plugin add % &>/dev/null
+
+# FIX for LUA_ROCKS (without this, neither the previous version works)
+export ASDF_LUA_LUAROCKS_VERSION=3.12.2
+
+info Installing chezmoi langs
+asdf install &>/dev/null
+
+# do an asdf reshim to guarantee that packages are now visible and asdf shell
+# (wrapper) files, under $HOME/.local/bin point to correct asdf tool version
+asdf reshim &>/dev/null
+
+
+##############################
+warn 'Go requires some programs, therefore they will be installed by default'
+
+# in nvim `GoInstallBinariesAndReshim`'
+# Based on https://github.com/fatih/vim-go/blob/master/plugin/go.vim
+
+# Check `:Go` + `tab`. `:GoAddTags json,omitempty`
+declare -A go_packages=(
+  # lsp and navigation
+  ["[lsp_and_navigation] gopls        - official lsp"]="golang.org/x/tools/gopls@latest"
+  ["[navigation]         godef        - older tool to find symbols and definitions (deprecated)"]="github.com/rogpeppe/godef@latest"
+  ["[nvim_navigation]    gotags       - generates ctags, making easier for nvim/vim"]="github.com/jstemmer/gotags@master"
+
+  # codegen and change
+  ["[edit]               goimports    - sync imports and format code"]="golang.org/x/tools/cmd/goimports@master"
+  ["[bulk_edit]          gomodifytags - allow bulking edit for struct tags"]="github.com/fatih/gomodifytags@latest"
+  ["[codegen]            impl         - generate methods and stubs for interfaces"]="github.com/josharian/impl@main"
+  ["[codegen]            fillstruct   - fill struct with zero values"]="github.com/davidrjenni/reftools/cmd/fillstruct@master"
+  ["[formatter]          asmfmt       - formatter for goassembly to keep it readable"]="github.com/klauspost/asmfmt/cmd/asmfmt@latest"
+
+  # error handling and logic
+  ["[errors_checker]     iferr        - scans if missing iferr blocks"]="github.com/koron/iferr@master"
+  ["[errors_checker]     errcheck     - check if ignoring error with _"]="github.com/kisielk/errcheck@latest"
+
+  # Linting & Static Analysis
+  ["[lint]               golangci     - lint/fast linter"]="github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest"
+  ["[analysis]           staticcheck  - analyzer that find bugs and errors in code"]="honnef.co/go/tools/cmd/staticcheck@latest"
+  ["[lint]               revive       - replacement for golint"]="github.com/mgechev/revive@latest"
+
+  # debugging & editor enhanced motion
+  ["[dbg]                dlv          - delve debugger"]="github.com/go-delve/delve/cmd/dlv@latest"
+  ["[vim]                motion       - vim only, provides cursor movement based on go declarations"]="github.com/fatih/motion@latest"
+)
+
+
+info "Installing Go tools..."
+tool_names=
+for tool in "${!go_packages[@]}"; do
+  pkg="${go_packages[$tool]}"
+  info "  $tool"
+  if command -v .cache/asdf/shims/go >/dev/null 2>&1; then
+    .cache/asdf/shims/go install "$pkg" &>/dev/null || warn "Failed to install $tool"
+  else
+    warn "Cannot find go to install $tool"
+  fi
+done
+
+# reshim, so it gets shown at PATH
+# do an asdf reshim to guarantee that packages are now visible and asdf shell
+# (wrapper) files, under $HOME/.local/bin point to correct asdf tool version
+asdf reshim &>/dev/null
+
+# tools such as jetbrains ide relies on calling actual binary, and does't
+# support shell files as entrypoint for application
+tip "The asdf install shell files in your path that points to version set at\n" \
+"      .tool-versions file. Some tools need the actual binary, thus, call 'asdf \n"\
+"        which PLUGIN_NAME' to get actual binary path."
+
+{{ end -}}

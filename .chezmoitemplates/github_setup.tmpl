@@ -1,0 +1,4 @@
+binName=${binName:-$pkg}
+version=$(curl -s "https://api.github.com/repos/$pkgCreator/$pkg/releases/latest" | jq -r .tag_name)
+echo "🚀 Installing: $binName $version"
+

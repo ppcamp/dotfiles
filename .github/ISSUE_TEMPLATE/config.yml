@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Onboarding
+    url: https://discord.gg/
+    about: "Join Discord for setup guidance in #help."
+  - name: Support
+    url: https://discord.gg/
+    about: "Get help from on Discord in #help."

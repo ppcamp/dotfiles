@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+{{- if has "entr" .scripts -}}
+
+# This package installs entr, a utility that runs arbitrary commands when files
+# change.
+
+pkg=entr
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}
+
+
+{{- if has "watchexec" .scripts -}}
+
+# This package installs watchexec, a utility that runs arbitrary commands when files
+# change.
+
+unset biName pkg pkgCreator
+pkg=watchexec
+binName=$pkg
+pkgCreator=watchexec
+
+{{ template "github_setup.tmpl" . }}
+
+version=${version#v}
+
+# downloading package
+file="${pkg}-${version}-x86_64-unknown-linux-musl.tar.xz"
+getfile "https://github.com/$pkgCreator/$pkg/releases/latest/download/$file"
+
+tar -xf $file -C . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
+
+
+
+{{- if has "inotify" .scripts -}}
+
+# This package installs entr, a utility that runs arbitrary commands when files
+# change.
+
+pkg=inotify-tools
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}

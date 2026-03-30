@@ -1,0 +1,377 @@
+" .ideavimrc - IdeaVim configuration mirroring Neovim setup
+" Keymaps follow: lua/config/keymaps.lua and each plugin's keys = {...}
+
+" ══════════════════════════════════════════════════════════════════════════════
+" LEADER
+" ══════════════════════════════════════════════════════════════════════════════
+let mapleader=" "
+
+" ══════════════════════════════════════════════════════════════════════════════
+" IDEAVIM PLUGINS
+" ══════════════════════════════════════════════════════════════════════════════
+set surround           " mini.surround / tpope/vim-surround   → sa sd sr
+set commentary         " tpope/vim-commentary                 → gcc gc
+set argtextobj         " argument text-objects                → aa/ia
+set easymotion         " flash.nvim fallback                  → <leader>f
+set textobj-entire     " entire buffer text-object            → ae/ie
+set ReplaceWithRegister
+set multiple-cursors
+set highlightedyank
+
+
+" Go to Implementation  →  <C-F12> / <leader>ni
+nmap <C-F12>     <Action>(GotoImplementation)
+nmap <leader>ni  <Action>(GotoImplementation)
+
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" ══════════════════════════════════════════════════════════════════════════════
+" VIM OPTIONS  (mirrors lua/config/options.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+set ignorecase         " opt.ignorecase = true
+set smartcase          " opt.smartcase  = true
+set incsearch
+set hlsearch
+set scrolloff=10       " opt.scrolloff = 10
+set sidescrolloff=8
+set number             " opt.number = true
+set relativenumber     " opt.relativenumber = true
+set cursorline         " opt.cursorline = true
+set nowrap             " opt.wrap = false
+set expandtab          " opt.expandtab = true
+set tabstop=4          " opt.tabstop = 4
+set shiftwidth=4       " opt.shiftwidth = 4
+set softtabstop=4      " opt.softtabstop = 4
+set smartindent
+set showmode
+set clipboard+=unnamed
+
+" ══════════════════════════════════════════════════════════════════════════════
+" IDEA-SPECIFIC OPTIONS
+" ══════════════════════════════════════════════════════════════════════════════
+set lookupkeys+=<C-n>,<C-p>
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+set autoindent
+set smarttab
+
+" ══════════════════════════════════════════════════════════════════════════════
+" BASIC KEYMAPS  (lua/config/keymaps.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Clear search highlights  →  <Esc> :nohlsearch
+nnoremap <Esc> :nohlsearch<CR>
+
+" CMD mode shortcut  →  ; :
+nnoremap ; :
+
+" Save  →  <C-s> in n/i/v
+nmap <C-S> :w<CR>
+imap <C-S> <Esc>:w<CR>a
+vmap <C-S> <Esc>:w<CR>gv
+
+" Close buffer  →  <C-q> :bd
+nmap <C-Q> <Action>(CloseContent)
+
+" Buffer cycling  →  <Tab> / <S-Tab>
+nmap <Tab>   <Action>(NextTab)
+nmap <S-Tab> <Action>(PreviousTab)
+
+" Buffer management  →  <leader>b*
+nmap <leader>bd <Action>(CloseContent)              " :bd
+nmap <leader>bo <Action>(CloseAllEditorsButActive)  " :%bd | e# | bd#
+nmap <leader>bD <Action>(CloseEditor)               " :bd|close
+
+" Split  →  <leader>%
+nmap <leader>% <Action>(SplitVertically)
+
+" New buffer  →  <leader>e  (:enew)
+" New element in project tree (IDE convenience)
+"nmap <leader>ef <Action>(NewFile)
+nmap <leader>e <Action>(NewElementMenu)
+
+" Window focus  →  <C-h/j/k/l>
+nmap <C-H> <C-W>h
+nmap <C-J> <C-W>j
+nmap <C-K> <C-W>k
+nmap <C-L> <C-W>l
+
+" ══════════════════════════════════════════════════════════════════════════════
+" BUFFERLINE  (lua/plugins/ui/bufferline.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <S-H> <Action>(PreviousTab)          " <S-h> BufferLineCyclePrev
+nmap <S-L> <Action>(NextTab)              " <S-l> BufferLineCycleNext
+nmap [b    <Action>(PreviousTab)          " BufferLineCyclePrev
+nmap ]b    <Action>(NextTab)              " BufferLineCycleNext
+nmap [B    <Action>(MoveEditorToOppositeTabGroup)   " BufferLineMovePrev
+nmap ]B    <Action>(MoveEditorToOppositeTabGroup)   " BufferLineMoveNext
+
+nmap <leader>bp <Action>(PinActiveEditorTab)          " TogglePin
+nmap <leader>bP <Action>(CloseAllUnpinnedEditors)     " Delete Non-Pinned
+nmap <leader>br <Action>(CloseAllEditorsToTheRight)   " Delete Buffers to the Right
+nmap <leader>bl <Action>(CloseAllEditorsToTheLeft)    " Delete Buffers to the Left
+
+
+" ══════════════════════════════════════════════════════════════════════════════
+" LSP / CODE INTELLIGENCE  (lua/plugins/ide/lsp.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Hover documentation  →  K
+nmap K <Action>(QuickJavaDoc)
+
+" Go to Definition  →  gd / <F12> / <leader>nd
+nmap gd          <Action>(GotoDeclaration)
+nmap <F12>       <Action>(GotoDeclaration)
+nmap <leader>nd  <Action>(GotoDeclaration)
+
+" Find References  →  gr / <S-F12> / <leader>nr
+nmap gr          <Action>(FindUsages)
+nmap <S-F12>     <Action>(FindUsages)
+nmap <leader>nr  <Action>(FindUsages)
+
+" Go to Implementation  →  <C-F12> / <leader>ni
+nmap <C-F12>     <Action>(GotoImplementation)
+nmap <leader>ni  <Action>(GotoImplementation)
+
+" Go to Type Definition  →  <leader>nt
+nmap <leader>nt  <Action>(GotoTypeDeclaration)
+
+" Go to Declaration (header/interface)  →  <leader>nD
+nmap <leader>nD  <Action>(GotoDeclaration)
+
+" Rename  →  <F2> / <leader>rn
+nmap <F2>        <Action>(RenameElement)
+imap <F2>        <Action>(RenameElement)
+nmap <leader>rn  <Action>(RenameElement)
+
+" Code Action  →  <leader>ca / gra
+nmap <leader>ca  <Action>(ShowIntentionActions)
+vmap <leader>ca  <Action>(ShowIntentionActions)
+
+" Code Action in insert mode  →  <C-.>
+imap <C-.> <Action>(ShowIntentionActions)
+
+" Format buffer  →  <leader>cf
+nmap <leader>cf <Action>(ReformatCode)
+vmap <leader>cf <Action>(ReformatCode)
+
+" Document symbols  →  <leader>sw  (FileStructurePopup)
+nmap <leader>sw <Action>(FileStructurePopup)
+
+" Workspace symbols  →  <leader>sW
+nmap <leader>sW <Action>(GotoSymbol)
+
+" Diagnostics  →  <leader>sq / <leader>cq
+nmap <leader>sq <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>cq <Action>(ActivateProblemsViewToolWindow)
+
+" Toggle inlay hints  →  <leader>ch
+nmap <leader>ch <Action>(ToggleInlayHintsGloballyAction)
+
+" Show error description at cursor  →  <C-W>d
+nmap <C-W>d <Action>(ShowErrorDescription)
+
+" nvim 0.11 gr* builtin mappings
+nmap grn <Action>(RenameElement)
+nmap gra <Action>(ShowIntentionActions)
+vmap gra <Action>(ShowIntentionActions)
+nmap grr <Action>(FindUsages)
+nmap gri <Action>(GotoImplementation)
+nmap grt <Action>(GotoTypeDeclaration)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" SEARCH / TELESCOPE EQUIVALENTS  (lua/plugins/editor/telescope.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <leadee>sf  <Action>(GotoFile)                " find_files
+nmap <leader>ss  <Action>(FindInPath)              " live_grep
+nmap <leader>sg  <Action>(FindInPath)              " find_golang_text_files (IDE: same)
+nmap <leader>s*  <Action>(FindUsages)              " grep_string (word under cursor)
+nmap <leader>sc  <Action>(GotoAction)              " commands
+nmap <leader>sk  <Action>(KeymapReferenceAction)   " keymaps
+nmap <leader>sb  <Action>(Switcher)                " buffers
+nmap <leader>sR  <Action>(PasteMultiple)           " registers
+nmap <leader>sm  <Action>(ShowBookmarks)           " marks
+nmap <leader>sr  <Action>(SearchEverywhere)        " resume / search everywhere
+nmap <leader>st  <Action>(TodoView)                " TodoTelescope
+nmap <leader>sT  <Action>(TodoView)                " TodoTelescope keywords=TODO,FIX,FIXME
+nmap <leader>?h  <Action>(HelpTopics)              " help_tags
+nmap <leader>?t  <Action>(SearchEverywhere)        " Telescope overview
+
+" Git-related search
+nmap <leader>gb  <Action>(Git.Branches)            " git_branches
+nmap <leader>gs  <Action>(Vcs.Show.Local.Changes)  " git_status
+nmap <leader>gf  <Action>(Git.Fetch)               " git_files (fetch)
+nmap <leader>gC  <Action>(Vcs.ShowHistoryForBlock) " git_commits (ALL)
+nmap <leader>gc  <Action>(Vcs.ShowHistoryForBlock) " find_commits (current buffer)
+vmap <leader>gc  <Action>(Vcs.ShowHistoryForBlock) " find_commits_range (visual)
+nmap <leader>gS  <Action>(Git.Stash)               " git_stash
+
+" ══════════════════════════════════════════════════════════════════════════════
+" GIT / GITSIGNS  (lua/plugins/ide/git.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Hunk navigation  →  ]c / [c
+nmap ]c <Action>(VcsShowNextChangeMarker)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+
+" Stage hunk  →  <leader>ghs (n/v)
+nmap <leader>ghs  <Action>(Git.Stage)
+vmap <leader>ghs  <Action>(Vcs.RollbackSelectedRanges)
+
+" Reset hunk  →  <leader>ghr (n/v)
+nmap <leader>ghr  <Action>(Vcs.RollbackChangedLines)
+vmap <leader>ghr  <Action>(Vcs.RollbackSelectedRanges)
+
+" Stage buffer  →  <leader>ghS
+nmap <leader>ghS <Action>(Vcs.Add)
+
+" Reset buffer  →  <leader>ghR
+nmap <leader>ghR <Action>(Vcs.RollbackFile)
+
+" Preview hunk  →  <leader>ghp / <leader>ghi (inline)
+nmap <leader>ghp <Action>(Vcs.ShowTabbedDiff)
+nmap <leader>ghi <Action>(VcsShowCurrentChangeMarker)
+
+" Blame  →  <leader>ghb (full) / <leader>gho (toggle)
+nmap <leader>ghb <Action>(Annotate)
+nmap <leader>gho <Action>(Vcs.ToggleAnnotations)
+
+" Diff  →  <leader>ghd / <leader>ghD
+nmap <leader>ghd <Action>(CompareWithBranch)
+nmap <leader>ghD <Action>(Compare.SameVersion)
+
+" Quickfix list  →  <leader>gq
+nmap <leader>gq <Action>(ActivateVersionControlToolWindow)
+
+" Close diff window  →  <leader>ghc
+nmap <leader>ghc <Action>(CloseContent)
+
+" LazyGit  →  <leader>gl / <leader>gL  (snack.lua)
+nmap <leader>gl <Action>(Vcs.ShowTabbedFileHistory)
+nmap <leader>gL <Action>(ActivateVersionControlToolWindow)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" DEBUGGER / DAP  (lua/plugins/ide/debugger.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <F9>   <Action>(ActivateDebugToolWindow)       " dapui.toggle
+nmap <F5>   <Action>(Debug)                         " dap.continue / start
+nmap <S-F5> <Action>(Stop)                          " dap.stop
+nmap <F6>   <Action>(StepOver)                      " dap.step_over
+nmap <F7>   <Action>(StepInto)                      " dap.step_into
+nmap <S-F7> <Action>(StepOut)                       " dap.step_out
+nmap <F8>   <Action>(ToggleLineBreakpoint)          " dap.toggle_breakpoint
+nmap <S-F8> <Action>(AddConditionalBreakpoint)      " dap.set_breakpoint (conditional)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" TROUBLE / DIAGNOSTICS  (lua/plugins/ide/trouble.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <leader>cx <Action>(ActivateProblemsViewToolWindow)   " diagnostics toggle
+nmap <leader>cX <Action>(ActivateProblemsViewToolWindow)   " buffer diagnostics toggle
+nmap <leader>cs <Action>(FileStructurePopup)               " symbols toggle
+nmap <leader>cS <Action>(GotoRelated)                      " LSP references/definitions
+nmap <leader>cl <Action>(ActivateProblemsViewToolWindow)   " loclist toggle
+
+" Quickfix navigation  →  [q / ]q
+nmap [q <Action>(GotoPreviousError)
+nmap ]q <Action>(GotoNextError)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" TODO COMMENTS  (lua/plugins/extra/todo.lua)
+" NOTE: ]t / [t (jump_next/prev) have no IdeaVim equivalent
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <leader>ct <Action>(TodoView)   " Trouble todo toggle
+nmap <leader>cT <Action>(TodoView)   " Todo/Fix/Fixme (Trouble)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" FILE EXPLORER / OIL  (lua/plugins/ui/file-explorer.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <leader>- <Action>(SelectInProjectView)        " Oil (cwd)
+nmap <leader>+ <Action>(ActivateProjectToolWindow)  " Oil workspace
+
+" ══════════════════════════════════════════════════════════════════════════════
+" AI / COPILOT  (lua/plugins/ai/copilot-chat.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <leader>aa <Action>(Copilot.OpenChat)       " toggle
+vmap <leader>aa <Action>(Copilot.OpenChat)
+nmap <leader>ax <Action>(Copilot.ResetChat)      " clear / reset
+vmap <leader>ax <Action>(Copilot.ResetChat)
+nmap <leader>aq <Action>(Copilot.OpenChat)       " quick chat
+vmap <leader>aq <Action>(Copilot.OpenChat)
+nmap <leader>ap <Action>(Copilot.PromptActions)  " prompt actions
+vmap <leader>ap <Action>(Copilot.PromptActions)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" FLASH / EASYMOTION  (lua/plugins/extra/flash.lua)
+" NOTE: Flash treesitter jump (S key) has no IdeaVim equivalent
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Flash jump  →  using easymotion as the closest approximation
+map <leader>f <Plug>(easymotion-s)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" LINE MOVEMENT / MINI.MOVE  (lua/plugins/editor/mini.lua)
+" ══════════════════════════════════════════════════════════════════════════════
+
+nmap <M-J> <Action>(MoveLineDown)
+nmap <M-K> <Action>(MoveLineUp)
+vmap <M-J> <Action>(MoveStatementDown)
+vmap <M-K> <Action>(MoveStatementUp)
+vmap <M-H> <Action>(MoveStatementLeft)
+vmap <M-L> <Action>(MoveStatementRight)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" INSERT MODE
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Exit insert mode  →  jk
+imap jk <Esc>
+
+" Comment in insert mode  →  <C-_>  (Ctrl+/)
+imap <C-_> <Esc><Action>(CommentByLineComment)
+
+" Undo helpers (preserve undo blocks on C-w / C-u)
+imap <C-W> <C-G>u<C-W>
+imap <C-U> <C-G>u<C-U>
+
+" Template variable navigation (IDE live-template support)
+imap <Tab>   <Action>(NextTemplateVariable)
+imap <S-Tab> <Action>(PreviousTemplateVariable)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" VISUAL MODE
+" ══════════════════════════════════════════════════════════════════════════════
+
+" Comment  →  gcc / gc equivalent
+vmap <C-_> <Action>(CommentByLineComment)
+
+" Replace in path
+vmap <leader>r <Action>(ReplaceInPath)
+
+" Search in selection direction
+vmap * <Action>(FindNext)
+vmap # <Action>(FindPrevious)
+
+" Surround (vim-surround via set surround)
+vmap S <Plug>VSurround
+
+" Emmet wrap  (lua/plugins/ide/emmet.lua)
+vmap <leader>ce <Action>(EmmetWrapAction)
+
+" ══════════════════════════════════════════════════════════════════════════════
+" IDE-ONLY EXTRAS  (no nvim equivalent, kept for convenience)
+" ══════════════════════════════════════════════════════════════════════════════
+
+" File structure popup shortcut alias
+nmap <leader>o <Action>(FileStructurePopup)
+
+" Distraction-free mode
+nmap <leader>z <Action>(ToggleDistractionFreeMode)
+

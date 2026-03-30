@@ -1,0 +1,145 @@
+{{- if has "asdf" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+pkgCreator=asdf-vm
+pkg=asdf
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/$pkg-${version}-linux-amd64.tar.gz" |
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+info "Adding plugins"
+while read line; do
+  if [[ $line =~ ^# ]]; then
+    continue
+  fi
+
+  plugin=$(echo $line | cut -d ' ' -f 1)
+  info "  - $plugin"
+  asdf plugin add "$plugin"  &>/dev/null || true
+done < "{{ .chezmoi.homeDir }}/.tool-versions"
+
+asdf reshim
+
+packages_golang() {
+  declare -A packages=(
+    [asmfmt]='github.com/klauspost/asmfmt/cmd/asmfmt@latest'
+    [dlv]='github.com/go-delve/delve/cmd/dlv@latest'
+    [errcheck]='github.com/kisielk/errcheck@latest'
+    [fillstruct]='github.com/davidrjenni/reftools/cmd/fillstruct@master'
+    [godef]='github.com/rogpeppe/godef@latest'
+    [goimports]='golang.org/x/tools/cmd/goimports@master'
+    [revive]='github.com/mgechev/revive@latest'
+    [gopls]='golang.org/x/tools/gopls@latest'
+    [golangci-lint]='github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest'
+    [staticcheck]='honnef.co/go/tools/cmd/staticcheck@latest'
+    [gomodifytags]='github.com/fatih/gomodifytags@latest'
+    [gotags]='github.com/jstemmer/gotags@master'
+    [impl]='github.com/josharian/impl@main'
+    [motion]='github.com/fatih/motion@latest'
+    [iferr]='github.com/koron/iferr@master'
+  )
+
+  declare -A categories=(
+    [asmfmt]='formatting'
+    [dlv]='debugging'
+    [errcheck]='linting'
+    [fillstruct]='codegen'
+    [godef]='navigation'
+    [goimports]='formatting'
+    [revive]='linting'
+    [gopls]='lsp'
+    [golangci-lint]='linting'
+    [staticcheck]='linting'
+    [gomodifytags]='codegen'
+    [gotags]='navigation'
+    [impl]='codegen'
+    [motion]='navigation'
+    [iferr]='codegen'
+  )
+
+  declare -A descriptions=(
+    [asmfmt]='Go assembly formatter'
+    [dlv]='Go debugger'
+    [errcheck]='Check for unchecked errors'
+    [fillstruct]='Fill struct literals with zero values'
+    [godef]='Find symbol definitions'
+    [goimports]='Manage import lines automatically'
+    [revive]='Extensible Go linter'
+    [gopls]='Official Go language server'
+    [golangci-lint]='Aggregated linters runner'
+    [staticcheck]='Static analysis tool'
+    [gomodifytags]='Modify struct field tags'
+    [gotags]='ctags-compatible tag generator'
+    [impl]='Generate interface method stubs'
+    [motion]='Navigate between functions/methods'
+    [iferr]='Insert if err != nil checks'
+  )
+
+  echo
+  info "  Installing GO packages"
+  for tool in "${!packages[@]}"; do
+  info "$(printf "   [%-10s] %-14s - %s" "${categories[$tool]}" "$tool" "${descriptions[$tool]}")"
+
+  go install "${packages[$tool]}" &>/dev/null
+  done
+}
+
+echo
+while read -p "    Do you want to install Go tools? [y/N] " -n 1 -r; do
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    packages_golang
+  else
+    warn "Skipping Go tools installation."
+  fi
+  break
+done
+
+packages_js() {
+  declare -A categories=(
+    [zx]='scripting'
+  )
+
+  declare -A descriptions=(
+    [zx]='A tool for writing better scripts in JavaScript'
+  )
+
+  echo
+  info "  Installing JS packages"
+  for pkg in "${!descriptions[@]}"; do
+    info "$(printf "   [%-10s] %-14s - %s" "${categories[$pkg]}" "$pkg" "${descriptions[$pkg]}")"
+
+    # if bun is installed use it, otherwise fallback to npm
+    if command -v bun &>/dev/null; then
+      tool="bun"
+    else
+      tool="npm"
+    fi
+
+    $tool install -g "${pkg}" &>/dev/null
+  done
+}
+
+
+echo
+while read -p "    Do you want to install Javascript tools? [y/N] " -n 1 -r; do
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    packages_js
+  else
+    warn "Skipping JS tools installation."
+  fi
+  break
+done
+
+
+asdf reshim
+
+{{ end -}}

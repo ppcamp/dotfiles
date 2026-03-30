@@ -1,0 +1,19 @@
+{{- if has "sd" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs sd, an intuitive find & replace CLI (sed alternative).
+
+pkgCreator=chmln
+pkg=sd
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/${pkg}/releases/latest/download/${pkg}-$version-x86_64-unknown-linux-musl.tar.gz" \
+  | tar -xzC . --transform='s|.*/||'
+
+{{ template "install_main.tmpl" . }}
+
+{{ end -}}
