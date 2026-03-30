@@ -1,0 +1,19 @@
+[submodule "dot_config/shell/internal/zinit"]
+	path = dot_local/share/shell/internal/zinit
+	url = https://github.com/zdharma-continuum/zinit
+	branch = main
+
+[submodule "docs_recommended_programs"]
+	path = docs_recommended_programs
+	url = https://gist.github.com/ppcamp/91dd1fc9ae5f3c78026617720e26795e
+	branch = main
+
+[submodule "docs"]
+	path = docs
+	url = https://gist.github.com/ppcamp/a235cad810edbba705610774bd71e89b
+	branch = main
+
+[submodule "ai"]
+	path = ai
+	url = https://gist.github.com/ppcamp/f93217cc18c099aa61cfc9cb2ec3315f
+	branch = main

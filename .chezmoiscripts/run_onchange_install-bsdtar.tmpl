@@ -1,0 +1,18 @@
+{{- if has "bsdtar" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs bsdtar, a tar implementation that supports more formats
+# than "GNU tar" (default tar), including xz and lzma compression.
+
+pkg=bsdtar
+
+{{- if eq .configs.os "apt" }}
+	binName=libarchive-tools
+{{ end -}}
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}

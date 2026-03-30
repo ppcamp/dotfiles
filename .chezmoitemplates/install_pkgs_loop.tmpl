@@ -1,0 +1,11 @@
+
+for pkg in "${pkgs[@]}"; do
+	version=$(get_version $pkg)
+
+	if [[ -z "$version" ]]; then
+		echo "❌ Package $pkg not found in repositories."
+		continue
+	fi
+
+	install_pkg $pkg
+done

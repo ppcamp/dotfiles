@@ -1,0 +1,10 @@
+{{- if has "starship" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+echo "🚀 Installing starship latest version"
+
+curl -sS https://starship.rs/install.sh | sh -s -- -y 2>&1 >/dev/null
+
+{{ end -}}

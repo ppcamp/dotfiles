@@ -1,0 +1,16 @@
+{{- if has "podman" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+pkg=podman
+
+
+{{ template "install_pkg.tmpl" . }}
+
+# TODO: add new choice to install flatpah UI
+tip "Install io.podman_desktop.PodmanDesktop to enable podman daemon and interface"
+# https://flathub.org/pt-BR/apps/io.podman_desktop.PodmanDesktop
+# https://podman-desktop.io/
+
+{{ end -}}

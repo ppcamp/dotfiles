@@ -1,0 +1,29 @@
+############################## load ZSH config
+# Load Zinit for plugin management and configuration
+source $HOME/.local/share/shell/init.zsh
+
+############################# SSH Agent plugin config
+#zstyle :zen:plugins:ssh-agent agent-forwarding yes
+#zstyle :zen:plugins:ssh-agent lifetime 2h
+#zstyle :zen:plugins:ssh-agent identities $HOME/.ssh/git
+#zstyle :zen:plugins:ssh-agent quiet yes
+#zinit ice wait"0a" lucid
+#zinit light $ZEN/pkg/ssh-agent
+
+{{- if has "asdf" .scripts -}}
+############################## Cargo/rustup
+. "$HOME/.cargo/env"
+{{ end -}}
+
+{{- if has "asdf" .scripts -}}
+############################## pnpm (for node)
+# Prefer bun install instead
+#PNPM_HOME="$HOME/.local/share/pnpm"
+#PATH="$PNPM_HOME:$PATH"
+{{ end -}}
+
+{{- if has "bun" .scripts -}}
+############################## bun
+BUN_INSTALL="$HOME/.bun"
+PATH="$BUN_INSTALL/bin:$PATH"
+{{ end -}}

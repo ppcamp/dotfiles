@@ -1,0 +1,49 @@
+{{- if or (has "flatpak" .scripts) (has "flatpak-fix-dark-theme" .scripts) -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+{{- if has "flatpak" .scripts }}
+# This script installs Flatpak, a software utility for software deployment,
+# application virtualization, and package management.
+#
+# NOTE: it has a better performance than snap, and it is more flexible.
+
+pkg=flatpak
+
+{{ template "install_pkg.tmpl" . }}
+
+if is_installed gnome-software; then
+  info "GNOME Software is installed. Configuring it to support Flatpak applications."
+  pad="{{ repeat 3 " " }}"
+  pkg=gnome-software-plugin-flatpak
+  install_pkg gnome-software-plugin-flatpak
+fi
+
+info "Configuring flathub"
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo &>/dev/null
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo  &>/dev/null
+
+{{- end -}}
+
+{{- if has "flatpak-fix-dark-theme" .scripts }}
+  ############################## Flatpak fix themes for GNOME
+
+  info "Fixing mixed theming issue for Flatpak themes in GNOME"
+
+# with this, all applications will use the Adwaita dark theme.
+#
+# See https://gist.github.com/ppcamp/8646e69eddb9293cff732aa0c820f64a
+#
+# Fixes:
+# - dbeaver issue
+# - insomnia issue
+# - libreoffice issue
+flatpak override --user --env=GTK_THEME=Adwaita:light
+
+# sudo apt autopurge -y flatpak
+{{ end -}}
+
+tip "Install 'Flatseal' to control perm 'flatpak install com.github.tchx84.Flatseal.flatpakref'"
+
+{{ end -}}

@@ -1,0 +1,58 @@
+{{- if has "k6" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# Install k6, a modern load testing tool.
+
+pkgCreator=grafana
+pkg=k6
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}-${version}-linux-amd64.tar.gz" \
+  | tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
+
+{{- if has "ab" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+binName=apache2-utils
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}
+
+
+{{- if has "wrk" .scripts -}}
+
+unset binName pkg
+
+{{ template "helpers.tmpl" . }}
+
+binName=wrk
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}
+
+
+
+{{- if has "apache-jmeter" .scripts -}}
+
+unset binName pkg
+
+{{ template "helpers.tmpl" . }}
+
+binName=jmeter
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}
