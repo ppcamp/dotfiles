@@ -1,0 +1,48 @@
+{{- if has "python-tools" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+################################################################################
+# Install Python tools
+#
+# Since, the original debian and debian based distros block the installation
+# of python tools via pip, to avoid broken packages, we need to install them
+# via apt, which usually provides a virtual environment for them.
+#
+# Some tools may even use build tools to improve performance.
+#
+# Although, such tools may not be available for your specific distro, and
+# therefore, you may need to install them manually. (Using venv, or in this
+# case, pipx).
+#
+# See https://pipx.pypa.io/stable/comparisons/
+
+
+if ! which pip &>/dev/null || ! which pip3 &>/dev/null; then
+  pkg=python3-pip
+  {{ template "install_pkg.tmpl" . }}
+fi
+
+
+#pkg=pipx
+#version=$(get_version $pkg)
+#if [ -z "$version" ]; then
+#  echo "❌ pipx is not available in the apt repository."
+#
+#  version=$(curl -sSL https://pypi.org/pypi/pipx/json | jq .info.version)
+#
+#  echo "🚀 Installing pipx version ${version} from pip"
+#  python3 -m pip install --user pipx
+#else
+#  {{ template "install_pkg.tmpl" . }}
+#fi
+
+pad='   '
+info "Configuring uv"
+#python3 -m pipx ensurepath -qq --force &>/dev/null
+# sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
+
+curl -LsSf https://astral.sh/uv/install.sh | sh &>/dev/null
+
+{{ end -}}

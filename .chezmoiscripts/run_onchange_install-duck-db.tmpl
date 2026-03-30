@@ -1,0 +1,21 @@
+{{- if has "duckdb" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs duckdb CLI tool. DuckDB is an in-process SQL OLAP
+# database management system.
+
+pkgCreator=duckdb
+pkg=duckdb
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_cli-linux-amd64.zip" \
+  | bsdtar -xjC .
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

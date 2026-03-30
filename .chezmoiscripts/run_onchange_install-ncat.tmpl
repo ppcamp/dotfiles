@@ -1,0 +1,26 @@
+{{- if has "ncat" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs ncat, a networking utility for reading and writing data
+# across networks.
+#
+# Usage: ncat [options] <hostname> <port>
+#
+# Example:
+#
+# Quick chat server:
+#   ncat -l 1234
+#   ncat localhost 1234
+#
+# Sending files:
+#   ncat -l 1234 > received_file
+#   ncat localhost 1234 < file_to_send
+
+pkg=ncat
+
+{{ template "install_pkg.tmpl" . }}
+
+{{ end -}}

@@ -1,0 +1,27 @@
+tools/
+
+README.md
+BREAKING_CHANGES.md
+TODO.md
+LICENSE
+
+docs/
+docs_recommended_programs/
+ai/
+
+.github/
+
+.gitignore
+
+.lefthook.yaml
+.golangci.yaml
+
+**/lazy-lock.json
+
+{{ if .configs.disable.zsh }}
+.config/shell
+{{ end }}
+
+{{ if not .git.ssh }}
+.ssh/allowed_signers
+{{ end }}

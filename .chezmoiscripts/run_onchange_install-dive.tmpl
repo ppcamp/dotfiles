@@ -1,0 +1,21 @@
+{{- if has "dive" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs fastfetch, a fast system information fetcher.
+
+pkgCreator=wagoodman
+pkg=dive
+
+{{ template "github_setup.tmpl" . }}
+
+version=${version#v}
+
+# downloading package
+getFileToStdin "https://github.com/$pkgCreator/$pkg/releases/latest/download/${pkg}_${version}_linux_amd64.tar.gz" \
+  | tar -xzC .
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

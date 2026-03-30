@@ -1,0 +1,26 @@
+{{- if has "perm" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs perm, a command-line tool for managing permissions.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
+
+
+pkg=perm
+version=1.0.0
+
+echo "🚀 Installing $pkg $version script to shell"
+{{ $pkg := joinPath .chezmoi.sourceDir "tools" "scripts" "$pkg" | quote -}}
+
+# copy with permission
+# cp -fp {{ $pkg }} {{ .installDirs.home }}
+
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 {{ $pkg }} {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{- end -}}

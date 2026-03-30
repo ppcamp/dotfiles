@@ -1,0 +1,20 @@
+{{- if has "gopass" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs gopass, a password manager, using the latest release
+# from GitHub.
+
+pkgCreator=gopasspw
+pkg=gopass
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package (single binary)
+getFileToStdin "https://github.com/$pkgCreator/${pkg}/releases/latest/download/${pkg}-${version#v}-linux-amd64.tar.gz" |
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

@@ -1,0 +1,16 @@
+{{- if has "tesseract" .scripts -}}
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs tesseract OCR engine and Portuguese language data.
+
+pkgs=(
+  tesseract-ocr
+  tesseract-ocr-por
+)
+
+{{ template "install_pkgs_loop.tmpl" . }}
+
+{{ end -}}

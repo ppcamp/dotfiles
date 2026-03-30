@@ -1,0 +1,47 @@
+{{- if has "xcp" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs xcp, a command-line tool for copying text to the
+# clipboard.
+#
+# NOTE: that this script doesn't run when file changed, because file is not
+#       tracked by chezmoi.
+
+
+{{ if ( or ( contains "microsoft" ( lower .chezmoi.kernel.osrelease )) ( contains "wsl" ( lower .chezmoi.kernel.osrelease ))) }}
+  # Running in WSL, and therefore, should not install xclip
+
+{{ else }}
+  {{ template "helpers.tmpl" . }}
+
+  {{- if eq (env "XDG_SESSION_TYPE") "wayland" }}
+    pkg=wl-clipboard
+  {{- else if eq (env "XDG_SESSION_TYPE") "x11" }}
+    pkg=xclip
+  {{- end }}
+
+  if ! is_installed $pkg; then
+    echo "⚙️ $pkg is not installed. Installing it now..."
+    pad="{{ repeat 3 " "}}"
+    {{ template "install_pkg.tmpl" . }}
+  fi
+{{ end }}
+
+
+
+version=1.0.0
+
+echo "🚀 Installing xcp $version to shell"
+{{ $xcp := joinPath .chezmoi.sourceDir "tools" "scripts" "xcp" | quote -}}
+
+# copy with permission
+# sudo cp -p {{ $xcp }} {{ .installDirs.main }}
+
+# installing it
+sudo install -m 755 {{ $xcp }} {{ .installDirs.main }}
+
+# rm {{ joinPath .installDirs.main $xcp }}
+
+{{- end -}}

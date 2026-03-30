@@ -1,0 +1,9 @@
+
+binName=${binName:-$pkg}
+version=$(get_version $binName)
+if [[ -z "$version" ]]; then
+	echo "❌ Package $pkg not found in repositories."
+	exit 0 # required to avoid stop chezmoi
+fi
+
+install_pkg $binName

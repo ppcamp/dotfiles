@@ -1,0 +1,31 @@
+{{- if has "ai" .scripts  -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+loginstall "Installing AI tools"
+
+TOOL="npm"
+{{ if has "bun" .scripts }}
+TOOL="bun"
+{{ end }}
+
+${TOOL} install -g @gitlawb/openclaude &>/dev/null
+
+info "  Installing Claude CLI"
+curl -fsSL https://claude.ai/install.sh | bash &>/dev/null
+
+info "  Installing MCP_DOCKER command for Claude MCP Gateway"
+claude mcp add-json MCP_DOCKER '{
+  "command": "docker",
+  "args": ["mcp", "gateway", "run", "--profile", "dev_tools"]
+}' &>/dev/null
+
+
+tip "  docker mcp cli plugin alone (without Docker Desktop) is not enough to run the MCP Gateway (missing secret support). Thus, prefer to use native instead."
+tip "  If you don't pass variable, it'll try to load from env."
+tip "  If you don't pass variable, it'll try to load from env."
+# force success even if claude fails
+exit 0
+
+{{ end -}}

@@ -1,0 +1,7 @@
+{{- if has "nautilus-script" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+bash -c "$(curl -fsSL https://cfgnunes.github.io/nautilus-scripts/install.sh)"
+{{ end -}}

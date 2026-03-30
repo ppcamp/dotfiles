@@ -1,0 +1,258 @@
+{{- /*
+
+This file is render before everything, thus, you can't reference the
+`.chezmoidata.yaml` file.
+
+ALL CUSTOMS VARIABLES MUST BE HERE. You CANNOT USE PROMPTS INSIDE TEMPLATES
+DIRECTLY.
+
+See:
+- https://www.chezmoi.io/reference/templates/variables/
+- https://www.chezmoi.io/user-guide/command-overview/
+
+*/ -}}
+
+{{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
+{{- $interactive := stdinIsATTY -}}
+
+{{- /* Initializes the name variable with a default value */ -}}
+{{- /* If name was previously set, reuses it */ -}}
+{{- /* Otherwise, if running interactively, prompts for a name */ -}}
+
+{{- $name := "Pedro Campos" -}}
+{{- if hasKey . "name" -}}
+{{-   $name = .name -}}
+{{- else if $interactive -}}
+{{-   $name = promptString " git name" $name -}}
+{{- end -}}
+{{/*
+*/}}
+{{- /* Does the same for the email */ -}}
+{{- $email := "p.augustocampos@gmail.com" -}}
+{{- if hasKey . "email" -}}
+{{-   $email = .email -}}
+{{- else if $interactive -}}
+{{-   $email = promptString " git email" $email -}}
+{{- end -}}
+{{/*
+*/}}
+{{- /* Check if shuold sign commits */ -}}
+{{- $shouldSign := true -}}
+{{- if $interactive -}}
+{{-   $shouldSign = promptBool " Sign git commits (shows a 'verified' badge)" $shouldSign -}}
+{{- end -}}
+{{/*
+*/}}
+{{- $gitsign := "" -}}
+{{- $useSignGPG := true -}}
+{{/*
+*/}}
+{{- if $shouldSign -}}
+{{-   $useSignGPG := promptBool " Use gpg" $useSignGPG -}}
+{{-   if $useSignGPG -}}
+{{      $gitsign = "E16AAD57E79809F3" -}}
+{{-     writeToStdout "\033[33m🛠️ Warn:\033[0m It requires gnupg to be installed and running\n" }}
+{{-     writeToStdout "🔏 Enabling signed commits\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can generate keys by typing:\n" }}
+{{-     writeToStdout "\tgpg --full-generate-key\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can check the generated keys by typing:\n" }}
+{{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG\n" }}
+{{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG | grep '^sec' | awk '{print $2}' | cut -d'/' -f2 \n\n" }}
+{{/*
+*/}}
+{{-     $gitsign = promptString "🔏 GPG key to enable" $gitsign }}
+{{/*
+*/}}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m After this, you just need to copy and register into the platform (Bitbucket/Github):\n" }}
+{{-     writeToStdout "\tgpg --armor --export " $gitsign "\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m You can check it by typing\n" }}
+{{-     writeToStdout "\tgit log --show-signature\n\n" }}
+{{-   else -}}
+{{      $gitsign = joinPath .chezmoi.homeDir ".ssh" "git.pub" -}}
+{{-     writeToStdout "🔏 Enabling signed commits with SSH key\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m You can use SSH keys to sign commits, see: https://git-scm.com/docs/gpg-signing-key\n\n" }}
+{{-     writeToStdout "\033[32m💡 Tip:\033[0m you can generate keys by typing:\n" }}
+{{-     writeToStdout "\tssh-keygen -t ed25519 -C \"p.augustocampos@gmail.com\" -f ~/.ssh/git\n\n" }}
+{{-     $gitsign = promptString "🔏 SSH key to enable" $gitsign }}
+{{-   end -}}
+{{- else -}}
+{{-   writeToStdout "🔏 Disabling signed commits\n" }}
+{{- end }}
+{{/*****************************************************************************
+
+                         Installation scripts selection
+
+*****************************************************************************/}}
+{{- $programs := list
+  "ab"
+  "ai"
+  "asdf"
+  "bat"
+  "bat-extras"
+  "bsdtar"
+  "btop"
+  "bun"
+  "choose"
+  "copilot"
+  "debug-tools"
+  "delta"
+  "diffstatic"
+  "distrobox"
+  "dive"
+  "dualboot-clock"
+  "duckdb"
+  "entr"
+  "eza"
+  "fastfetch"
+  "fd"
+  "flatpak"
+  "flatpak-fix-dark-theme"
+  "fzf"
+  "gh"
+  "gitx"
+  "gopass"
+  "gum"
+  "hyperfine"
+  "inotify"
+  "just"
+  "apache-jmeter"
+  "k6"
+  "kitty"
+  "lazygit"
+  "magick"
+  "meld"
+  "micro"
+  "nautilus-script"
+  "nvim"
+  "ncat"
+  "pass"
+  "perm"
+  "pet"
+  "pg-query-analyzer"
+  "podman"
+  "procs"
+  "python-tools"
+  "rg"
+  "rsync"
+  "screenreader"
+  "sd"
+  "shfmt"
+  "sqlfluff"
+  "tesseract"
+  "tlrc"
+  "toolbx"
+  "watchexec"
+  "wrk"
+  "xcp"
+  "xpb"
+  "yq"
+  "zoxide"
+  "zsh"
+-}}
+{{/*****************************************************************************
+
+                        Default choices for installation
+
+*****************************************************************************/}}
+{{- $defaultChoices := list
+  "asdf"
+  "bat"
+  "bat-extras"
+  "bsdtar"
+  "btop"
+  "choose"
+  "copilot"
+  "diffstatic"
+  "eza"
+  "fastfetch"
+  "fd"
+  "flatpak"
+  "flatpak-fix-dark-theme"
+  "fzf"
+  "gitx"
+  "gopass"
+  "gum"
+  "hyperfine"
+  "just"
+  "kitty"
+  "lazygit"
+  "meld"
+  "nvim"
+  "pass"
+  "perm"
+  "procs"
+  "rg"
+  "sd"
+  "tlrc"
+  "watchexec"
+  "xcp"
+  "xpb"
+  "zoxide"
+  "zsh"
+-}}
+{{- $choices := promptMultichoice "󰯂 What should install (scripts to run)" $programs $defaultChoices -}}
+{{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}
+{{/**/}}
+{{- if $interactive -}}
+{{-   writeToStdout "\033[32m💡 Tip:\033[0m You can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
+{{- end -}}
+{{/**/}}
+{{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n" }}
+{{- writeToStdout "\tUse ppa or build from src, if necessary.\n" }}
+{{/**/}}
+{{ $pkgTool := "" }}
+{{ if eq .chezmoi.os "linux" -}}
+  {{- $osID := (.chezmoi.osRelease.id | lower) }}
+  {{- if (contains (.chezmoi.kernel.osrelease | lower) "microsoft") }}
+    {{- /*    🪟 WSL-specific code. Mainly support debian based solutions (at Win store, at least) */ -}}
+    {{ $pkgTool = "apt" }}
+  {{- else if has $osID (list "debian" "ubuntu" "pop-os" "kubuntu") }}
+    {{- /*    🐧 Debian-specific code */ -}}
+    {{ $pkgTool = "apt" }}
+  {{- else if eq $osID "fedora" }}
+    {{- /*    🎩 Fedora-specific code */ -}}
+    {{ $pkgTool = "dnf" }}
+  {{- else }}
+    {{ fail (print "❌ Error: Unsupported OS: " $osID) }}
+  {{- end }}
+{{ else }}
+  {{ fail (print "❌ Error: Unsupported platform: " .chezmoi.os) }}
+{{- end }}
+{{/**/}}
+{{- writeToStdout "\n" }}
+{{- writeToStdout (repeat 80 "─") }}
+{{- writeToStdout "\n" }}
+{{/*****************************************************************************
+
+                        Data to be used in the templates
+
+*****************************************************************************/}}
+sourceDir: {{ .chezmoi.sourceDir | quote }}
+{{/**/}}
+# diff command to use, by default chezmoi uses `diff`. Vimdiff requires `vim` to be installed.
+# diff:
+#  command: "vimdiff"
+{{/**/}}
+# cz data | jq '.chezmoi.osRelease.id'
+{{/**/}}
+data:
+  configs:
+    os: {{ $pkgTool }}
+    disable:
+      zsh: false
+
+  installDirs:
+    main: /usr/local/bin
+    home: {{ joinPath .chezmoi.homeDir ".local" "bin" }}
+    local: {{ joinPath .chezmoi.homeDir ".local" }}
+
+  git:
+    name: {{ $name | quote }}
+    email: {{ $email | quote }}
+    sign: {{ $gitsign | quote }}
+    ssh: {{ not $useSignGPG }}
+
+  scripts:
+    {{ range $choices -}}
+    - {{.}}
+    {{ end -}}

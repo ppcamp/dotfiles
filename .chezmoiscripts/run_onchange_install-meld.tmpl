@@ -1,0 +1,12 @@
+{{- if has "meld" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# Meld is a visual diff and merge tool
+pkg=meld
+
+{{ template "install_pkg.tmpl" . }}
+
+
+{{ end -}}
