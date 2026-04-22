@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/evilmartians/lefthook/refs/heads/master/schema.json
+
+min_version: 2.1.6
+skip_lfs: true
+
+output:
+  - summary        # Print summary block (successful and failed steps)
+  - skips          # Print "skip" (i.e. no files matched)
+  - success        # Print successful steps
+  - failure        # Print failed steps printing
+  # - empty_summary  # Print summary heading when there are no steps to run
+  # - execution      # Print any execution logs
+  # - execution_out  # Print execution output
+  # - execution_info # Print `EXECUTE > ...` logging
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: lint
+      run: make lint-fix 2>&1 >/dev/null
+      stage_fixed: true
+
+    - name: test
+      run: go test ./... 2>&1 >/dev/null
+
+    - name: building
+      run: make build 2>&1 >/dev/null
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lint
+      glob: "*.go"
+      run: golangci-lint run $(dirname {staged_files}|sort -u| xargs -I% echo ./%) 2>&1 >/dev/null
+      stage_fixed: true
+
+    - name: test
+      glob: "*.go"
+      run: |
+        go test -short $(dirname {staged_files}|sort -u| xargs -I% echo ./%) 2>&1 >/dev/null

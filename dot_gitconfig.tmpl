@@ -84,11 +84,12 @@ difftool = true
 ff = false
 tool = meld
 prompt = true
+#conflictstyle = zdiff3 # show the base version in the middle of the conflict markers
 
 [mergetool]
 keepBackup = false # clean up backup files after merge
 
-[difftool "meld"]
+[mergetool "meld"]
 cmd = meld "$LOCAL" "$REMOTE"
 trustExitCode = true
 

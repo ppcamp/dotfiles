@@ -10,20 +10,18 @@ source $HOME/.local/share/shell/init.zsh
 #zinit ice wait"0a" lucid
 #zinit light $ZEN/pkg/ssh-agent
 
-{{- if has "asdf" .scripts -}}
+
+{{ if has "asdf" .scripts -}}
 ############################## Cargo/rustup
 . "$HOME/.cargo/env"
-{{ end -}}
 
-{{- if has "asdf" .scripts -}}
 ############################## pnpm (for node)
-# Prefer bun install instead
 #PNPM_HOME="$HOME/.local/share/pnpm"
 #PATH="$PNPM_HOME:$PATH"
 {{ end -}}
 
+
 {{- if has "bun" .scripts -}}
-############################## bun
-BUN_INSTALL="$HOME/.bun"
-PATH="$BUN_INSTALL/bin:$PATH"
+############################## bun (for node)
+PATH="$PATH:$HOME/.bun/bin"
 {{ end -}}
