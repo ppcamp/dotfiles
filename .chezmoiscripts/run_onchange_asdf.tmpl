@@ -1,0 +1,17 @@
+{{- if has "asdf" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+pkgCreator=asdf-vm
+pkg=asdf
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getGithubFileStdin "$pkg-${version}-linux-amd64.tar.gz" |
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}

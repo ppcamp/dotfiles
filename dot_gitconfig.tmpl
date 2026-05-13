@@ -188,6 +188,7 @@ sww = switch - # swap branches
 swx = !gitx --run branches    # (it requires to have installed the gitx plugin)
 sync = !git f && git p        # (fetch and pull) example: <git sync>
 tags = !gitx --run tags       # (it requires to have installed the gitx plugin)
+top = !git ls | head -n5
 what = ls --follow --full-history --  # (whatchanged) shows the history of a path/file (e.g, git track file.go)
 unmodule = submodule deinit -f
 unstage = restore --staged

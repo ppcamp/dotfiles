@@ -19,7 +19,6 @@ return {
   dependencies = {
     -- "j-hui/fidget.nvim",
     "mason-org/mason.nvim",
-    "lvimuser/lsp-inlayhints.nvim",
     "folke/which-key.nvim",
     "blink.cmp",
   },
@@ -140,8 +139,6 @@ return {
 
         if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
           vim.lsp.inlay_hint.enable(true)
-
-          require("lsp-inlayhints").on_attach(client, event.buf)
 
           map("<leader>ch", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))

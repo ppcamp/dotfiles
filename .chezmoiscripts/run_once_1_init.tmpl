@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# vim: ts=2 sts=2 sw=2 et
+
+{{ template "helpers.tmpl" . }}
+
+# This script is run once at the start of the container to initialize the environment.
+# https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals
+
+echo "🚀 Installing system packages"
+
+tip "  If you need to install additional packages, when using debian, do a 'dpkg-deb --extract pkg folderToCreate'"
+
+# pkgs=(
+# 	curl               # Command line tool for transferring data with URLs
+# 	git                # Version control system
+# 	make               # Build automation tool (required by many tools, such as asdf)
+# 	desktop-file-utils # Utilities for handling desktop entry files
+#   cmake              # required for asdf and other tool
+#   gcc                # c++ compiler required for asdf
+# )
+# 
+# # Install required common tools
+# {{- if eq .configs.os "deb" }}
+# 	pkgs+=(
+#     vim # Text editor with advanced features (also includes vimdiff)
+#     g++ # required by asdf and some building tools)
+#   ) 
+# 
+# {{- else if eq .configs.os "dnf" }}
+# 	warn "Dnf package may take more time to run."
+# 	echo -e "\n"
+# 
+# 	pkgs+=(
+#     vim-enhanced # Text editor with advanced features (also includes vimdiff)
+#     gcc-c++      # required by asdf and some building tools)
+#   ) 
+# {{- end }}
+# 
+# pad="{{ repeat 3 " "}}"
+# 
+# update_package_list
+
+{{ template "install_pkgs_loop.tmpl" . }}

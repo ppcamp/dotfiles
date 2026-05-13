@@ -2,7 +2,7 @@
 name: senior-code-reviewer
 description: "Use this agent when code has been written or modified and needs expert review. Examples:\\n\\n<example>\\nContext: The user asked to implement a new feature and the assistant wrote the code.\\nuser: 'Add a rate limiter to the API endpoints'\\nassistant: 'I've implemented the rate limiter. Let me now use the senior-code-reviewer agent to review the code.'\\n<commentary>\\nSince a significant piece of code was written, proactively launch the senior-code-reviewer agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User explicitly requests a code review.\\nuser: 'Can you review the authentication module I just wrote?'\\nassistant: 'I'll use the senior-code-reviewer agent to thoroughly review your authentication module.'\\n<commentary>\\nUser explicitly asked for a review, use the senior-code-reviewer agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: A bug fix was just applied.\\nuser: 'Fix the null pointer exception in the payment service'\\nassistant: 'I've fixed the issue. Now let me run the senior-code-reviewer agent to verify the fix is sound and doesn't introduce new issues.'\\n<commentary>\\nAfter applying a fix, proactively review to ensure correctness.\\n</commentary>\\n</example>"
 tools: Glob, Grep, Read, WebFetch, WebSearch, Bash, CronCreate, CronDelete, CronList, EnterWorktree, ExitWorktree, Monitor, Skill, TaskCreate, TaskGet, TaskList, TaskUpdate
-model: sonnet
+model: inherit
 color: orange
 memory: user
 ---

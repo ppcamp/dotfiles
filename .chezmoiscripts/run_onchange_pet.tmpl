@@ -1,0 +1,22 @@
+{{- if has "pet" .scripts -}}
+#!/usr/bin/env bash
+
+# TODO: upgrade this file
+
+{{ template "helpers.tmpl" . }}
+
+pkgCreator=knqyf263
+pkg=pet
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getGithubFileStdin "${pkg}_${version#v}_linux_amd64.tar.gz" |
+  tar -xzC .
+
+# or use the system utils to set proper permissions/groups for this folder
+install -m 755 $pkg {{ .installDirs.home }}
+
+# rm {{ joinPath .installDirs.home "$pkg" }}
+
+{{ end -}}

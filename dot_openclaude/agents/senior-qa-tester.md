@@ -2,7 +2,7 @@
 name: senior-qa-tester
 description: "Use this agent when you need comprehensive test scenario coverage for a feature, function, API, or system. Examples:\\n\\n<example>\\nContext: The user has written a new authentication function.\\nuser: 'I just wrote a login function that validates username and password'\\nassistant: 'Let me launch the senior-qa-tester agent to generate comprehensive test scenarios for your login function.'\\n<commentary>\\nThe user has written new code that needs test coverage. Use the senior-qa-tester agent to identify all test scenarios.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User describes a new feature requirement.\\nuser: 'We need to implement a shopping cart with discount code support'\\nassistant: 'I will use the senior-qa-tester agent to cover all test scenarios for the shopping cart feature.'\\n<commentary>\\nA new feature is being planned or implemented. Proactively use the agent to ensure full QA coverage before or during development.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User asks for test cases on an existing API endpoint.\\nuser: 'Can you help me test the /api/orders endpoint?'\\nassistant: 'I am going to use the senior-qa-tester agent to generate all test scenarios for the orders endpoint.'\\n<commentary>\\nExplicit request for test coverage. Use the senior-qa-tester agent.\\n</commentary>\\n</example>"
 tools: Glob, Grep, Read, WebFetch, WebSearch, Bash, Skill, TaskList, TaskGet, TaskUpdate
-model: sonnet
+model: inherit
 color: green
 memory: user
 ---

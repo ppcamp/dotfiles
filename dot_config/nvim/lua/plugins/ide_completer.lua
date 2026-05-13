@@ -1,13 +1,18 @@
 -- vim: ts=2 sts=2 sw=2 et
 
--- Autocompletion support.
---
--- With this, we'll be able to generate and accept suggestions from LSP
-
-return {
+return { -- Autocompletion support.
   "saghen/blink.cmp",
-  -- optional: provides snippets for the snippet source
-  dependencies = { "rafamadriz/friendly-snippets" },
+  dependencies = {
+    "rafamadriz/friendly-snippets",
+    {
+      "supermaven-inc/supermaven-nvim",
+      opts = {
+        disable_inline_completion = true, -- force supermaven to use cmp
+        disable_keymaps = true, -- prevent supermaven from overriding cmp keymaps
+      },
+    },
+    "Huijiro/blink-cmp-supermaven",
+  },
   version = "1.*", -- use a release tag to download pre-built binaries
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -22,10 +27,18 @@ return {
     },
     appearance = { nerd_font_variant = "mono" },
     completion = {
+      keyword = { range = "full" },
+      list = {
+        selection = {
+          preselect = true,
+          auto_insert = true,
+        },
+      },
+      ghost_text = {
+        enabled = true,
+      },
       menu = {
-        border = nil,
-        scrolloff = 1,
-        scrollbar = false,
+        border = "rounded",
         draw = {
           columns = {
             { "kind_icon" },
@@ -40,10 +53,16 @@ return {
         auto_show_delay_ms = 500,
       },
     },
-    -- Default list of enabled providers defined so that you can extend it
-    -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
+      default = { "supermaven", "lsp", "snippets", "path" },
+      providers = {
+        supermaven = {
+          name = "supermaven",
+          module = "blink-cmp-supermaven",
+          async = true,
+          score_offset = 100,
+        },
+      },
     },
     cmdline = {
       -- Default list of enabled providers for cmdline

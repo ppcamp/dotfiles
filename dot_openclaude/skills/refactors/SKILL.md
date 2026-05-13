@@ -4,6 +4,7 @@ description: >
   Guided incremental refactoring mode. Each refactor is small, independently testable,
   and committed separately using conventional commits. Pauses on bug discovery.
   Use when user asks to refactor code, invokes /refactors, or requests code cleanup.
+model: inherit
 ---
 
 ## Rules

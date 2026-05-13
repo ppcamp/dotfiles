@@ -1,0 +1,131 @@
+specification {
+  element actor
+  element system
+  element container
+  element component
+}
+
+model {
+  developer = actor 'Developer' {
+    description 'Provisions and uses the dev environment daily'
+  }
+
+  dotfiles = system 'Dotfiles (chezmoi)' {
+    description 'Personal Linux developer environment managed by chezmoi. Supports Debian/Ubuntu (apt) and Fedora (dnf); also handles WSL.'
+
+    chezmoi_engine = container 'Chezmoi Engine' {
+      description 'Template rendering, OS detection, and install orchestration'
+
+      data = component '.chezmoidata.yaml' {
+        description 'Static data loaded after .chezmoi.yaml.tmpl'
+      }
+      config_tmpl = component '.chezmoi.yaml.tmpl' {
+        description 'Interactive init: OS detection (apt/dnf), program selection, git identity, GPG/SSH signing config'
+      }
+      scripts = component '.chezmoiscripts/' {
+        description '~55 run_onchange_* install scripts, one per tool. Sudo-required scripts marked separately.'
+      }
+      fragments = component '.chezmoitemplates/' {
+        description 'Reusable template fragments: install_main (→/usr/local/bin), install_home (→~/.local/bin), install_pkg, install_pkgs_loop, github_setup, helpers'
+      }
+
+      data -> config_tmpl: 'static data'
+      config_tmpl -> scripts: 'selects programs'
+      scripts -> fragments: 'uses helpers'
+    }
+
+    zsh_runtime = container 'ZSH Runtime' {
+      description 'Full shell environment sourced from ~/.zshenv via dot_local/share/shell/init.zsh'
+
+      zinit = component 'zinit' {
+        description 'ZSH plugin manager (git submodule at internal/zinit/). Loads config modules in order.'
+      }
+      configs = component 'Config Modules' {
+        description 'internal/configs/: paths · variables · configs (setopt) · plugins · shortcuts (ZLE) · snippets · completions'
+      }
+      plugins = component 'Custom Plugins' {
+        description 'plugins/: env-cache (load_env_cached/env_reload) · fzf (Ctrl+T/Alt+C/Ctrl+R) · gh (GitHub CLI aliases + Copilot) · pet · zoxide (smart cd) · tldr · ssh-agent · pretty-man · aliases'
+      }
+      snippets = component 'Snippets' {
+        description 'snippets/: aliases.sh (nvim/eza/bat/git/docker/gopass/chezmoi) · functions.sh (zreload/cz-upgrade-tools/z/http/agr/zebra) · listenat.sh — lll.sh and trash.sh blacklisted'
+      }
+      completions = component 'Completions' {
+        description 'completions/: static ZSH completions for ~25 tools: asdf bat bun chezmoi delta eza fd fzf gh golangci-lint gopass gum hyperfine just lazygit ollama opencode pet rg sd tldr uv watchexec yq zoxide'
+      }
+
+      zinit -> configs: 'loads in order'
+      configs -> plugins: 'plugins.zsh'
+      configs -> snippets: 'snippets.zsh'
+      configs -> completions: 'completions.zsh'
+    }
+
+    app_configs = container 'App Configs' {
+      description 'Rendered configuration files for editor, terminal, git, and AI tooling'
+
+      nvim = component 'Neovim / LazyVim' {
+        description 'Lua config (dot_config/nvim/): LSP — gopls, pyright, rust-analyzer, ts-ls, lua-ls, awk, arduino. Commands: autocmds, bash, goimports, curl, format_line, common_editor'
+      }
+      kitty = component 'Kitty Terminal' {
+        description 'dot_config/kitty/: JetBrainsMono Nerd Font 12pt, Monokai Soda theme, hint scripts (hints_define-google.py, hints_open-br.py)'
+      }
+      git_cfg = component '.gitconfig' {
+        description 'dot_gitconfig.tmpl: identity, GPG key E16AAD57E79809F3 or SSH signing, delta pager, aliases'
+      }
+      claude_cfg = component 'dot_openclaude' {
+        description 'Agents: senior-dev, senior-code-reviewer, senior-qa-tester, tech-lead-reviewer, system-diagnostics-inspector. Skills: caveman, conventional-commits, enforce-libs, enforce-english-docs, refactors, compress. Settings: claude-sonnet-4-6, effort: high, gopls-lsp plugin.'
+      }
+    }
+
+    tools = container 'Installed Tools' {
+      description 'CLI tools and runtimes installed by chezmoi scripts'
+
+      runtimes = component 'asdf runtimes' {
+        description 'Go 1.26 · Rust stable · Lua 5.4 · Node LTS · Bun 1.3 — pinned in dot_tool-versions'
+      }
+      cli = component 'CLI Tools' {
+        description 'fzf · rg · bat · eza · delta · lazygit · gh · gopass · gum · yq · jless · just · hyperfine · btop · procs · sd · tlrc · bsdtar · fastfetch · duckdb · podman · distrobox · toolbx · watchexec'
+      }
+      scripts_bin = component 'Utility Scripts' {
+        description 'tools/scripts/: gitx (fzf+git TUI: branches/hashes/tags/remotes/stashes/reflogs/worktrees) · now (ISO 8601) · perm · xcp · xpb · screenreader'
+      }
+    }
+  }
+
+  developer -> dotfiles: 'bootstrap: chezmoi init --apply <repo>'
+  developer -> dotfiles.zsh_runtime: 'daily shell usage'
+  developer -> dotfiles.app_configs.nvim: 'code editing'
+  developer -> dotfiles.app_configs.kitty: 'terminal emulator'
+  developer -> dotfiles.app_configs.claude_cfg: 'AI assistance (Claude Code)'
+
+  dotfiles.chezmoi_engine.scripts -> dotfiles.tools: 'installs'
+  dotfiles.chezmoi_engine -> dotfiles.app_configs: 'renders via chezmoi apply'
+  dotfiles.zsh_runtime -> dotfiles.tools.cli: 'aliases & wraps'
+  dotfiles.zsh_runtime.plugins -> dotfiles.tools.scripts_bin: 'integrates gitx + fzf'
+}
+
+views {
+  view index {
+    title 'Dotfiles — System Overview'
+    include *
+  }
+
+  view chezmoi of dotfiles.chezmoi_engine {
+    title 'Chezmoi Engine'
+    include *
+  }
+
+  view shell of dotfiles.zsh_runtime {
+    title 'ZSH Runtime'
+    include *
+  }
+
+  view apps of dotfiles.app_configs {
+    title 'App Configs'
+    include *
+  }
+
+  view tools of dotfiles.tools {
+    title 'Installed Tools'
+    include *
+  }
+}

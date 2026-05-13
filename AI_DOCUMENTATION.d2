@@ -1,0 +1,90 @@
+direction: right
+
+entry: Entry Points {
+  init: chezmoi init --apply {shape: oval}
+  shell: .zshenv → init.zsh {shape: oval}
+}
+
+chezmoi: Chezmoi Engine {
+  data: .chezmoidata.yaml\nstatic data {shape: page}
+  tmpl: .chezmoi.yaml.tmpl\nOS detect · git identity · program selection
+  scripts: .chezmoiscripts/\nrun_onchange_* (~55 scripts)
+  fragments: .chezmoitemplates/ {
+    install_main: install_main.tmpl\n→ /usr/local/bin
+    install_home: install_home.tmpl\n→ ~/.local/bin
+    install_pkg: install_pkg.tmpl\napt / dnf single package
+    install_pkgs_loop: install_pkgs_loop.tmpl\nbatch packages
+    github_setup: github_setup.tmpl\nGitHub release downloader
+    helpers: helpers.tmpl\nutility macros
+  }
+
+  data -> tmpl
+  tmpl -> scripts: selects programs
+  scripts -> fragments: uses helpers
+}
+
+shell_rt: ZSH Runtime {
+  zinit: zinit {shape: diamond}
+
+  configs: Config Modules {
+    paths: paths.zsh\nPATH additions
+    vars: variables.zsh\nHISTFILE · EDITOR · ASDF_DATA_DIR · GPG_TTY
+    cfgs: configs.zsh\nsetopt flags
+    plugins_cfg: plugins.zsh\nzinit async/sync loading
+    shortcuts: shortcuts.zsh\nZLE keybindings (Ctrl+Y · Ctrl+Space · Alt+W)
+    snippets_cfg: snippets.zsh\nsnippets loader + blacklist
+    completions_cfg: completions.zsh\ncompletion setup
+  }
+
+  plugins: Custom Plugins {
+    env_cache: env-cache/\nload_env_cached · env_reload\ncaches ~/.env → /dev/shm/env_$USER
+    fzf_p: fzf/\nCtrl+T · Alt+C · Ctrl+R
+    gh_p: gh/\nGitHub CLI aliases · Copilot functions
+    pet_p: pet/\nsnippet manager integration
+    zoxide_p: zoxide/\nsmart cd jump
+    tldr_p: tldr/\nCtrl+tldr widget
+    ssh_agent: ssh-agent/\nSSH agent management
+    pretty_man: pretty-man/\ncolorized man pages
+  }
+
+  snippets: Snippets {
+    aliases_sh: aliases.sh\nnvim · eza · bat · python · git · docker · gopass · chezmoi
+    functions_sh: functions.sh\nzreload · cz-upgrade-tools · cd · z · http · echoerr · agr · zebra
+    listenat_sh: listenat.sh\nport → process lookup
+  }
+
+  completions: Completions (~25 tools) {shape: page}
+
+  zinit -> configs: loads in order
+  configs.plugins_cfg -> plugins
+  configs.snippets_cfg -> snippets
+  configs.completions_cfg -> completions
+}
+
+apps: App Configs {
+  nvim: Neovim / LazyVim {
+    lsp: LSP Configs\ngopls · pyright · rust-analyzer\nts-ls · lua-ls · awk · arduino
+    cmds: commands/\nautocmds · bash · goimports · curl · format_line · common_editor
+  }
+  kitty: Kitty Terminal\nJetBrainsMono Nerd Font 12pt\nMonokai Soda theme\nhints: google · open-br
+  git: .gitconfig\nGPG signing E16AAD57E79809F3\nSSH signing option · delta pager · aliases
+  claude: dot_openclaude {
+    agents: Agents\nsenior-dev · senior-code-reviewer\nsenior-qa-tester · tech-lead-reviewer\nsystem-diagnostics-inspector
+    skills: Skills\ncaveman · conventional-commits\nenforce-libs · enforce-english-docs\nrefactors · compress
+    settings: settings.json\nmodel: claude-sonnet-4-6\neffort: high · plugins: gopls-lsp
+  }
+}
+
+tools: Installed Tools {
+  asdf: asdf runtimes\nGo 1.26 · Rust stable · Lua 5.4\nNode LTS · Bun 1.3
+  cli: CLI Tools\nfzf · rg · bat · eza · delta · lazygit\ngh · gopass · gum · yq · jless · just\nhyperfine · btop · procs · sd · podman · distrobox
+  scripts_bin: Utility Scripts\ngitx (fzf+git TUI) · now · perm\nxcp · xpb · screenreader
+}
+
+entry.init -> chezmoi.tmpl: renders templates
+chezmoi.scripts -> tools: installs
+chezmoi -> apps: chezmoi apply
+entry.shell -> shell_rt.zinit: sources
+shell_rt -> tools.cli: aliases & wraps
+shell_rt.plugins.fzf_p -> tools.scripts_bin: integrates gitx
+shell_rt.plugins.zoxide_p -> tools.cli: wraps zoxide

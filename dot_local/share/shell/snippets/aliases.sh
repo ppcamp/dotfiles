@@ -41,7 +41,7 @@ alias ll='eza -l --icons'
 alias llo='ll -o'
 alias lls='ll --sort=size'
 alias llr='ll --sort=size --reverse'
-alias tree='eza --tree'
+alias tre='eza --tree'
 
 ### python3 (w/ python2 installed)
 alias python='python3'
@@ -77,6 +77,7 @@ alias histclear='echo "" > ~/$HISTFILE && fc -R'
 alias table='column -t'
 
 alias now='date +"%Y-%m-%dT%H:%M:%SZ"'
+alias nowdate='date +"%Y-%m-%d'
 
 ### open files
 # see https://pt.linux-console.net/?p=19677
@@ -150,7 +151,7 @@ alias oclaude='openclaude' # see claude
 alias copilot='copilot -s --disable-builtin-mcps'
 #alias gemini='gemini --yolo'
 #alias claude='claude --permission-mode=bypassPermissions'
-#alias ocode='opencode'
+alias ocode='opencode'
 
 ### functions
 alias allfunctions='functions | rg -oN -r "$1" "^([a-zA-Z0-9]+)\s*\("'
@@ -170,8 +171,8 @@ alias docker-start="docker ps -f 'status=exited' --format '{{.ID}}\t{{.Names}}' 
 alias watch='watchexec'
 
 ### gopass
-alias pass='gopass'
-alias otp='gopass otp --alsoclip'
+#alias pass='gopass'
+#alias otp='gopass otp --alsoclip'
 
 ### system
 alias fixscreen='sudo systemctl restart gdm3'

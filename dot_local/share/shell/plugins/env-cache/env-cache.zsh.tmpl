@@ -1,0 +1,36 @@
+# vim: ts=2 sts=2 sw=2 et
+
+ENV_MEM_CACHE="${ENV_MEM_CACHE:-/dev/shm/{{ include "/proc/sys/kernel/random/boot_id" | sha256sum }}}"
+ENV_FILE="${ENV_FILE:-$HOME/.env}"
+
+load_env_cached() {
+  # By doing this way, we'll have a default mem_filename. If you want to increase
+  # a bit security, you can set ENV_MEM_CACHE to a different value, such as
+  #   ENV_MEM_CACHE=$(sha256sum /proc/sys/kernel/random/boot_id | cut -d' ' -f1)
+  # You can also set ENV_FILE to a different value, such as
+  #   ENV_FILE=/path/to/your/env/file
+
+  if [[ ! -f $ENV_MEM_CACHE ]]; then
+    # load the env vars and cache them in memory for faster access.
+    # only persist the names actually assigned in $ENV_FILE, so we don't bake
+    # the whole environment (PWD, OLDPWD, ...) into the cache. typeset -p quotes
+    # values correctly, including multiline ones (via $'...').
+    source "$ENV_FILE"
+    local -a _env_names
+    _env_names=(${(u)${(f)"$(sed -nE 's/^[[:space:]]*(export[[:space:]]+)?([A-Za-z_][A-Za-z0-9_]*)=.*/\2/p' "$ENV_FILE")"}})
+    (( ${#_env_names} )) && typeset -p ${_env_names} >"$ENV_MEM_CACHE"
+    # avoid other users to read the env cache
+    chmod 600 "$ENV_MEM_CACHE"
+  fi
+
+  source "$ENV_MEM_CACHE"
+
+  CURRENT_ENV_FILE="$(pwd)/.env"
+  [[ ! -f $CURRENT_ENV_FILE ]] && return
+  [[ "$CURRENT_ENV_FILE" != $ENV_FILE ]] && source "$CURRENT_ENV_FILE"
+}
+
+reload_env() {
+  rm -f "$ENV_MEM_CACHE"
+  load_env_cached
+}

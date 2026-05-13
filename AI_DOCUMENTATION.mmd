@@ -1,0 +1,70 @@
+flowchart TD
+    subgraph ENTRY["Entry Points"]
+        INIT["chezmoi init --apply"]
+        SHELL[".zshenv → init.zsh"]
+    end
+
+    subgraph CHEZMOI["Chezmoi Engine"]
+        DATA[".chezmoidata.yaml\nstatic data"]
+        TMPL[".chezmoi.yaml.tmpl\nOS detect · git identity · program selection"]
+        SCRIPTS[".chezmoiscripts/\n~55 run_onchange_* scripts"]
+        FRAGMENTS[".chezmoitemplates/\ninstall_main · install_home\ngithub_setup · install_pkg · helpers"]
+        DATA --> TMPL
+        TMPL -->|selects programs| SCRIPTS
+        SCRIPTS -->|uses| FRAGMENTS
+    end
+
+    subgraph SHELL_RT["ZSH Runtime (dot_local/share/shell/)"]
+        ZINIT["zinit\ngit submodule"]
+        subgraph CONFIGS["Config Modules (internal/configs/)"]
+            PATHS["paths.zsh\nPATH additions"]
+            VARS["variables.zsh\nHISTFILE · EDITOR · ASDF_DATA_DIR"]
+            CFGS["configs.zsh\nsetopt flags"]
+            PLUGCFG["plugins.zsh\nzinit async/sync loading"]
+            SHORTS["shortcuts.zsh\nZLE keybindings"]
+            SNIPCFG["snippets.zsh\nsnippets loader"]
+            COMPCFG["completions.zsh\ncompletion setup"]
+        end
+        subgraph PLUGINS["Custom Plugins (plugins/)"]
+            PENV["env-cache/\nload_env_cached · env_reload"]
+            PFZF["fzf/\nCtrl+T · Alt+C · Ctrl+R"]
+            PGH["gh/\nGitHub CLI aliases · Copilot fns"]
+            PPET["pet/\nsnippet manager"]
+            PZOX["zoxide/\nsmart cd"]
+            PTLDR["tldr/\nCtrl+tldr widget"]
+            PSSH["ssh-agent/"]
+            PMAN["pretty-man/\ncolorized man pages"]
+        end
+        subgraph SNIPPETS_GRP["Snippets (snippets/)"]
+            SAL["aliases.sh\nnvim · eza · bat · git · docker · chezmoi"]
+            SFN["functions.sh\nzreload · cz-upgrade-tools · z · http · agr"]
+            SLA["listenat.sh\nport → process lookup"]
+        end
+        COMPS["Completions (~25 tools)\nasdf bat bun chezmoi delta eza fd fzf gh\nlazygit gopass gum yq jless just hyperfine..."]
+
+        ZINIT -->|loads in order| CONFIGS
+        PLUGCFG --> PLUGINS
+        SNIPCFG --> SNIPPETS_GRP
+        COMPCFG --> COMPS
+    end
+
+    subgraph APPS["App Configs"]
+        NVIM["Neovim / LazyVim\nLSP: gopls · pyright · rust-analyzer · ts-ls · lua-ls · awk · arduino\ncommands: autocmds · bash · goimports · curl · format_line"]
+        KITTY["Kitty Terminal\nJetBrainsMono Nerd Font 12pt · Monokai Soda\nhint scripts: google · open-br"]
+        GITCFG[".gitconfig\nGPG signing E16AAD57E79809F3 · delta pager · aliases"]
+        CLAUDE["dot_openclaude\nagents: senior-dev · code-reviewer · qa · tech-lead\nskills: caveman · conventional-commits · enforce-libs · refactors"]
+    end
+
+    subgraph TOOLS["Installed Tools"]
+        ASDF["asdf runtimes\nGo 1.26 · Rust stable · Lua 5.4 · Node LTS · Bun 1.3"]
+        CLI["CLI Tools\nfzf · rg · bat · eza · delta · lazygit · gh\ngopass · gum · yq · jless · just · hyperfine · btop"]
+        BIN["Utility Scripts\ngitx (fzf+git TUI) · now · perm · xcp · xpb · screenreader"]
+    end
+
+    INIT -->|renders templates| TMPL
+    SCRIPTS -->|installs| TOOLS
+    CHEZMOI -->|chezmoi apply| APPS
+    SHELL -->|sources| ZINIT
+    SHELL_RT -->|aliases & wraps| CLI
+    PFZF -->|integrates| BIN
+    PZOX -->|wraps| CLI

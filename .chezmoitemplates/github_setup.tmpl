@@ -1,4 +1,105 @@
 binName=${binName:-$pkg}
-version=$(curl -s "https://api.github.com/repos/$pkgCreator/$pkg/releases/latest" | jq -r .tag_name)
-echo "🚀 Installing: $binName $version"
+pkgCreator=${pkgCreator:-$pkg}
 
+gh_release_url() {
+  printf "https://github.com/%s/%s/releases/latest/download/%s" "$pkgCreator" "$pkg" "$1"
+}
+
+getGithubFileStdin() {
+  getFileToStdin "$(gh_release_url "$1")"
+}
+
+getGithubFile() {
+  getfile "$(gh_release_url "$1")"
+}
+
+_CHEZMOI_GH_SKIP="${TMPDIR:-/tmp}/chezmoi-gh-auth-skip"
+# Uses GitHub CLI's public OAuth client_id (open-source, well-known)
+_CHEZMOI_GH_CLIENT_ID="Iv1.b507a08c87ecfe98"
+
+_device_flow_auth() {
+  local response user_code verification_uri device_code interval
+
+  response=$(curl -sf -X POST "https://github.com/login/device/code" \
+    -H "Accept: application/json" \
+    -d "client_id=${_CHEZMOI_GH_CLIENT_ID}&scope=") || return 1
+
+  user_code=$(printf '%s' "$response" | jq -r '.user_code // empty')
+  [[ -z "$user_code" ]] && return 1
+
+  verification_uri=$(printf '%s' "$response" | jq -r .verification_uri)
+  device_code=$(printf '%s' "$response"      | jq -r .device_code)
+  interval=$(printf '%s' "$response"         | jq -r '.interval // 5')
+
+  echo
+  info "Open: $verification_uri" >/dev/tty
+  info "Enter code: $user_code"  >/dev/tty
+  echo
+
+  local expires_at=$(( $(date +%s) + 900 ))
+  while (( $(date +%s) < expires_at )); do
+    sleep "$interval"
+    local token_response error access_token
+    token_response=$(curl -sf -X POST "https://github.com/login/oauth/access_token" \
+      -H "Accept: application/json" \
+      -d "client_id=${_CHEZMOI_GH_CLIENT_ID}&device_code=${device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code") || continue
+
+    access_token=$(printf '%s' "$token_response" | jq -r '.access_token // empty')
+    error=$(printf '%s' "$token_response"         | jq -r '.error // empty')
+
+    if [[ -n "$access_token" ]]; then
+      printf '%s' "$access_token"; return 0
+    elif [[ "$error" == "slow_down" ]]; then
+      interval=$(( interval + 5 ))
+    elif [[ "$error" != "authorization_pending" ]]; then
+      return 1  # access_denied, expired_token, or unknown error
+    fi
+  done
+
+  return 1
+}
+
+resolve_gh_token() {
+  # 1. Already authenticated via env
+  [[ -n "${GH_TOKEN:-}" ]]     && printf '%s' "$GH_TOKEN"     && return
+  [[ -n "${GITHUB_TOKEN:-}" ]] && printf '%s' "$GITHUB_TOKEN" && return
+
+  # 1b. gh CLI already logged in
+  if command -v gh >/dev/null 2>&1 && gh auth token >/dev/null 2>&1; then
+    gh auth token 2>/dev/null; return
+  fi
+
+  # 2. User already declined/failed earlier in this run
+  [[ -f "$_CHEZMOI_GH_SKIP" ]] && return
+
+  # 3. Offer interactive login
+  if [[ -t 0 ]]; then
+    local ans
+    read -rp "$(warnnl 'Log in to GitHub to avoid API rate limits? [y/N] ')" ans </dev/tty
+    echo
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+      local tok
+
+      if command -v gh >/dev/null 2>&1; then
+        gh auth login --hostname github.com </dev/tty >/dev/tty 2>&1 || true
+        tok=$(gh auth token 2>/dev/null || true)
+      else
+        tok=$(_device_flow_auth)
+      fi
+
+      if [[ -n "$tok" ]]; then
+        printf '%s' "$tok"; return
+      fi
+      # auth failed — skip remaining scripts
+      touch "$_CHEZMOI_GH_SKIP"; return
+    fi
+  fi
+
+  # 4. Unauthenticated — remember decision to avoid re-prompting
+  touch "$_CHEZMOI_GH_SKIP"
+}
+
+_gh_token=$(resolve_gh_token)
+version=$(curl -s ${_gh_token:+-H "Authorization: Bearer $_gh_token"} \
+  "https://api.github.com/repos/$pkgCreator/$pkg/releases/latest" | jq -r .tag_name)
+echo "🚀 Installing: $binName $version"
