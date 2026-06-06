@@ -5,7 +5,7 @@ return {
   "fatih/vim-go",
   -- do not load if spawned in subshell by kitty (without load user ENV)
   -- Loading it only if opens a go file
-  ft = { "go", "gomod", "gosum", "gotmpl" },
+  ft = { "go", "gomod", "gosum", "gotmpl", "gohtmltmpl" },
   config = function()
     vim.g.go_gopls_enabled = 1 -- en/disable vim-go's gopls integration
 

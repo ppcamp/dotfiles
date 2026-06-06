@@ -1,19 +1,4 @@
 {
-  "model": "opus",
-  "skillOverrides": {
-    "review": "off"
-  },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/anthropics/claude-plugins-official.git"
-      }
-    }
-  },
   "permissions": {
     "allow": [
       "Bash(rtk ls *)",
@@ -22,10 +7,9 @@
       "Bash(rtk read *)"
     ]
   },
-  "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "dark",
-  "skipAutoPermissionPrompt": true,
+  "skillOverrides": {
+    "review": "off"
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -38,5 +22,22 @@
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/anthropics/claude-plugins-official.git"
+      }
+    }
+  },
+  "model": "haiku",
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "skipAutoPermissionPrompt": true
 }

@@ -36,7 +36,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 ################################################################################
 #                                   ASDF
-export ASDF_DATA_DIR="$HOME/.cache/asdf"
+export ASDF_DATA_DIR="$HOME/.local/share/asdf"
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
 
 ################################################################################
