@@ -10,7 +10,14 @@
 # This is a very very old way to block terminal consuming keys for serial
 # connections. And when we don't disable this, the terminal may not activate
 # bindkeys that use this keybindings properly.
-stty -ixon
+# Only run if standard input is an actual terminal (TTY)
+if [ -t 0 ]; then
+  # [ -t 0 ] is POSIX syntax to check if STDIN(0) is attached to a open
+  # interactive terminal (TTY).
+  #
+  # stty (-t) is a standard Unix command that sets the TTY (TeleTYpe) attributes.
+  stty -ixon
+fi
 
 ### History Settings
 setopt SHARE_HISTORY               # Share history between all sessions.
