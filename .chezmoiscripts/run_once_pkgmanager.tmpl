@@ -1,0 +1,72 @@
+{{- if has "pkg-manager" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+homebrew() {
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  tip " Activating for the current shell"
+  export BREW_PREFIX="/home/linuxbrew/.linuxbrew"
+
+  "$BREW_PREFIX/bin/brew" shellenv >> {{ .chezmoi.homeDir }}/.zshrc
+}
+
+homebrew_local() {
+  # Key caveats for a non-default prefix:
+  #
+  # - Bottles won't be used. Homebrew only ships prebuilt binaries for the default prefixes (/home/linuxbrew/.linuxbrew on Linux, /opt/homebrew or /usr/local on macOS). Everything will build
+  # from source, which is slower and needs a working compiler toolchain in your $PATH.
+  # - Build deps required. On Linux you need gcc, make, curl, git, procps, file available. If you don't have them system-wide, install a userland toolchain first (e.g. via conda, nix, or
+  # prebuilt tarballs).
+  # - Recommended workaround: if you can write to /home/linuxbrew/.linuxbrew (some shared systems pre-create it group-writable), use that prefix instead — you'll get bottles and avoid source
+  # builds.
+
+  # Pick any prefix you own
+  export BREW_PREFIX="$HOME/.linuxbrew"
+
+  git clone --quiet https://github.com/Homebrew/brew $BREW_PREFIX &>/dev/null
+
+  tip " Activating for the current shell"
+  "$BREW_PREFIX/bin/brew" shellenv >> {{ .chezmoi.homeDir }}/.zshrc
+}
+
+nix() {
+    sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install &>/dev/null) --no-daemon
+}
+
+echo "Choose a package manager:"
+
+echo -n $(tput setaf 250)
+echo "   Requires sudo access (except locally versions)."
+echo -n $(tput sgr0)
+
+options=("Homebrew" "Homebrew locally" "Nix" "None")
+
+select opt in "${options[@]}"; do
+    case $opt in
+        "Homebrew")
+            loginstall "Homebrew in /home/linuxbrew/.linuxbrew dir"
+            homebrew
+            break
+            ;;
+        "Homebrew locally")
+            loginstall "Homebrew in $HOME/.linuxbrew dir"
+            homebrew_local
+            break
+            ;;
+        "Nix")
+            loginstall "Nix in /nix dir"
+            nix
+            exit 0
+            ;;
+        "None")
+            exit 0
+            ;;
+        *)
+            echo "Opção inválida. Tente novamente."
+            ;;
+    esac
+done
+
+{{ end -}}
