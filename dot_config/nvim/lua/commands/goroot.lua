@@ -2,8 +2,16 @@
 
 local cmd = require("utils.command").command
 
--- Print the GOROOT environment variable
-cmd("GoRoot", function()
-  local root = vim.fn.system('go env GOROOT'):gsub('%s+$', '')
-  print(root)
-end)
+-- Load only if opens a go filetype
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  once = true,
+  callback = function()
+    -- Print the GOROOT environment variable
+    cmd("GoRoot", function()
+      local out = vim.system({ "go", "env", "GOROOT" }, { text = true }):wait().stdout or ""
+      local root = out:gsub("%s+$", "")
+      print(root)
+    end)
+  end,
+})

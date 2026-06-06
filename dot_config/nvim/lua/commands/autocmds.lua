@@ -51,9 +51,6 @@ autocmd("BufWritePre", { -- Before writing to the file, run this
       })
       :wait()
 
-    -- local result = vim.fn.system(c, content)
-    -- local exit_code = vim.v.shell_error
-
     if command.code ~= 0 then
       print("shfmt failed: " .. command.stderr)
 

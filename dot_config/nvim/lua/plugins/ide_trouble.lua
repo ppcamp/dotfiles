@@ -1,6 +1,5 @@
 -- vim: ts=2 sts=2 sw=2 et
 
-
 local function next_quickfix()
   if require("trouble").is_open() then
     require("trouble").next({ skip_groups = true, jump = true })
@@ -35,13 +34,21 @@ return {
     },
   },
   keys = {
-    { "<leader>cx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Quickfix Diagnostics (Trouble)" },
-    { "<leader>cX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Quickfix Buffer Diagnostics (Trouble)" },
-    { "<leader>cs", "<cmd>Trouble symbols toggle<cr>",                  desc = "Symbols (Trouble)" },
-    { "<leader>cS", "<cmd>Trouble lsp toggle<cr>",                      desc = "LSP references/definitions/... (Trouble)" },
-    { "<leader>cl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List (Trouble)" },
-    { "<leader>cq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List (Trouble)" },
-    { "[q",         prev_quickfix,                                      desc = "Previous Trouble/Quickfix Item" },
-    { "]q",         next_quickfix,                                      desc = "Next Trouble/Quickfix Item" },
+    { "<leader>cx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Quickfix Diagnostics (Trouble)" },
+    {
+      "<leader>cX",
+      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      desc = "Quickfix Buffer Diagnostics (Trouble)",
+    },
+    { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+    {
+      "<leader>cS",
+      "<cmd>Trouble lsp toggle<cr>",
+      desc = "LSP references/definitions/... (Trouble)",
+    },
+    { "<leader>cl", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+    { "<leader>cq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+    { "[q", prev_quickfix, desc = "Previous Trouble/Quickfix Item" },
+    { "]q", next_quickfix, desc = "Next Trouble/Quickfix Item" },
   },
 }

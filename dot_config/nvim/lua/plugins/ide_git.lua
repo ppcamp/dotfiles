@@ -44,17 +44,24 @@ return {
         local row = vim.fn.line(".")
         local file = vim.fn.expand("%:p")
         local dir = vim.fn.fnamemodify(file, ":h")
-        local gitcmd = string.format(
-          "git -C %s blame -L %d,%d -s -- %s",
-          vim.fn.shellescape(dir),
-          row,
-          row,
-          vim.fn.shellescape(file)
-        )
-        local out = vim.fn.system(gitcmd)
-        out = out:gsub("^.-\n", "", 1) -- remove stty line
+        local cmd = {
+          "git",
+          "-C",
+          dir,
+          "blame",
+          "-L",
+          string.format("%d,%d", row, row),
+          "--porcelain",
+          "--",
+          file,
+        }
         --
-        local hash = out:match("^(%w+)")
+        local out = vim.system(cmd, { text = true }):wait() -- runs in system bg, thus no tty.
+        if out.code ~= 0 then
+          vim.notify(out.stderr, vim.log.levels.ERROR)
+        end
+        --
+        local hash = (out.stdout or ""):match("^(%w+)")
         if hash and hash ~= string.rep("0", 40) then
           vim.fn.setreg("+", hash)
           vim.fn.setreg('"', hash)
