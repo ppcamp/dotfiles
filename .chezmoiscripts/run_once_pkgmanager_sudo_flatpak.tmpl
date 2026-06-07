@@ -39,7 +39,13 @@ flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/fl
 # - dbeaver issue
 # - insomnia issue
 # - libreoffice issue
-flatpak override --user --env=GTK_THEME=Adwaita:light
+
+info "Fixing flatpak wayland issue"
+flatpak permission-set screenshot screenshot org.flameshot.Flameshot yes
+
+flatpak override --user --env=GTK_THEME=Adwaita:light org.flameshot.Flameshot
+
+tip For Wayland, check it out https://flameshot.org/docs/guide/wayland-help/
 
 # sudo apt autopurge -y flatpak
 {{ end -}}
