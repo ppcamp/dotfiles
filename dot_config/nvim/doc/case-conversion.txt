@@ -1,0 +1,123 @@
+*case-conversion.txt*  Case conversion commands for Neovim
+
+CASE CONVERSION                                    *case-conversion*
+
+================================================================================
+OVERVIEW                                           *case-conversion-overview*
+
+A set of commands to convert text between different naming conventions:
+  - PascalCase
+  - camelCase
+  - snake_case
+  - kebab-case
+  - dot.case
+  - CONSTANT_CASE (SCREAMING_SNAKE_CASE)
+
+Works in both normal mode (current word) and visual mode (selection).
+
+================================================================================
+COMMANDS                                           *case-conversion-commands*
+
+*:ToPascalCase*
+  Convert to PascalCase (capitalize first letter of each word, no separators)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: hello_world → HelloWorld
+
+*:ToCamelCase*
+  Convert to camelCase (first word lowercase, rest capitalized, no separators)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: hello_world → helloWorld
+
+*:ToSnakeCase*
+  Convert to snake_case (words separated by underscores, all lowercase)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: helloWorld → hello_world
+
+*:ToKebabCase*
+  Convert to kebab-case (words separated by hyphens, all lowercase)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: hello_world → hello-world
+
+*:ToDotCase*
+  Convert to dot.case (words separated by dots, all lowercase)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: hello_world → hello.world
+
+*:ToConstantCase*
+  Convert to CONSTANT_CASE (words separated by underscores, all uppercase)
+  Normal mode: converts word under cursor
+  Visual mode: converts selected text
+  Example: hello_world → HELLO_WORLD
+
+================================================================================
+USAGE EXAMPLES                                     *case-conversion-examples*
+
+NORMAL MODE - Converting a single word: ~
+
+  Position cursor on a word and use any command:
+  >
+    :ToPascalCase
+    :ToCamelCase
+    :ToSnakeCase
+    :ToKebabCase
+    :ToDotCase
+    :ToConstantCase
+  <
+
+VISUAL MODE - Converting multiple words or lines: ~
+
+  1. Select text with v, V, or Ctrl+V
+  2. Type the command:
+  >
+    :'<,'>ToPascalCase
+  <
+  The selection will be replaced with the converted text.
+
+EXAMPLES: ~
+
+  Single word conversion:
+    Cursor on: myVariable
+    :ToPascalCase  → MyVariable
+    :ToSnakeCase   → my_variable
+    :ToKebabCase   → my-variable
+    :ToConstantCase → MY_VARIABLE
+
+  Multiple words (visual selection):
+    Select: "hello world test"
+    :ToPascalCase   → HelloWorldTest
+    :ToSnakeCase    → hello_world_test
+    :ToKebabCase    → hello-world-test
+    :ToDotCase      → hello.world.test
+
+  Multiple lines:
+    Select multiple lines and apply any conversion command to
+    convert all text while preserving line structure.
+
+================================================================================
+SMART WORD DETECTION                              *case-conversion-detection*
+
+The converter intelligently handles:
+  - Space-separated words: "hello world"
+  - Hyphen-separated: "hello-world"
+  - Underscore-separated: "hello_world"
+  - Dot-separated: "hello.world"
+  - camelCase words: "helloWorld"
+  - PascalCase words: "HelloWorld"
+
+All of these will be correctly split and converted to any target format.
+
+================================================================================
+TIPS                                               *case-conversion-tips*
+
+- Use with motions: Select a word or phrase and immediately apply a conversion
+- Works on empty lines without errors
+- Handles accidental extra spaces/separators gracefully
+- Can be combined with other Vim commands via command chaining
+
+================================================================================
+vim:tw=78:ts=8:ft=help:norl:

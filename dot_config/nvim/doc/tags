@@ -1,0 +1,13 @@
+:ToCamelCase	case-conversion.txt	/*:ToCamelCase*
+:ToConstantCase	case-conversion.txt	/*:ToConstantCase*
+:ToDotCase	case-conversion.txt	/*:ToDotCase*
+:ToKebabCase	case-conversion.txt	/*:ToKebabCase*
+:ToPascalCase	case-conversion.txt	/*:ToPascalCase*
+:ToSnakeCase	case-conversion.txt	/*:ToSnakeCase*
+case-conversion	case-conversion.txt	/*case-conversion*
+case-conversion-commands	case-conversion.txt	/*case-conversion-commands*
+case-conversion-detection	case-conversion.txt	/*case-conversion-detection*
+case-conversion-examples	case-conversion.txt	/*case-conversion-examples*
+case-conversion-overview	case-conversion.txt	/*case-conversion-overview*
+case-conversion-tips	case-conversion.txt	/*case-conversion-tips*
+case-conversion.txt	case-conversion.txt	/*case-conversion.txt*
