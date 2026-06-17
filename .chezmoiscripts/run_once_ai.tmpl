@@ -14,6 +14,19 @@ ${TOOL} install -g @gitlawb/openclaude &>/dev/null
 
 info "  Installing Claude CLI"
 curl -fsSL https://claude.ai/install.sh | bash &>/dev/null
+tip "  Use `claude setup-token` to create a new config"
+
+echo
+while read -p "    Do you want to use `setup-token`/varEnv approach? [y/N] " -n 1 -r; do
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    info "  Skipping claude onboarding (bug) when using setup-token"
+    jq '. + {"hasCompletedOnboarding": true}' ~/.claude.json > tmp && mv tmp ~/.claude.json
+  else
+    info "  Use `claude` + `/login` instead."
+  fi
+  break
+done
+
 
 info "  Installing MCP_DOCKER command for Claude MCP Gateway"
 claude mcp add-json MCP_DOCKER '{
