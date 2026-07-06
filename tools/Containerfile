@@ -1,12 +1,16 @@
-FROM quay.io/toolbx/ubuntu-toolbox:25.04
+FROM debian:trixie
 
-ENV PATH="$PATH:/run/host/usr/local/bin"
+RUN apt update && apt install -y \
+    sudo \
+    git \
+    binutils \
+    gdb \
+    strace \
+    lsof \
+    file \
+    curl \
+    systemd \
+    libpam-systemd \
+    pipewire-audio-client-libraries
 
-RUN apt-get update && apt-get install -y \
-    binutils \   # includes objdump, readelf, nm, etc.
-    gdb \        # for debugging
-    strace \     # for system calls
-    lsof \       # for open file descriptors
-    file \       # inspect the type of the file
-    curl
-# lbzip2    # required for bzip2 compression/decompression (optional)
+RUN rm -rf /var/lib/apt/lists/*

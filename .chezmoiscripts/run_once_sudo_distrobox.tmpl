@@ -1,27 +1,35 @@
 {{- if has "distrobox" .scripts -}}
 #!/usr/bin/env bash
 
-#{{ template "helpers.tmpl" . }}
-#
-## Equivalent of toolbox command, but allows to run in any distro with any
-## container engine (podman, docker, etc.)
-#
-#binName=distrobox
-#version=$(get_version $binName)
-#if [[ -z "$version" ]]; then
-#	echo "❌ Package $pkg not found in repositories."
-#	echo "Using cUrl to install it."
-#
-#	curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
-#else
-#	install_pkg $binName
-#fi
-#
-#tipnl "You can use"
-#printf "     "
-## '--env TERM=xterm-256color'
-#echo -e "distrobox create --name ubuntu --init --image ubuntu:22.04 -ap 'systemd libpam-systemd pipewire-audio-client-libraries' --home ~/.config/distrobox-home/"
-#
-#warn "It may have problems with $TERM=xterm-kitty, so you may need to set it internally to $TERM=xterm-256color."
+{{ template "helpers.tmpl" . }}
+
+# Equivalent of toolbox command, but allows to run in any distro with any
+# container engine (podman, docker, etc.)
+binName=distrobox
+
+curl -sL https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix "{{ .installDirs.local }}" &>/dev/null
+
+echo "🚀 Installing: $binName"
+
+# Detect container engine (prefer docker)
+if command -v docker &> /dev/null; then
+  engine="docker"
+elif command -v podman &> /dev/null; then
+  engine="podman"
+else
+  error "Neither docker nor podman is installed"
+  exit 1
+fi
+
+imageName=devtools
+tip "Building $imageName image..."
+$engine build --force -t $imageName:latest -f "{{ .chezmoi.sourceDir }}/tools/Containerfile" "{{ .chezmoi.sourceDir }}" &>/dev/null
+
+tip "Creating distrobox container from $imageName image..."
+distrobox stop $imageName -Y &>/dev/null
+distrobox rm $imageName -Y &>/dev/null
+distrobox-create -n $imageName -i $imageName:latest --yes --additional-flags "--env TERM=xterm-256color" --nvidia
+
+tip "TERM is automatically set to xterm-256color in {{.chezmoi.homeDir }}/.config/distrobox/distrobox.conf file."
 
 {{ end -}}
