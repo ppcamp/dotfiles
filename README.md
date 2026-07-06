@@ -38,6 +38,9 @@
 > Avoid to use `snaps`, since they are much slower than native and flatpak, and
 > often buggy (even more in older versions).
 
+> [!TIP]
+> Check it out suggested packages in [./docs_recommended_programs/Programs for linux-bash-zsh.md]
+
 ## Docs
 
 ```
