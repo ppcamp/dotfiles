@@ -11,6 +11,16 @@ RUN apt update && apt install -y \
     curl \
     systemd \
     libpam-systemd \
-    pipewire-audio-client-libraries
+    pipewire-audio-client-libraries \
+    ca-certificates \
+    gnupg \
+    zsh
 
 RUN rm -rf /var/lib/apt/lists/*
+
+# Get Chezmoi
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+WORKDIR /root
+
+CMD ["/bin/zsh"]

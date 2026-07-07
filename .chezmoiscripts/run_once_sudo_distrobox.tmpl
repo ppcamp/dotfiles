@@ -23,11 +23,12 @@ fi
 
 imageName=devtools
 tip "Building $imageName image..."
-$engine build --force -t $imageName:latest -f "{{ .chezmoi.sourceDir }}/tools/Containerfile" "{{ .chezmoi.sourceDir }}" &>/dev/null
+$engine build -t $imageName:latest -f "{{ .chezmoi.sourceDir }}/tools/Containerfile" "{{ .chezmoi.sourceDir }}" &>/dev/null
 
 tip "Creating distrobox container from $imageName image..."
 distrobox stop $imageName -Y &>/dev/null
 distrobox rm $imageName -Y &>/dev/null
+
 distrobox-create -n $imageName -i $imageName:latest --yes --additional-flags "--env TERM=xterm-256color" --nvidia
 
 tip "TERM is automatically set to xterm-256color in {{.chezmoi.homeDir }}/.config/distrobox/distrobox.conf file."
