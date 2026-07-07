@@ -1,0 +1,17 @@
+[/]
+edge-tiling-mode='granular'
+enable-autotiling=true
+enable-blur-snap-assistant=false
+enable-smart-window-border-radius=false
+enable-snap-assistant-windows-suggestions=true
+enable-tiling-system=true
+enable-tiling-system-windows-suggestions=true
+enable-window-border=false
+inner-gaps=uint32 10
+outer-gaps=uint32 3
+raise-together=true
+selected-layouts=[['Layout 3', '12501453', '12501453'], ['Layout 3', '12501453', '12501453']]
+show-indicator=true
+tiling-system-activation-key=['0']
+window-border-width=uint32 2
+window-use-custom-border-color=false
