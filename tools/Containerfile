@@ -1,7 +1,35 @@
 # syntax=docker/dockerfile:1
+
+FROM debian:trixie-slim AS git-builder
+# ---- Build latest git from source
+# (Debian's packaged git lags upstream releases)
+
+RUN apt update && apt install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    libexpat1-dev \
+    zlib1g-dev \
+    gettext \
+    perl \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG GIT_VERSION=2.55.0
+RUN curl -fsSL "https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" -o /tmp/git.tar.gz \
+    && tar -xzf /tmp/git.tar.gz -C /tmp \
+    && cd "/tmp/git-${GIT_VERSION}" \
+    && make prefix=/usr/local NO_RUST=1 -j"$(nproc)" all \
+    && make prefix=/usr/local NO_RUST=1 DESTDIR=/out install \
+    && cd / \
+    && rm -rf /tmp/git.tar.gz "/tmp/git-${GIT_VERSION}"
+
+#--------------------------------- Final image ---------------------------------
 FROM debian:trixie
 
-# Install base system packages
+# Install base system packages, plus git's runtime libraries
 RUN apt update && apt install -y \
     sudo \
     binutils \
@@ -22,21 +50,19 @@ RUN apt update && apt install -y \
     tar \
     gzip \
     xz-utils \
-    build-essential \
-    pkg-config \
-    libssl-dev \
-    libarchive-tools
-
-# Build latest git from source (Debian's packaged git lags upstream releases)
-RUN apt update && apt install -y \
-    libcurl4-openssl-dev \
-    libexpat1-dev \
-    zlib1g-dev \
-    gettext \
+    libarchive-tools \
+    libcurl4 \
+    libexpat1 \
+    zlib1g \
+    g++ \
+    gcc \
     perl \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=git-builder /out/usr/local /usr/local
+
 # Tools available via apt
-RUN apt install -y \
+RUN apt update && apt install -y \
     bat \
     btop \
     fd-find \
@@ -50,9 +76,8 @@ RUN apt install -y \
     hyperfine \
     sqlite3 \
     postgresql-client \
-    rsync
-
-RUN rm -rf /var/lib/apt/lists/*
+    rsync \
+    && rm -rf /var/lib/apt/lists/*
 
 # Get Chezmoi
 RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
