@@ -1,20 +1,56 @@
+# syntax=docker/dockerfile:1
 FROM debian:trixie
 
+# Install base system packages
 RUN apt update && apt install -y \
     sudo \
-    git \
     binutils \
     gdb \
     strace \
     lsof \
     file \
     curl \
+    wget \
     systemd \
     libpam-systemd \
     pipewire-audio-client-libraries \
     ca-certificates \
     gnupg \
-    zsh
+    zsh \
+    jq \
+    unzip \
+    tar \
+    gzip \
+    xz-utils \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    libarchive-tools
+
+# Build latest git from source (Debian's packaged git lags upstream releases)
+RUN apt update && apt install -y \
+    libcurl4-openssl-dev \
+    libexpat1-dev \
+    zlib1g-dev \
+    gettext \
+    perl \
+    && rm -rf /var/lib/apt/lists/*
+# Tools available via apt
+RUN apt install -y \
+    bat \
+    btop \
+    fd-find \
+    fzf \
+    ripgrep \
+    lazygit \
+    meld \
+    neovim \
+    kitty \
+    procs \
+    hyperfine \
+    sqlite3 \
+    postgresql-client \
+    rsync
 
 RUN rm -rf /var/lib/apt/lists/*
 
