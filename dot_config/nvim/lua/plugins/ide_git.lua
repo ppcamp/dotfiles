@@ -71,17 +71,17 @@ return {
         end
       end, "Yank commit hash for line")
       -- Actions
-      map("n", "<leader>ghs", gitsigns.stage_hunk, "Stage hunk")
-      map("n", "<leader>ghr", gitsigns.reset_hunk, "Reset hunk")
-      map("v", "<leader>ghs", function()
+      map("n", "<leader>ga", gitsigns.stage_hunk, "Stage hunk")
+      map("n", "<leader>gr", gitsigns.reset_hunk, "Reset hunk")
+      map("v", "<leader>ga", function()
         gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
       end, "Stage hunk")
-      map("v", "<leader>ghr", function()
+      map("v", "<leader>gr", function()
         gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
       end, "Reset hunk")
-      map("n", "<leader>ghS", gitsigns.stage_buffer, "Stage buffer")
-      map("n", "<leader>ghR", gitsigns.reset_buffer, "Reset buffer")
-      map("n", "<leader>ghh", gitsigns.refresh, "Refresh")
+      map("n", "<leader>gA", gitsigns.stage_buffer, "Stage buffer")
+      map("n", "<leader>gR", gitsigns.reset_buffer, "Reset buffer")
+      map("n", "<leader>gh", gitsigns.refresh, "Refresh")
       map("n", "<leader>gb", gitsigns.blame, "Blame file")
       map("n", "<leader>gB", function()
         gitsigns.blame_line({ full = true })
@@ -102,9 +102,101 @@ return {
       map("n", "<leader>gD", function()
         gitsigns.diffthis("~")
       end, "Diff this against working directory")
+      map("n", "<leader>gl", function()
+        local row = vim.fn.line(".")
+        local file = vim.fn.expand("%:p")
+        local dir = vim.fn.fnamemodify(file, ":h")
+        local cmd = {
+          "git",
+          "-C",
+          dir,
+          "blame",
+          "-L",
+          string.format("%d,%d", row, row),
+          "--porcelain",
+          "--",
+          file,
+        }
+        local out = vim.system(cmd, { text = true }):wait()
+        if out.code ~= 0 then
+          vim.notify(out.stderr, vim.log.levels.ERROR)
+          return
+        end
+        local hash = (out.stdout or ""):match("^(%w+)")
+        if hash and hash ~= string.rep("0", 40) then
+          vim.system({ "lazygit", "-p", dir, "-r", hash }, { cwd = dir })
+        else
+          vim.notify("Line not committed", vim.log.levels.WARN)
+        end
+      end, "Open lazygit at current commit")
+      map("v", "<leader>gl", function()
+        local start_line = vim.fn.line("v")
+        local end_line = vim.fn.line(".")
+        if start_line > end_line then
+          start_line, end_line = end_line, start_line
+        end
+        local file = vim.fn.expand("%:p")
+        local dir = vim.fn.fnamemodify(file, ":h")
+        local cmd = {
+          "git",
+          "-C",
+          dir,
+          "log",
+          "--oneline",
+          "-p",
+          string.format("-L%d,%d:%s", start_line, end_line, file),
+        }
+        local out = vim.system(cmd, { text = true }):wait()
+        if out.code ~= 0 then
+          vim.notify(out.stderr, vim.log.levels.ERROR)
+          return
+        end
+        local entries = {}
+        for line in (out.stdout or ""):gmatch("[^\n]+") do
+          if line:match("^%x+%s") then
+            table.insert(entries, { filename = file, text = line })
+          end
+        end
+        if #entries > 0 then
+          vim.fn.setqflist(entries, "r")
+          vim.cmd("copen")
+        else
+          vim.notify("No commits in range", vim.log.levels.WARN)
+        end
+      end, "Show commits in range")
+      map("n", "<leader>gbl", function()
+        local file = vim.fn.expand("%:p")
+        local dir = vim.fn.fnamemodify(file, ":h")
+        local cmd = {
+          "git",
+          "-C",
+          dir,
+          "blame",
+          "-l",
+          "--",
+          file,
+        }
+        local out = vim.system(cmd, { text = true }):wait()
+        if out.code ~= 0 then
+          vim.notify(out.stderr, vim.log.levels.ERROR)
+          return
+        end
+        local entries = {}
+        for i, line in ipairs(vim.split(out.stdout or "", "\n")) do
+          if line ~= "" then
+            table.insert(entries, { filename = file, lnum = i, text = line })
+          end
+        end
+        if #entries > 0 then
+          vim.fn.setqflist(entries, "r")
+          vim.cmd("copen")
+        else
+          vim.notify("No blame info", vim.log.levels.WARN)
+        end
+      end, "Blame each line in quickfix")
       --
       require("which-key").add({
-        { "<leader>gh", mode = { "n", "v" }, group = "Actions" },
+        -- { "<leader>gh", mode = { "n", "v" }, group = "Actions" },
         { "<leader>gt", mode = { "n", "v" }, group = "Toggle actions" },
       })
       -- ]c - next hunk
