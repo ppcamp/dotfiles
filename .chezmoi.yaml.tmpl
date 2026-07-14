@@ -25,7 +25,7 @@ See:
 {{- else if $interactive -}}
 {{-   $name = promptString " git name" $name -}}
 {{- end -}}
-{{/*
+{{- /*
 */}}
 {{- /* Does the same for the email */ -}}
 {{- $email := "p.augustocampos@gmail.com" -}}
@@ -34,18 +34,18 @@ See:
 {{- else if $interactive -}}
 {{-   $email = promptString " git email" $email -}}
 {{- end -}}
-{{/*
+{{- /*
 */}}
 {{- /* Check if shuold sign commits */ -}}
 {{- $shouldSign := true -}}
 {{- if $interactive -}}
 {{-   $shouldSign = promptBool " Sign git commits (shows a 'verified' badge)" $shouldSign -}}
 {{- end -}}
-{{/*
+{{- /*
 */}}
 {{- $gitsign := "" -}}
 {{- $useSignGPG := true -}}
-{{/*
+{{- /*
 */}}
 {{- if $shouldSign -}}
 {{-   $useSignGPG := promptBool " Use gpg" $useSignGPG -}}
@@ -58,10 +58,10 @@ See:
 {{-     writeToStdout "\033[32m💡 Tip:\033[0m you can check the generated keys by typing:\n" }}
 {{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG\n" }}
 {{-     writeToStdout "\tgpg --list-secret-keys --keyid-format LONG | grep '^sec' | awk '{print $2}' | cut -d'/' -f2 \n\n" }}
-{{/*
+{{- /*
 */}}
 {{-     $gitsign = promptString "🔏 GPG key to enable" $gitsign }}
-{{/*
+{{- /*
 */}}
 {{-     writeToStdout "\033[32m💡 Tip:\033[0m After this, you just need to copy and register into the platform (Bitbucket/Github):\n" }}
 {{-     writeToStdout "\tgpg --armor --export " $gitsign "\n" }}
@@ -78,7 +78,7 @@ See:
 {{- else -}}
 {{-   writeToStdout "🔏 Disabling signed commits\n" }}
 {{- end }}
-{{/*****************************************************************************
+{{- /*****************************************************************************
 
                          Installation scripts selection
 
@@ -155,11 +155,7 @@ Note: bun can be installed by asdf
   "zoxide"
   "zsh"
 -}}
-{{/*****************************************************************************
-
-                        Default choices for installation
-
-*****************************************************************************/}}
+{{- /* Default choices for installation */ -}}
 {{- $defaultChoices := list
   "asdf"
   "bat"
@@ -197,17 +193,13 @@ Note: bun can be installed by asdf
   "zsh"
 -}}
 {{- $choices := promptMultichoice "󰯂 What should install (scripts to run)" $programs $defaultChoices -}}
-{{- /* toRun: {{ $choices | toYaml | nindent 4 }} */ -}}
-{{/**/}}
 {{- if $interactive -}}
 {{-   writeToStdout "\033[32m💡 Tip:\033[0m You can re-enter your name and email with `chezmoi init --data=false`.\n\n" -}}
 {{- end -}}
-{{/**/}}
 {{- writeToStdout "\033[33m🛠️ Warn:\033[0m To gitconfig to work properly, you need to have git 3.37+.\n" }}
 {{- writeToStdout "\tUse ppa or build from src, if necessary.\n" }}
-{{/**/}}
-{{ $pkgTool := "" }}
-{{ if eq .chezmoi.os "linux" -}}
+{{- $pkgTool := "" -}}
+{{- if eq .chezmoi.os "linux" -}}
   {{- $osID := (.chezmoi.osRelease.id | lower) }}
   {{- if (contains (.chezmoi.kernel.osrelease | lower) "microsoft") }}
     {{- /*    🪟 WSL-specific code. Mainly support debian based solutions (at Win store, at least) */ -}}
@@ -221,26 +213,11 @@ Note: bun can be installed by asdf
   {{- else }}
     {{ fail (print "❌ Error: Unsupported OS: " $osID) }}
   {{- end }}
-{{ else }}
-  {{ fail (print "❌ Error: Unsupported platform: " .chezmoi.os) }}
+{{- else }}
+  {{- fail (print "❌ Error: Unsupported platform: " .chezmoi.os) -}}
 {{- end }}
-{{/**/}}
-{{- writeToStdout "\n" }}
-{{- writeToStdout (repeat 80 "─") }}
-{{- writeToStdout "\n" }}
-{{/*****************************************************************************
-
-                        Data to be used in the templates
-
-*****************************************************************************/}}
+{{- /* Data to be used in the templates */ -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
-{{/**/}}
-# diff command to use, by default chezmoi uses `diff`. Vimdiff requires `vim` to be installed.
-# diff:
-#  command: "vimdiff"
-{{/**/}}
-# cz data | jq '.chezmoi.osRelease.id'
-{{/**/}}
 data:
   configs:
     os: {{ $pkgTool }}
@@ -259,6 +236,6 @@ data:
     ssh: {{ not $useSignGPG }}
 
   scripts:
-    {{ range $choices -}}
+  {{- range $choices }}
     - {{.}}
-    {{ end -}}
+  {{- end -}}
