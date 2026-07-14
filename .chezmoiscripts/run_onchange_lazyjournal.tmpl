@@ -1,0 +1,20 @@
+{{- if has "lazyjournal" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs lazyjournal, a system log viewer.
+#
+# https://github.com/Lifailon/lazyjournal/blob/main/config.yml
+
+pkgCreator=Lifailon
+pkg=lazyjournal
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package
+getGithubFileStdin "${pkg}-${version#v}-linux-amd64" > $pkg
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
