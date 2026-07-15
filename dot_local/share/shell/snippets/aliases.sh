@@ -109,6 +109,11 @@ alias btar='bsdtar'
 ### Lazygit
 alias lazy='LANG=en_US.UTF-8 lazygit'
 
+### Git
+# fix HEAD^1| HEAD^^| and @^ refs (without this, zsh expand them, so you need
+# to use HEAD~1 instead)
+alias git='noglob git'
+
 ## Chezmoi
 alias cz='chezmoi'
 
