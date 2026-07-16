@@ -27,14 +27,10 @@ funcdescr() {
 }
 
 # list aliases and grep from args
-agr() {
-  alias | rg $@
-}
+agr() { alias | rg $@ }
 
 # grep lines to copy
-grepln() {
-  sed -n "$1,$2p" $3 | xcp
-}
+grepln() { sed -n "$1,$2p" $3 | xcp }
 
 # append a minus, so zshell understand the number from dirs
 # for `z` you must type -N
