@@ -14,12 +14,18 @@ zebra() {
   # NR: Line number
   # \033[48;5;235m: Set background to dark gray (235)
   # \033[K: Clears to the end of the line (essential for full-width striping)
-  awk '{
+  local zebra_awk='{
         if (NR % 2 == 0)
             printf "\033[48;5;240m%s\033[K\033[0m\n", $0;
         else
             print $0;
     }'
+
+  if [[ -t 0 ]]; then
+    ls | awk "$zebra_awk"
+  else
+    awk "$zebra_awk"
+  fi
 }
 
 http() {
