@@ -23,26 +23,6 @@ agr() { alias | rg $@ }
 # grep lines to copy
 grepln() { sed -n "$1,$2p" $3 | xcp }
 
-# append a minus, so zshell understand the number from dirs
-# for `z` you must type -N
-cd() {
-  if [[ $1 =~ ^[0-9]+$ ]]; then
-    1="-$1"
-  fi
-
-  builtin cd "$1"
-}
-
-z() {
-  if [[ $1 =~ ^[0-9]+$ ]]; then
-    1="-$1"
-  fi
-
-  __zoxide_z "$@"
-}
-
-
-colorss() {
   color1=$(tput setaf 12)
   printf '-%.0s' {1..80}
   echo

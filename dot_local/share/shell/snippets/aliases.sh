@@ -24,11 +24,10 @@ alias duh='du -sh'
 ### Dir stack (see pushd and popd)
 alias dirs='dirs -v'
 
-### cd
+### cd (check zoxide plugin for more options)
 alias -g '...'='../..'
 alias -g '....'='../../..'
 alias -- -='cd -'
-#alias 1='cd -1'
 
 ### listing
 alias ls='ls --color=always --human-readable --group-directories-first'
@@ -42,6 +41,7 @@ alias llo='ll -o'
 alias lls='ll --sort=size'
 alias llr='ll --sort=size --reverse'
 alias tre='eza --tree'
+# NOTE: that `tre` does't support actions such as `git s | tree --fromfile` (stdin)
 
 ### python3 (w/ python2 installed)
 alias python='python3'
