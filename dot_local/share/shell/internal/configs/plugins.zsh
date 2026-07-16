@@ -16,6 +16,7 @@ local ASYNC_PLUGINS=(
   "$folder/tldr"                               # tldr command line widget (ctrl+tldr
   "$folder/env-cache"                          # reloadable env vars caching system (avoid gopass everytime
   "$folder/fancy-ctrl-z"                       # fancy ctrl+z
+  "$folder/chezmoi"                            # chezmoi integration
   #"$folder/pet"                               # completion and ctrl+r saving option
 )
 

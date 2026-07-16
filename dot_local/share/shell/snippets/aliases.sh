@@ -114,9 +114,6 @@ alias lazy='LANG=en_US.UTF-8 lazygit'
 # to use HEAD~1 instead)
 alias git='noglob git'
 
-## Chezmoi
-alias cz='chezmoi'
-
 ### Lefthook
 alias lh='lefthook'
 

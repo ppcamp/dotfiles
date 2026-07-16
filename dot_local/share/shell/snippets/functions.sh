@@ -1,16 +1,5 @@
 # vim: ts=2 sts=2 sw=2 et:
 
-cz-upgrade-tools() {
-  (
-    cd $HOME/.local/share/chezmoi/.chezmoiscripts
-    for script in *;do
-      if [[ -z $1 ||  "$script" == *"$1"* ]]; then
-        chezmoi execute-template < $script | zsh
-      fi
-    done
-  )
-}
-
 echoerr() { echo "$@" 1>&2 && return 1 }
 
 funcdescr() { function $1 | tr -d '\t\n' }
