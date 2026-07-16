@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# vim: noet ts=2 sw=2
+
+name=aibox
+
+usage() {
+  cat <<-EOF
+		Usage: aibox [command] [name]
+
+		Commands:
+			(none)                  enter the '$name' container (default)
+			enter [name]            start (if needed) and attach to a container (default: $name)
+			stop  [name]            stop a container (default: $name)
+			build -f <file> [dir]   build the '$name' image from <file> (dir defaults to <file>'s directory)
+			-h, --help              show this help
+		EOF
+}
+
+if [ "$1" = -h ] || [ "$1" = --help ] || [ "$1" = help ]; then
+  usage
+  exit 0
+fi
+
+# Detect container engine (prefer docker)
+if command -v docker &> /dev/null; then
+  engine="docker"
+elif command -v podman &> /dev/null; then
+  engine="podman"
+else
+  echo "Neither docker nor podman is installed" >&2
+  exit 1
+fi
+
+build() {
+  if [ $# -eq 0 ]; then
+		echo "build: -f <Containerfile> is required." >&2
+		echo "build: see $engine build --help for more support." >&2
+		exit 1
+	fi
+
+  $engine build \
+    -t "$name:latest" $@
+}
+
+enter(){
+  target=${1:-$name}
+  if ! $engine container inspect "$target" &>/dev/null; then
+    $engine run -d --name "$target" "$name:latest" sleep infinity
+  fi
+  $engine start "$target" 2>/dev/null  # no-op se já estiver rodando
+  if [ -t 0 ]; then
+    $engine exec -it "$target" zsh
+  else
+    $engine exec -i "$target" zsh
+  fi
+}
+
+stop(){
+  target=${1:-$name}
+  $engine stop "$target"
+}
+
+if [ $# -eq 0 ]; then
+  enter
+elif [ "$1" = enter ]; then
+  enter "$2"
+elif [ "$1" = stop ]; then
+  stop "$2"
+elif [ "$1" = build ]; then
+  shift
+  build "$@"
+else
+  usage
+  exit 1
+fi

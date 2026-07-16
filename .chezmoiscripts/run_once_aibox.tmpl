@@ -1,0 +1,16 @@
+{{- if has "aibox" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+binName="aibox"
+
+echo "🚀 Installing aibox to shell"
+
+{{ $binName := joinPath .chezmoi.sourceDir "tools" "scripts" "aibox" | quote -}}
+
+binName={{ $binName }}
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
