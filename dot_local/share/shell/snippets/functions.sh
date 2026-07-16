@@ -13,38 +13,19 @@ cz-upgrade-tools() {
 
 echoerr() { echo "$@" 1>&2 && return 1 }
 
-funcdescr() {
-  function $1 | tr -d '\t\n'
-}
+funcdescr() { function $1 | tr -d '\t\n' }
 
 # list aliases and grep from args
 agr() { alias | rg $@ }
 
-# grep lines to copy
+# Copy range of lines of file, Example: < grepln 1 10 file >
 grepln() { sed -n "$1,$2p" $3 | xcp }
 
-  color1=$(tput setaf 12)
-  printf '-%.0s' {1..80}
-  echo
-  printf "Colors"
-  echo
-  tput bold
-  printf "${color1}Usage:\nSee \`function colors\`\n"
-  tput sgr0
-  for i in {0..255}; do
-    tput setaf $i
-    echo -n "Cor $i "
-    if [ $((($i + 1) % 8)) -eq 0 ]; then echo; fi
-  done
-
-  tput sgr0
-}
-
 zebra() {
-    # NR: Line number
-    # \033[48;5;235m: Set background to dark gray (235)
-    # \033[K: Clears to the end of the line (essential for full-width striping)
-    awk '{
+  # NR: Line number
+  # \033[48;5;235m: Set background to dark gray (235)
+  # \033[K: Clears to the end of the line (essential for full-width striping)
+  awk '{
         if (NR % 2 == 0)
             printf "\033[48;5;240m%s\033[K\033[0m\n", $0;
         else
@@ -57,12 +38,12 @@ http() {
   local entry_name="$2"
   local vars=()
 
-  if [[ -z "$file" ]]; then
+  if [[ -z $file ]]; then
     echo "Usage: hrun <file.hurl> [entry-name] [hurl args...]"
     return 1
   fi
 
-  if [[ ! -f "$file" ]]; then
+  if [[ ! -f $file ]]; then
     echo "File not found: $file"
     return 1
   fi
@@ -71,7 +52,6 @@ http() {
   while IFS='=' read -r key val; do
     vars+=(--variable "${key}=${val}")
   done < <(env)
-
 
   if [[ -n $entry_name ]]; then
     # acha o número da entry pelo nome no comentário
@@ -93,3 +73,21 @@ http() {
   fi
 }
 
+
+colorss() {
+  color1=$(tput setaf 12)
+  printf '-%.0s' {1..80}
+  echo
+  printf "Colors"
+  echo
+  tput bold
+  printf "${color1}Usage:\nSee \`function colors\`\n"
+  tput sgr0
+  for i in {0..255}; do
+    tput setaf $i
+    echo -n "Cor $i "
+    if [ $(((i + 1) % 8)) -eq 0 ]; then echo; fi
+  done
+
+  tput sgr0
+}
