@@ -1,0 +1,17 @@
+{{- if has "ai-jail" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+pkgCreator=akitaonrails
+pkg=ai-jail
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package (single binary)
+getGithubFileStdin "${pkg}-linux-x86_64.tar.gz"|
+  tar -xzC . --transform='s|.*/||'
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
