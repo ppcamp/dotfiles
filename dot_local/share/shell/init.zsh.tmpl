@@ -8,6 +8,17 @@ local internal="$ZEN"
 
 # load utils
 source "${ZINIT_HOME}/zinit.zsh"
+# reload everything (rebuild aliases and functions)
+# usually required when updating snippet
+# zreload() {
+#   zinit delete --all
+#   # zinit self-update       # only if plan to update it
+#   zinit update --all # everything
+#   # zinit update --snippets # snippets only
+# }
+#
+# NOTE: prefer user `zi update --all` instead
+
 source $ZEN/internal/utils/loaders.zsh # load path loaders functions
 
 # needs to be loaded in this order

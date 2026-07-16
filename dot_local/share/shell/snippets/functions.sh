@@ -1,14 +1,5 @@
 # vim: ts=2 sts=2 sw=2 et:
 
-# reload everything (rebuild aliases and functions)
-# usually required when updating snippet
-zreload() {
-  zinit delete --all
-  # zinit self-update       # only if plan to update it
-  zinit update --all # everything
-  # zinit update --snippets # snippets only
-}
-
 cz-upgrade-tools() {
   (
     cd $HOME/.local/share/chezmoi/.chezmoiscripts
