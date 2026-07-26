@@ -12,33 +12,34 @@
 
 pkgCreator=neovim
 pkg=neovim
+folder=$HOME/.local # /opt/nvim
 
 {{ template "github_setup.tmpl" . }}
 
-# Download and install nvim directly to /opt/nvim
-sudo rm -rf /opt/nvim
+# Download and install nvim directly to $folder
+# sudo rm -rf $folder
 getGithubFileStdin "nvim-linux-x86_64.tar.gz" |
-  sudo tar -xz --transform='s/^nvim-linux-x86_64/nvim/' -C /opt
+  tar -xz --transform='s/^nvim-linux-x86_64//' -C $folder 2>/dev/null
 
 
 ################################################################################
 # Create a symlink to the nvim binary in /usr/local/bin
 #
-sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+# sudo ln -sf $folder/bin/nvim /usr/local/bin/nvim
 
 
 ################################################################################
 # Create desktop entry
 #   ideally, we would use `chmod +x $HOME/.local/share/applications/nvim.desktop`, but
 #   for some reason, ubuntu does not understand this.
-sudo desktop-file-install "/opt/nvim/share/applications/nvim.desktop"
+# sudo desktop-file-install "$folder/share/applications/nvim.desktop"
 
 # configure the entry, to match this new app path
 #   (to keep the application isolated as possible from `env`)
-sudo desktop-file-edit \
+desktop-file-edit \
   --set-key Icon \
-  --set-value "/opt/nvim/share/icons/hicolor/128x128/apps/nvim.png" \
-  /usr/share/applications/nvim.desktop
+  --set-value "$folder/share/icons/hicolor/128x128/apps/nvim.png" \
+  $folder/share/applications/nvim.desktop
 
 # sudo desktop-file-edit \
 #  --set-key Exec \
@@ -52,7 +53,7 @@ sudo desktop-file-edit \
 
 ################################################################################
 # update entries
-sudo update-desktop-database
+update-desktop-database
 
 # sudo update-desktop-database ~/.local/share/applications
 # sudo desktop-file-validate $HOME/.local/share/applications/nvim.desktop
