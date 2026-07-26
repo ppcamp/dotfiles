@@ -20,7 +20,7 @@ ai/
 **/lazy-lock.json
 
 {{ if .configs.disable.zsh }}
-.config/shell
+.local/share/shell
 {{ end }}
 
 {{ if not .git.ssh }}
