@@ -22,8 +22,10 @@ else
 fi
 
 imageName=devtools
-tip "Building $imageName image..."
+tip "Building $imageName image with $engine..."
 $engine build -t $imageName:latest -f "{{ .chezmoi.sourceDir }}/tools/Containerfile" "{{ .chezmoi.sourceDir }}" &>/dev/null
+
+warn "Distrobox may fail to detect the engine, so we force it, `export DBX_CONTAINER_MANAGER=$engine`"
 
 tip "Creating distrobox container from $imageName image..."
 distrobox stop $imageName -Y &>/dev/null
