@@ -6,7 +6,7 @@ return {
     { "<leader>ws", "<cmd>SessionSave<CR>", desc = "Save session for auto session root dir" },
   },
   opt = {
-    auto_restore_enabled = true,
+    auto_restore_enabled = false,
     auto_session_suppress_dirs = { "~/Downloads", "~", "~/Desktop/", "~/Área de Trabalho" },
     auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
   },
