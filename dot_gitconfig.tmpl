@@ -146,6 +146,7 @@ del-remote = push origin --delete            # (delete a given branch in remote)
 delta = !git diff | delta
 d = diff --word-diff --find-copies --find-renames --color
 ds = d --staged
+do = d @{u} # diff against upstream
 dt = difftool
 dts = dt --staged
 exist-remote = ls-remote --heads origin # (check if exist in remote) example: <git exist-remote branchName>
