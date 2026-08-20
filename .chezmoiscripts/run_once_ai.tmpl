@@ -28,10 +28,15 @@ while read -p "    Do you want to use `setup-token`/varEnv approach? [y/N] " -n 
 done
 
 
-info "  Installing MCP_DOCKER command for Claude MCP Gateway"
-claude mcp add-json MCP_DOCKER '{
-  "command": "docker",
-  "args": ["mcp", "gateway", "run", "--profile", "dev_tools"]
+claude mcp add-json mcp_obsidian '{
+  "command": "uvx",
+  "args": [ "--with=mcp<2.0.0", "mcp-obsidian" ],
+  "env": { "OBSIDIAN_HOST": "127.0.0.1", "OBSIDIAN_PORT": "27124" }
+}' &>/dev/null
+
+claude mcp add-json mcp_postgres '{
+  "command": "uvx",
+  "args": [ "--with=mcp<2.0.0", "postgres-mcp", "--access-mode=restricted" ]
 }' &>/dev/null
 
 info "  Installing [R]ust[T]o[k]en minifier"
