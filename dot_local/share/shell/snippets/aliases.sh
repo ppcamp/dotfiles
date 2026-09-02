@@ -174,8 +174,8 @@ alias docker-start="docker ps -f 'status=exited' --format '{{.ID}}\t{{.Names}}' 
 alias watch='watchexec'
 
 ### gopass
-#alias pass='gopass'
-#alias otp='gopass otp --alsoclip'
+alias pass='gopass --alsoclip --yes'
+alias otp='gopass otp --alsoclip -o'
 
 ### system
 alias fixscreen='sudo systemctl restart gdm3'
