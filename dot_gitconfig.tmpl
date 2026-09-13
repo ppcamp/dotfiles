@@ -199,8 +199,13 @@ unmodule = submodule deinit -f
 unstage = restore --staged
 unstage-all = unstage -S .
 w = worktree
-wa = worktree add
-wr = worktree remove
+# create a worktree at ~/.git-worktrees/<repo>-<branch> (slashes flattened to dashes),
+# checking out <branch> if it exists (locally or on a remote) or creating it otherwise.
+# example: <git wa feature/login> -> ~/.git-worktrees/myrepo-feature-login
+wa = "!f() { r=$(basename \"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\"); p=\"$HOME/.git-worktrees/$r-$(printf %s \"$1\" | tr '/' '-')\"; git worktree add \"$p\" \"$1\" 2>/dev/null || git worktree add -b \"$1\" \"$p\"; }; f"
+# remove the worktree that <git wa> created for <branch>; extra flags (e.g. --force) pass through.
+# example: <git wr feature/login> -> removes ~/.git-worktrees/myrepo-feature-login
+wr = "!f() { b=$1; shift; r=$(basename \"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\"); git worktree remove \"$@\" \"$HOME/.git-worktrees/$r-$(printf %s \"$b\" | tr '/' '-')\"; }; f"
 wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
 wipb = switch --create wip # Work In Progress commit
 worktrees = !gitx --run worktrees        # (it requires to have installed the gitx plugin)

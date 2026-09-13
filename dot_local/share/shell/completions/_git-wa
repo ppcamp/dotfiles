@@ -1,0 +1,16 @@
+#compdef git-wa
+#description create a worktree under ~/.git-worktrees
+
+# Completion for the `wa` alias in ~/.gitconfig. The alias takes a branch name
+# (an existing local branch, an existing remote one, or a new one) and derives
+# the worktree path itself, so complete branches rather than the directories
+# that plain `git worktree add` would ask for.
+
+(( CURRENT == 2 )) || return 1
+
+local -a alts
+alts=(
+  'heads:branch:__git_branch_names'
+  'remote-branches:remote branch:__git_remote_branch_names_noprefix'
+)
+_alternative $alts

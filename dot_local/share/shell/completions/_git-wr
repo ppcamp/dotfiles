@@ -1,0 +1,23 @@
+#compdef git-wr
+#description remove a worktree created by `git wa`
+
+# Completion for the `wr` alias in ~/.gitconfig. The alias reads the branch name
+# from its FIRST argument, maps it back to ~/.git-worktrees/<repo>-<branch>, and
+# forwards any remaining arguments to `git worktree remove` -- so only offer the
+# worktrees that actually exist for the current repository.
+
+if (( CURRENT == 2 )); then
+  local common repo
+  common=${$(_call_program git-common-dir git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)%%$'\n'*}
+  [[ -n $common ]] || return 1
+  repo=${common:h:t}
+
+  local -a wts
+  wts=($HOME/.git-worktrees/${repo}-*(/N:t))
+  wts=(${wts#${repo}-})
+  (( $#wts )) || return 1
+
+  _describe -t worktrees 'worktree' wts
+else
+  _values 'option' '--force[remove even if the worktree is dirty or has submodules]'
+fi
