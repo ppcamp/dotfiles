@@ -29,7 +29,7 @@ z() {
 zz(){ __zoxide_zi $@ } 
 zo(){ __zoxide_zi $@ } 
 
-export _ZO_MAXAGE=100
+export _ZO_MAXAGE=1000
 export _ZO_EXCLUDE_DIRS="$HOME:$HOME/.config/*:/tmp:/usr/*:/opt/*:/share/*"
 export _ZO_DATA_DIR="$HOME/.cache/zoxide"
 # show a tree view (instead of the default `ls -Cp`) in the zi/zz fzf preview
