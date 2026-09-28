@@ -86,3 +86,40 @@ colorss() {
 
   tput sgr0
 }
+
+# `git wcd <branch>` jumps to one of the worktrees of the current repository.
+# It lives here instead of next to `git wa`/`git wr` in ~/.gitconfig because a
+# git alias runs in a child process and cannot change the shell's directory.
+# <branch> is the branch the worktree has checked out, or, for a detached one,
+# the worktree directory name. Completion: $ZEN/completions/_git-wcd
+# example: <git wcd feature/login> -> ~/.git-worktrees/myrepo-feature-login
+git() {
+  [[ $1 == wcd ]] || { command git "$@"; return }
+
+  local name=$2
+  if [[ -z $name ]]; then
+    echoerr "usage: git wcd <branch|worktree>"
+    return 1
+  fi
+
+  local -a entries
+  local entry line dir branch porcelain
+  porcelain=$(command git worktree list --porcelain 2>/dev/null)
+  entries=(${(ps:\n\n:)porcelain})
+
+  for entry in $entries; do
+    dir='' branch=''
+    for line in ${(f)entry}; do
+      case $line in
+      'worktree '*) dir=${line#worktree } ;;
+      'branch '*) branch=${${line#branch }#refs/heads/} ;;
+      esac
+    done
+    if [[ $name == "$branch" || $name == "${dir:t}" ]]; then
+      cd "$dir"
+      return
+    fi
+  done
+
+  echoerr "no worktree for '$name'"
+}

@@ -1,0 +1,35 @@
+#compdef git-wcd
+#description jump to a worktree of the current repository
+
+# Completion for the `wcd` subcommand handled by the `git` wrapper in
+# ~/.local/share/shell/snippets/functions.sh. `wcd` is not a git alias (an alias
+# runs in a child process and cannot change the shell's directory), but zsh's
+# _git dispatches `git <sub>` to _git-<sub> regardless, so this still applies.
+#
+# The wrapper matches its argument against the branch a worktree has checked out
+# or, for detached ones, the worktree directory name -- so offer exactly that,
+# described by the path it lands on.
+
+(( CURRENT == 2 )) || return 1
+
+local -a entries worktrees
+local entry line dir branch porcelain
+
+porcelain=$(_call_program worktrees git worktree list --porcelain 2>/dev/null)
+entries=(${(ps:\n\n:)porcelain})
+
+for entry in $entries; do
+  dir='' branch=''
+  for line in ${(f)entry}; do
+    case $line in
+    'worktree '*) dir=${line#worktree } ;;
+    'branch '*) branch=${${line#branch }#refs/heads/} ;;
+    esac
+  done
+  [[ -n $dir ]] || continue
+  worktrees+=("${branch:-${dir:t}}:${dir/#$HOME/~}")
+done
+
+(( $#worktrees )) || return 1
+
+_describe -t worktrees 'worktree' worktrees

@@ -40,8 +40,18 @@ defaultBranch = main
 
 [core]
 editor = nvim #code --wait
-pager = less -IR -
-abbrev=7 
+#pager = less -IR -
+pager = delta
+abbrev=7
+
+[delta]
+features = mellow-barbet
+
+[interactive]
+diffFilter = delta --color-only
+
+[rerere]
+enabled = true
 
 [diff]
 # diffstatic is just a post-processor visualizer for unified diffs
@@ -51,6 +61,9 @@ abbrev=7
 #
 # To avoid such problems, prefer to use git aliases, or difftool.
 tool = meld
+colorMoved = default
+mnemonicPrefix = true
+algorithm = histogram
 #external = difft # DO NOT CHANGE THIS, otherwise, you won't be able to generate valid patch files
 
 [difftool]
@@ -206,6 +219,9 @@ wa = "!f() { r=$(basename \"$(dirname \"$(git rev-parse --path-format=absolute -
 # remove the worktree that <git wa> created for <branch>; extra flags (e.g. --force) pass through.
 # example: <git wr feature/login> -> removes ~/.git-worktrees/myrepo-feature-login
 wr = "!f() { b=$1; shift; r=$(basename \"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\"); git worktree remove \"$@\" \"$HOME/.git-worktrees/$r-$(printf %s \"$b\" | tr '/' '-')\"; }; f"
+# `git wcd <branch>` jumps into one of those worktrees. It is deliberately not
+# an alias: an alias runs in a child process and cannot change the shell's
+# directory, so it is a zsh function in ~/.local/share/shell/snippets/functions.sh
 wip = !git add -A && git commit -m 'WIP' # Work In Progress commit
 wipb = switch --create wip # Work In Progress commit
 worktrees = !gitx --run worktrees        # (it requires to have installed the gitx plugin)
