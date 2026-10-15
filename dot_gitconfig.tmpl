@@ -173,7 +173,7 @@ graphx = graph --abbrev-commit --all
 hard = reset --hard
 hist = !gitx --run hashes                                                                                                                              # (it requires to have installed the gitx plugin)
 health = fsck                                                                                                                                          # (check the health of the repository) example: <git health>
-lazy = !LANG=en_US.UTF-8 lazygit                                                                                                                       # (execute lazygit cmd)
+lazy = !LANG=en_US.UTF-8 lazygit -sm=full log                                                                                                          # (execute lazygit cmd)
 list = branch -v                                                                                                                                       # (list local branches) example: <git list>
 list-remotes = branch --remotes                                                                                                                        # (list remote branches ref) example: <git list-remotes>
 ll = ls --name-only                                                                                                                                    # alternative to <git log>, example: <git ls>
@@ -181,6 +181,8 @@ local-branches = !git branch -v | cut -c 3- | awk '{ print $2\" \"$1 }'         
 log-deleted = log --diff-filter=D --                                                                                                                   # (show logged files, alternativaly, you can pass a directory to search for) example: <git log-deleted>
 ls = log --format=format:'%C(bold yellow)%h%C(reset) %C(reset)%s%C(bold blue)%d%C(reset) %C(dim white)%an [%G?] (%ad, %ar)%C(reset)' --decorate --date=short # alternative to <git log>, example: <git ls>
 lsp = ls --follow --first-parent # show merges commits only
+merge-find-commit = "!f() { c=$(git rev-parse --verify \"$1^{commit}\") || return 1; b=${2:-HEAD}; m=$( { git rev-list --ancestry-path \"$c..$b\"; echo ---; git rev-list --first-parent \"$c.. } | awk '/^---$/{s=1;next} !s{a[$0]=1;next} a[$0]{m=$0} END{print m}'); if [ -n \"$m\" ]; then git show -s --format='%h %s (%ad)' --date=short \"$m\"; else echo \"no merge found\" >&2; return 1; fi; }; f"
+merge-find-latest-branch-by-commit="!f(){ for b in $(git for-each-ref --format='%(refname:short)' refs/heads refs/remotes | grep -v HEAD); do [ "$(git log -1 --merges --format=%h "$b")" = "$1" ] && echo "$b"; done }"
 merges = ls --merges # merges main..develop
 new = switch --create                                                                                                                                      # (create new branches) example: <git new branchName>
 p = pull
