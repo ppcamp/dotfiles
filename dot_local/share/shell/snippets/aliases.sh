@@ -188,3 +188,6 @@ send() { ncat $1 4444 <"$2"; }
 
 ### mixer for audio
 alias mixer='alsamixer'
+
+### visidata
+alias visidata='uvx visidata'

@@ -1,0 +1,12 @@
+{{- if has "visidata" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# Terminal spreadsheet multitool for discovering and arranging data
+# https://github.com/saulpw/visidata
+
+info "Installing visidata"
+uv tool install --force visidata &> /dev/null
+
+{{ end -}}
