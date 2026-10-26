@@ -1,0 +1,4 @@
+\x auto
+\pset linestyle unicode
+\pset border 3
+\setenv PAGER 'pspg -s 11'
