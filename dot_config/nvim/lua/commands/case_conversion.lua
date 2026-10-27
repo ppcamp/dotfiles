@@ -177,21 +177,16 @@ for name, convert_fn in pairs(conversions) do
   local key = keybindings[name]
   if key then
     -- Normal mode binding
-    vim.keymap.set(
-      "n",
-      "<leader>f" .. key,
-      function()
-        local text = get_word_under_cursor()
-        local converted = convert_fn(text)
-        replace_word_under_cursor(converted)
-      end,
-      { noremap = true, silent = true }
-    )
+    vim.keymap.set("n", "<leader>x" .. key, function()
+      local text = get_word_under_cursor()
+      local converted = convert_fn(text)
+      replace_word_under_cursor(converted)
+    end, { noremap = true, silent = true })
 
     -- Visual mode binding - use command with range
     vim.keymap.set(
       "x",
-      "<leader>f" .. key,
+      "<leader>x" .. key,
       ":<C-u>'" .. "<" .. ",'>" .. cmd_name .. "<CR>",
       { noremap = true, silent = true }
     )

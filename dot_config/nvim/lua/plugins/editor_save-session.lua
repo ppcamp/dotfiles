@@ -5,10 +5,10 @@ return {
     { "<leader>wr", "<cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
     { "<leader>ws", "<cmd>SessionSave<CR>", desc = "Save session for auto session root dir" },
   },
-  opt = {
-    auto_restore_enabled = false,
-    auto_session_suppress_dirs = { "~/Downloads", "~", "~/Desktop/", "~/Área de Trabalho" },
-    auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
+  opts = {
+    auto_restore = false,
+    suppressed_dirs = { "~/Downloads", "~", "~/Desktop/", "~/Área de Trabalho" },
+    root_dir = vim.fn.stdpath("data") .. "/sessions/",
   },
   config = function(_, opts)
     require("auto-session").setup(opts)
