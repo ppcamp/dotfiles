@@ -4,7 +4,7 @@
 # use unset to unload some alias
 
 ### nvim
-alias n='nvim'
+alias nn='nvim'
 
 ### bat/batcat
 # alias bat='batcat'
@@ -77,7 +77,7 @@ alias histclear='echo "" > ~/$HISTFILE && fc -R'
 alias table='column -t'
 
 alias now='date +"%Y-%m-%dT%H:%M:%SZ"'
-alias nowdate='date +"%Y-%m-%d'
+alias nowdate='date +"%Y-%m-%d"'
 
 ### open files
 # see https://pt.linux-console.net/?p=19677
@@ -88,7 +88,6 @@ alias icat='kitten icat'
 
 ### Github
 alias gist='gh gist'
-alias copilot='copilot --model "gpt-5-mini"'
 
 ### Podman
 alias pd='podman'
@@ -157,7 +156,7 @@ alias copilot='copilot -s --disable-builtin-mcps'
 alias ocode='opencode'
 
 ### functions
-alias allfunctions='functions | rg -oN -r "$1" "^([a-zA-Z0-9]+)\s*\("'
+alias allfunctions="functions | rg -oN -r '\$1' '^([a-zA-Z0-9]+)\s*\('"
 
 ### gum (better tui)
 alias gumf='gum filter --no-limit'
