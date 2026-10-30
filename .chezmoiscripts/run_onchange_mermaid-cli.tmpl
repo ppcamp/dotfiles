@@ -1,0 +1,24 @@
+{{- if has "mermaid-cli" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs mermaid-cli (mmdc), a CLI to render Mermaid diagrams
+# into SVG/PNG/PDF.
+# https://github.com/mermaid-js/mermaid-cli
+
+if ! command -v bun &>/dev/null; then
+  warn "bun not found, skipping mermaid-cli (install bun first)"
+  exit 0
+fi
+
+loginstall "Installing mermaid-cli"
+
+bun add -g @mermaid-js/mermaid-cli &>/dev/null
+
+# puppeteer's postinstall doesn't fetch the browser, so run the bundled
+# puppeteer (resolved from the package dir) to get a matching headless chrome.
+cd "$(dirname "$(readlink -f "$(bun pm bin -g)/mmdc")")" &&
+  bun x puppeteer browsers install chrome-headless-shell &>/dev/null
+
+{{ end -}}

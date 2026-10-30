@@ -1,0 +1,21 @@
+{{- if has "hl" .scripts -}}
+#!/usr/bin/env bash
+
+{{ template "helpers.tmpl" . }}
+
+# This script installs hl, a fast and powerful log viewer and processor that
+# converts JSON/logfmt logs into a human-readable format.
+# https://github.com/pamburus/hl
+
+pkgCreator=pamburus
+pkg=hl
+
+{{ template "github_setup.tmpl" . }}
+
+# downloading package (single binary)
+getGithubFileStdin "${pkg}-linux-x86_64-musl.tar.gz" \
+  | tar -xzC .
+
+{{ template "install_home.tmpl" . }}
+
+{{ end -}}
