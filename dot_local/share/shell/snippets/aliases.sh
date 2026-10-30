@@ -183,7 +183,7 @@ alias reboot='sudo systemctl reboot'
 ### netcat improved
 alias nc='ncat'
 alias receive='ncat -l -p 4444'
-send() { ncat $1 4444 <"$2"; }
+send() { local host=$1; shift; cat -- "$@" | ncat "$host" 4444; }
 
 ### mixer for audio
 alias mixer='alsamixer'
